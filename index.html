@@ -3,24 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Projects | Chris Augustine</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Trip Guides | Chris Augustine</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Personal Trips Projects</h1>
-        <p>This is where I experiment with new ideas and build apps for fun.</p>
+        <div class="container site-header">
+            <h1 class="site-title"><a href="index.html">Trip Guides</a></h1>
+            <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="belgium-netherlands/index.html">Belgium & Netherlands</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    
+
     <main>
-        <section>
-            <h2>Current Projects</h2>
-            <p>I'm working on some exciting projects that I'll showcase here soon!</p>
+        <section class="hero">
+            <div class="container">
+                <h1>Adventure Awaits</h1>
+                <p>Detailed trip guides to help you plan your perfect journey.</p>
+            </div>
         </section>
+
+        <div class="container">
+            <section class="card">
+                <h2>Featured Trips</h2>
+                <div class="trip-card">
+                    <h3>Belgium & Netherlands: 10 Day Journey</h3>
+                    <p>Explore the historic cities, beautiful canals, and delicious cuisine of Belgium and the Netherlands.</p>
+                    <a href="belgium-netherlands/index.html" class="btn">View Trip Guide</a>
+                </div>
+            </section>
+        </div>
     </main>
-    
+
     <footer>
-        <p>&copy; 2025 Chris Augustine. Personal projects space.</p>
+        <div class="container">
+            <p>&copy; 2023 Chris Augustine. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
