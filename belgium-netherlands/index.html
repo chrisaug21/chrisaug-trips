@@ -190,11 +190,12 @@
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 100; /* Higher z-index to ensure it stays on top */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin-bottom: 0; /* Remove gap between nav and header */
       transition: all 0.3s ease-in-out;
+      width: 100%;
     }
     
     .fixed-nav {
@@ -216,9 +217,7 @@
     .trip-nav-days {
       display: flex;
       gap: 0.5rem;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
       max-width: 100%;
       -webkit-overflow-scrolling: touch;
       border-top: 1px solid var(--light-bg);
@@ -260,79 +259,6 @@
       color: var(--white);
     }
 
-    @media (max-width: 768px) {
-      .trip-nav {
-        padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
-      }
-      
-      .day-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .trip-nav-container {
-        gap: 0.5rem;
-      }
-      
-      .trip-nav-links {
-        justify-content: flex-start;
-      }
-      
-      .trip-nav-days {
-        justify-content: flex-start;
-        width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
-        overflow-x: visible; /* Remove horizontal scrolling */
-        padding-bottom: 0.25rem;
-      }
-
-      .day-label {
-        display: none;
-      }
-      
-      .trip-nav-link {
-        padding: 0.4rem 0.75rem;
-        font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
-      }
-      
-      .phrase-list {
-        grid-template-columns: 1fr;
-      }
-      
-      .map-legend {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      
-      .section-title-container h2 {
-        font-size: 1.7rem;
-      }
-      
-      .culture-subsection h3 {
-        font-size: 1.3rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .day-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .trip-nav-link {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-      }
-    }
-
     /* Map Modal Styles */
     .map-modal {
       display: none;
@@ -348,8 +274,8 @@
     }
 
     .map-modal-content {
-      max-width: 95%;
-      max-height: 95%;
+      width: 95%;
+      height: 95%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -360,6 +286,9 @@
       max-height: 95vh;
       border-radius: 8px;
       object-fit: contain;
+      width: auto;
+      height: auto;
+      min-height: 85vh; /* Ensure the image is large enough */
     }
 
     .map-modal-close {
@@ -386,6 +315,10 @@
       padding: 1.5rem;
       border-radius: 0 8px 8px 0;
       height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
     }
 
     .culture-box h3 {
@@ -416,6 +349,9 @@
       list-style: none;
       padding-left: 0 !important;
       margin-bottom: 0.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.5rem 2rem;
     }
 
     .phrase-list li {
@@ -427,6 +363,7 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      border-bottom: 1px dotted #eee;
     }
 
     .phrase-text {
@@ -438,22 +375,6 @@
       color: var(--light-text);
       font-style: italic;
       margin-left: 1rem;
-    }
-
-    @media (max-width: 768px) {
-      .phrase-list li {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .phrase-pronunciation {
-        margin-left: 0;
-        margin-top: 0.25rem;
-      }
-      
-      .culture-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     .quote-box {
@@ -530,26 +451,171 @@
       font-size: 1.2rem;
     }
 
-    .phrase-list {
-      list-style: none;
-      padding-left: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 0.5rem 2rem;
-    }
-
-    .phrase-list li {
-      padding: 0.5rem;
-      border-bottom: 1px dotted #eee;
+    /* Add styles for the mobile-only Trip Home button */
+    .mobile-trip-home-link {
+      display: none;
     }
 
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
+        top: 0; /* Ensure it's at the top */
       }
       
       .day-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .trip-nav-container {
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-links {
+        justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap; /* Allow wrapping for day buttons */
+        overflow-x: visible; /* Remove horizontal scrolling */
+        padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Allow columns to adjust based on content */
+        gap: 0.3rem;
+      }
+
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.85rem;
+        text-align: center;
+        width: 100%; /* Make all buttons full width of their grid cell */
+      }
+      
+      .trip-nav-link.all-trips-link {
+        display: none; /* Hide All Trips link on mobile */
+      }
+      
+      .trip-nav-link.trip-home-link {
+        display: none; /* Hide desktop Trip Home link on mobile */
+      }
+      
+      .mobile-trip-home-link {
+        display: inline-flex !important;
+        padding: 0.4rem;
+        font-size: 0.85rem;
+        width: auto;
+        min-width: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .phrase-list {
+        grid-template-columns: 1fr;
+        min-width: 0;
+      }
+      
+      .phrase-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      .phrase-pronunciation {
+        margin-left: 0;
+        margin-top: 0.25rem;
+        font-size: 0.9rem;
+      }
+      
+      .map-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .section-title-container h2 {
+        font-size: 1.7rem;
+      }
+      
+      .culture-subsection h3 {
+        font-size: 1.3rem;
+      }
+      
+      /* Use more horizontal space on mobile */
+      .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        max-width: 100%;
+      }
+      
+      .card {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      
+      .culture-box {
+        padding: 0.75rem;
+      }
+      
+      .phrase-list li {
+        padding: 0.5rem;
+      }
+      
+      .culture-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Force phrase text to wrap properly */
+      .phrase-text {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .day-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .trip-nav-days {
+        grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
+        gap: 0.25rem;
+      }
+      
+      .trip-nav-link {
+        padding: 0.3rem 0.3rem;
+        font-size: 0.7rem;
+      }
+      
+      .mobile-trip-home-link {
+        padding: 0.3rem;
+        font-size: 0.7rem;
+      }
+      
+      /* Further reduce padding for very small screens */
+      .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      
+      .card {
+        padding: 0.75rem;
+      }
+      
+      .culture-box {
+        padding: 0.75rem;
       }
     }
   </style>
@@ -576,6 +642,8 @@
         <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
       </div>
       <div class="trip-nav-days">
+        <!-- Mobile-only Trip Home button -->
+        <a href="index.html" class="trip-nav-link mobile-trip-home-link"><i class="fas fa-map-marked-alt"></i></a>
         <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
         <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
         <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
@@ -1047,19 +1115,18 @@
         }
       });
       
-      // Fix for position of nav bar when scrolling
-      const tripNav = document.querySelector('.trip-nav');
-      const navTop = tripNav ? tripNav.offsetTop : 0;
-      
-      function fixNav() {
-        if (window.scrollY >= navTop) {
-          tripNav.classList.add('fixed-nav');
-        } else {
-          tripNav.classList.remove('fixed-nav');
-        }
+      // Handle mobile navigation display
+      const mobileHomeLink = document.querySelector('.mobile-trip-home-link');
+      if (currentPage === '' || currentPage === 'index.html') {
+        mobileHomeLink.classList.add('active');
       }
       
-      window.addEventListener('scroll', fixNav);
+      // No need for scroll-based nav changes since we want it always visible
+      // Instead, just add the fixed-nav class permanently
+      const tripNav = document.querySelector('.trip-nav');
+      if (tripNav) {
+        tripNav.classList.add('fixed-nav');
+      }
       
       // Map modal functionality
       const tripMap = document.getElementById('trip-map');
