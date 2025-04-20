@@ -114,6 +114,7 @@ main {
   padding: 3rem 0;
   margin-bottom: 2rem;
   text-align: center;
+  margin-top: -2rem; /* Remove gap between nav and header */
 }
 
 .hero h1 {
@@ -195,7 +196,7 @@ main {
 
 /* Trip Cards */
 .trip-card {
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   background-color: var(--white);
@@ -204,6 +205,7 @@ main {
   flex-direction: column;
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: 4px solid var(--accent); /* Yellow accent on the left */
 }
 
 .trip-card:hover {
@@ -217,8 +219,8 @@ main {
 }
 
 .trip-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 0.8rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--primary);
 }
 
@@ -234,8 +236,9 @@ main {
   display: inline-flex;
   align-items: center;
   background-color: var(--light-bg);
-  padding: 0.3rem 0.7rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 20px;
+  font-size: 0.85rem;
 }
 
 .trip-date i {
@@ -282,6 +285,7 @@ main {
   background-color: var(--light-bg);
   position: relative;
   opacity: 0.8;
+  border-left: 4px solid var(--secondary);
 }
 
 .about-section {
