@@ -122,17 +122,38 @@ function initializeStickyNav() {
   const tripNav = document.querySelector('.trip-nav');
   
   if (tripNav) {
-    // Add the fixed-nav class to ensure it always has the shadow
+    // First make sure headers and nav have the correct stacking order
+    const header = document.querySelector('header');
+    if (header) {
+      header.style.zIndex = '900';
+    }
+    
+    // Ensure the trip-nav has the correct sticky properties
+    tripNav.style.position = 'sticky';
+    tripNav.style.top = '0';
+    tripNav.style.zIndex = '1000';
+    
+    // Always add the fixed-nav class for consistent appearance
     tripNav.classList.add('fixed-nav');
     
-    // Optional: If you want to change styles on scroll
+    // Handle scroll effects
     window.addEventListener('scroll', function() {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 10) {
         tripNav.classList.add('scrolled');
+        // Force the sticky behavior by toggling the position property
+        tripNav.style.position = 'sticky';
       } else {
         tripNav.classList.remove('scrolled');
       }
     });
+    
+    // Force a repaint to ensure sticky behavior takes effect
+    setTimeout(function() {
+      tripNav.style.position = 'static';
+      setTimeout(function() {
+        tripNav.style.position = 'sticky';
+      }, 10);
+    }, 0);
   }
 }
 

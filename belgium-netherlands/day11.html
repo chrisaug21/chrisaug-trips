@@ -7,12 +7,43 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    /* Create a sticky wrapper */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
     .trip-header {
       background-color: var(--primary);
       color: var(--white);
       padding: 3rem 0;
       text-align: center;
-      margin-top: -2rem; /* Remove gap between nav and header */
+      margin-top: 0; /* Changed from -2rem */
       margin-bottom: 2rem; /* Add space between header and first card */
     }
 
@@ -192,7 +223,7 @@
       padding: 0.75rem 0;
       position: sticky;
       top: 0; /* Start at the very top */
-      z-index: 100; /* Higher z-index to ensure it stays on top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin-bottom: 0; /* Remove gap between nav and header */
       transition: all 0.3s ease-in-out;
@@ -221,8 +252,6 @@
       flex-wrap: wrap; /* Allow wrapping for day buttons on web */
       max-width: 100%;
       -webkit-overflow-scrolling: touch;
-      border-top: 1px solid var(--light-bg);
-      padding-top: 0.75rem;
     }
 
     .trip-nav-days::-webkit-scrollbar {
@@ -307,6 +336,12 @@
       display: none;
     }
 
+    .all-trips-link i,
+    .trip-home-link i,
+    .mobile-trip-home-link i {
+      margin-right: 5px;
+    }
+
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
@@ -359,8 +394,11 @@
   <!-- Header will be inserted here -->
   <div id="header-container"></div>
   
-  <!-- Trip Nav will be inserted here -->
-  <div id="trip-nav-container"></div>
+  <!-- Create a sticky wrapper for navigation -->
+  <div class="sticky-nav-wrapper">
+    <!-- Trip Nav will be inserted here -->
+    <div id="trip-nav-container"></div>
+  </div>
   
   <main>
     <!-- Trip Header Section -->
@@ -437,7 +475,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
+      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
     </div>
   </footer>
 
@@ -448,17 +486,73 @@
   <script src="../assets/js/main.js"></script>
   
   <script>
-    // Initialize page-specific functionality after the components are loaded
     document.addEventListener('DOMContentLoaded', function() {
-      // Call initPage with any page-specific options
-      if (typeof initPage === 'function') {
-        initPage({
-          init: function() {
-            console.log('Day 11 page initialized');
-            // Any page-specific initialization can go here
+      // Wait a short time for all components to load fully
+      setTimeout(() => {
+        // Apply styles to sticky wrapper
+        const stickyWrapper = document.querySelector('.sticky-nav-wrapper');
+        if (stickyWrapper) {
+          stickyWrapper.style.position = 'sticky';
+          stickyWrapper.style.top = '0';
+          stickyWrapper.style.zIndex = '1000';
+          stickyWrapper.style.width = '100%';
+          stickyWrapper.style.backgroundColor = 'white';
+          stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        }
+
+        // Force the trip-nav-container to be part of the sticky flow
+        const tripNavContainer = document.getElementById('trip-nav-container');
+        if (tripNavContainer) {
+          // Don't make this sticky, let the wrapper handle it
+          tripNavContainer.style.position = 'static';
+          tripNavContainer.style.width = '100%';
+        }
+
+        // Find the actual trip-nav element inside the container
+        const tripNav = document.querySelector('.trip-nav');
+        if (tripNav) {
+          // Apply styles to the nav itself - make it static
+          tripNav.style.position = 'static';
+          tripNav.style.width = '100%';
+          tripNav.style.boxShadow = 'none'; // Remove shadow from the nav
+        }
+
+        // Find the day navigation (the bottom part)
+        const tripNavDays = document.querySelector('.trip-nav-days');
+        if (tripNavDays) {
+          tripNavDays.style.position = 'static';
+          tripNavDays.style.background = 'white';
+          tripNavDays.style.width = '100%';
+        }
+
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.trip-nav-link');
+        
+        // Find the current page URL
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        // Add active class to matching link
+        navLinks.forEach(link => {
+          if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
           }
         });
-      }
+
+        // Add scroll class on scroll
+        const handleScroll = () => {
+          if (window.scrollY > 10) {
+            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.15)';
+          } else {
+            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+          }
+        };
+        
+        // Listen for scroll events
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initialize on page load
+        handleScroll();
+      }, 100); // Short delay to ensure components are fully loaded
     });
   </script>
 </body>

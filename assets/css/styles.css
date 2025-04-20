@@ -414,4 +414,121 @@ footer a:hover {
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+
+/* Trip Navigation */
+.trip-nav {
+  background-color: var(--white);
+  padding: 0.75rem 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+header {
+  position: relative;
+  z-index: 900;
+}
+
+.fixed-nav {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.trip-nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trip-nav-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.trip-nav-days {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  border-top: 1px solid var(--light-bg);
+  padding-top: 0.75rem;
+}
+
+.trip-nav-link {
+  padding: 0.5rem 1rem;
+  background-color: var(--light-bg);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.trip-nav-link:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.trip-nav-link.active {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.all-trips-link i,
+.trip-home-link i,
+.mobile-trip-home-link i {
+  margin-right: 5px;
+}
+
+.mobile-trip-home-link {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Mobile navigation for trip pages */
+  .trip-nav {
+    padding: 0.5rem 0;
+  }
+  
+  .trip-nav-container {
+    gap: 0.5rem;
+  }
+  
+  .trip-nav-links {
+    display: none;
+  }
+  
+  .trip-nav-days {
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0.25rem;
+    border-top: none;
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 0.3rem;
+  }
+
+  .day-label {
+    display: none;
+  }
+  
+  .trip-nav-link {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .mobile-trip-home-link {
+    display: inline-block;
+  }
 } 
