@@ -31,6 +31,33 @@
       background-color: var(--white);
     }
 
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* We'll handle this with JavaScript to avoid CSS/JS conflicts */
+    }
+
     /* Reset trip-nav-container styles that may interfere */
     #trip-nav-container, 
     #trip-nav-container * {
@@ -38,13 +65,38 @@
       contain: none !important;
     }
 
+    /* Remove gap between navigation and header */
     .trip-header {
       background-color: var(--primary);
       color: var(--white);
       padding: 3rem 0;
       text-align: center;
-      margin-top: 0; /* Changed from -2rem */
+      margin-top: 0;
       margin-bottom: 2rem; /* Add space between header and first card */
+    }
+    
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+    
+    /* Remove top space from header */
+    .trip-header {
+      margin-top: 0 !important;
+      padding-top: 3rem !important;
     }
 
     .trip-header h1 {
@@ -331,11 +383,6 @@
       cursor: pointer;
     }
 
-    /* Add styles for the mobile-only Trip Home button */
-    .mobile-trip-home-link {
-      display: none;
-    }
-
     .all-trips-link i,
     .trip-home-link i,
     .mobile-trip-home-link i {
@@ -400,9 +447,9 @@
     <div id="trip-nav-container"></div>
   </div>
   
-  <main>
+  <main style="margin-top: 0; padding-top: 0;">
     <!-- Trip Header Section -->
-    <section class="trip-header">
+    <section class="trip-header" style="margin-top: 0;">
       <div class="container">
         <h1>Day 11: Final Day</h1>
         <div class="trip-dates">Friday, May 2, 2025</div>
@@ -498,31 +545,84 @@
           stickyWrapper.style.width = '100%';
           stickyWrapper.style.backgroundColor = 'white';
           stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+          stickyWrapper.style.marginBottom = '0';
+          stickyWrapper.style.paddingBottom = '0';
         }
 
         // Force the trip-nav-container to be part of the sticky flow
         const tripNavContainer = document.getElementById('trip-nav-container');
         if (tripNavContainer) {
-          // Don't make this sticky, let the wrapper handle it
           tripNavContainer.style.position = 'static';
           tripNavContainer.style.width = '100%';
+          tripNavContainer.style.marginBottom = '0';
+          tripNavContainer.style.paddingBottom = '0';
         }
 
         // Find the actual trip-nav element inside the container
         const tripNav = document.querySelector('.trip-nav');
         if (tripNav) {
-          // Apply styles to the nav itself - make it static
           tripNav.style.position = 'static';
           tripNav.style.width = '100%';
-          tripNav.style.boxShadow = 'none'; // Remove shadow from the nav
+          tripNav.style.boxShadow = 'none';
+          tripNav.style.marginBottom = '0';
+          tripNav.style.paddingBottom = '0.5rem';
+        }
+
+        // Remove margins from trip header
+        const tripHeader = document.querySelector('.trip-header');
+        if (tripHeader) {
+          tripHeader.style.marginTop = '0';
+        }
+        
+        // Remove margin from main content
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+          mainContent.style.marginTop = '0';
+          mainContent.style.paddingTop = '0';
+        }
+
+        // Hide "All Trips" link
+        const allTripsLink = document.querySelector('.all-trips-link');
+        if (allTripsLink) {
+          allTripsLink.style.display = 'none';
+        }
+
+        // Move Trip Home link to the day navigation
+        const tripHomeLink = document.querySelector('.trip-home-link');
+        const tripNavDays = document.querySelector('.trip-nav-days');
+        
+        if (tripHomeLink && tripNavDays) {
+          // Clone the Trip Home link
+          const clonedTripHomeLink = tripHomeLink.cloneNode(true);
+          
+          // Add it to the beginning of the day navigation
+          tripNavDays.insertBefore(clonedTripHomeLink, tripNavDays.firstChild);
+          
+          // Hide the original
+          tripHomeLink.parentElement.style.display = 'none';
+          
+          // Modify the content for mobile view
+          if (window.innerWidth <= 768) {
+            // Just text "Trip" with no icon on mobile
+            clonedTripHomeLink.innerHTML = 'Trip';
+          } else {
+            // Keep "Trip Home" with icon on desktop
+            // No changes needed as we're using the original cloned content
+          }
+        }
+
+        // Hide the mobile-only Trip Home link
+        const mobileTripHomeLink = document.querySelector('.mobile-trip-home-link');
+        if (mobileTripHomeLink) {
+          mobileTripHomeLink.style.display = 'none';
         }
 
         // Find the day navigation (the bottom part)
-        const tripNavDays = document.querySelector('.trip-nav-days');
         if (tripNavDays) {
           tripNavDays.style.position = 'static';
           tripNavDays.style.background = 'white';
           tripNavDays.style.width = '100%';
+          tripNavDays.style.display = 'flex';
         }
 
         // Get all navigation links
@@ -552,6 +652,18 @@
         
         // Initialize on page load
         handleScroll();
+        
+        // Handle resize events to update the Trip Home button text
+        window.addEventListener('resize', () => {
+          const clonedLink = tripNavDays.querySelector('.trip-home-link');
+          if (clonedLink) {
+            if (window.innerWidth <= 768) {
+              clonedLink.innerHTML = 'Trip';
+            } else {
+              clonedLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
+            }
+          }
+        });
       }, 100); // Short delay to ensure components are fully loaded
     });
   </script>
