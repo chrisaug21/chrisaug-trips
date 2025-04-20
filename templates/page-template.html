@@ -1,0 +1,400 @@
+<!-- Page Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}} | Trip Guides</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .trip-header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+      margin-top: -2rem; /* Remove gap between nav and header */
+      margin-bottom: 2rem; /* Add space between header and first card */
+    }
+
+    .trip-header h1 {
+      color: var(--white);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-dates {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .trip-intro {
+      max-width: 800px;
+      margin: 1.5rem auto 0;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      text-align: left;
+      line-height: 1.7;
+    }
+
+    .trip-intro p {
+      margin-bottom: 0.75rem;
+    }
+
+    .trip-highlights h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%; /* Make all boxes the same height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .highlight-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .highlight-box p {
+      margin-bottom: 1rem;
+    }
+
+    .highlight-box ul {
+      padding-left: 1.5rem;
+    }
+
+    .day-card {
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 1.2rem;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .day-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .day-card .date {
+      color: var(--light-text);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .day-card .location {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .map-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .map-container img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+      cursor: pointer; /* Make cursor show this is clickable */
+      transition: transform 0.3s ease;
+    }
+
+    .map-container img:hover {
+      transform: scale(1.02);
+    }
+
+    .map-caption {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-red-marker {
+      color: #e74c3c;
+      font-size: 1.2rem;
+    }
+
+    .map-blue-marker {
+      color: #3498db;
+      font-size: 1.2rem;
+    }
+
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0; /* Start at the very top */
+      z-index: 100; /* Higher z-index to ensure it stays on top */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    /* Map Modal Styles */
+    .map-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-modal-content {
+      width: 95%;
+      height: 95%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .map-modal-content img {
+      max-width: 100%;
+      max-height: 95vh;
+      border-radius: 8px;
+      object-fit: contain;
+      width: auto;
+      height: auto;
+      min-height: 85vh; /* Ensure the image is large enough */
+    }
+
+    .map-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Add styles for the mobile-only Trip Home button */
+    .mobile-trip-home-link {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+        top: 0; /* Ensure it's at the top */
+      }
+      
+      .day-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .trip-nav-container {
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-links {
+        justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap; /* Allow wrapping for day buttons */
+        overflow-x: visible; /* Remove horizontal scrolling */
+        padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Allow columns to adjust based on content */
+        gap: 0.3rem;
+      }
+
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.85rem;
+      }
+      
+      .mobile-trip-home-link {
+        display: inline-block;
+      }
+    }
+  </style>
+  <!-- Page-specific styles -->
+  {{PAGE_STYLES}}
+</head>
+<body>
+  <!-- Header will be inserted here -->
+  <div id="header-container"></div>
+  
+  <!-- Trip Nav will be inserted here -->
+  <div id="trip-nav-container"></div>
+  
+  <main>
+    <!-- Trip Header Section -->
+    <section class="trip-header">
+      <div class="container">
+        <h1>{{PAGE_TITLE}}</h1>
+        <div class="trip-dates">{{PAGE_DATE}}</div>
+      </div>
+    </section>
+
+    <div class="container">
+      <!-- Content will be inserted here -->
+      <div id="page-content">
+        {{PAGE_CONTENT}}
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Components.js script will be inserted here -->
+  <script src="../assets/js/components.js"></script>
+  
+  <!-- Main scripts -->
+  <script src="../assets/js/main.js"></script>
+  
+  <!-- Page-specific scripts -->
+  {{PAGE_SCRIPTS}}
+</body>
+</html> 

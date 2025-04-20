@@ -1,9 +1,13 @@
+/**
+ * Main JavaScript file for the Trip Guides site
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
   // Mobile navigation toggle
   const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
   const nav = document.querySelector('nav');
   
-  if (mobileNavToggle) {
+  if (mobileNavToggle && nav) {
     mobileNavToggle.addEventListener('click', function() {
       nav.classList.toggle('mobile-nav-open');
     });
@@ -15,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   navLinks.forEach(link => {
     const linkPath = link.getAttribute('href');
-    if (currentLocation.endsWith(linkPath)) {
+    if (linkPath && currentLocation.endsWith(linkPath) && linkPath !== '#') {
       link.classList.add('active');
     }
   });
