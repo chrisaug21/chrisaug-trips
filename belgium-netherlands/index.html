@@ -6,6 +6,553 @@
   <title>Belgium & Netherlands | Trip Guides</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .trip-header {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+      margin-top: -2rem; /* Remove gap between nav and header */
+    }
+
+    .trip-header h1 {
+      color: var(--white);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-dates {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .trip-intro {
+      max-width: 800px;
+      margin: 1.5rem auto 0;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      text-align: left;
+      line-height: 1.7;
+    }
+
+    .trip-intro p {
+      margin-bottom: 0.75rem;
+    }
+
+    .trip-highlights h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%; /* Make all boxes the same height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .highlight-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .highlight-box p {
+      margin-bottom: 1rem;
+    }
+
+    .highlight-box ul {
+      padding-left: 1.5rem;
+    }
+
+    .day-card {
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 1.2rem;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .day-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .day-card .date {
+      color: var(--light-text);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .day-card .location {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .map-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .map-container img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+      cursor: pointer; /* Make cursor show this is clickable */
+      transition: transform 0.3s ease;
+    }
+
+    .map-container img:hover {
+      transform: scale(1.02);
+    }
+
+    .map-caption {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-red-marker {
+      color: #e74c3c;
+      font-size: 1.2rem;
+    }
+
+    .map-blue-marker {
+      color: #3498db;
+      font-size: 1.2rem;
+    }
+
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+        top: 59px; /* Adjusted to prevent overlap with top nav */
+      }
+      
+      .day-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .trip-nav-container {
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-links {
+        justify-content: flex-start;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap; /* Allow wrapping for day buttons */
+        overflow-x: visible; /* Remove horizontal scrolling */
+        padding-bottom: 0.25rem;
+      }
+
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+      }
+      
+      .trip-nav-link.all-trips-link {
+        display: none; /* Hide All Trips link on mobile */
+      }
+      
+      .trip-nav-link.trip-home-link span {
+        display: none; /* Hide text on mobile */
+      }
+      
+      .phrase-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .map-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .section-title-container h2 {
+        font-size: 1.7rem;
+      }
+      
+      .culture-subsection h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .day-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .trip-nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Map Modal Styles */
+    .map-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-modal-content {
+      max-width: 95%;
+      max-height: 95%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .map-modal-content img {
+      max-width: 100%;
+      max-height: 95vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .map-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Styling for culture sections */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box h4 {
+      color: var(--secondary);
+      margin: 1rem 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Updated phrase list styling */
+    .phrase-list {
+      list-style: none;
+      padding-left: 0 !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .phrase-list li {
+      background-color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .phrase-text {
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .phrase-pronunciation {
+      color: var(--light-text);
+      font-style: italic;
+      margin-left: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .phrase-list li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .phrase-pronunciation {
+        margin-left: 0;
+        margin-top: 0.25rem;
+      }
+      
+      .culture-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quote-box {
+      font-style: italic;
+      color: var(--light-text);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      padding: 1rem;
+      border-top: 1px solid var(--secondary);
+      border-bottom: 1px solid var(--secondary);
+    }
+
+    /* New styles for the detailed content */
+    .content-box {
+      line-height: 1.7;
+    }
+
+    .content-box p {
+      margin-bottom: 1rem;
+    }
+
+    .trip-reminder {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      margin-top: 1.5rem;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .quote-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .quote-item {
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+      font-style: italic;
+    }
+
+    .quote-item p {
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-item cite {
+      font-style: normal;
+      color: var(--light-text);
+      font-weight: 600;
+    }
+
+    .culture-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-subsection {
+      margin-bottom: 2rem;
+    }
+
+    .culture-subsection h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-subsection h4 {
+      color: var(--secondary);
+      margin: 1rem 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .phrase-list {
+      list-style: none;
+      padding-left: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.5rem 2rem;
+    }
+
+    .phrase-list li {
+      padding: 0.5rem;
+      border-bottom: 1px dotted #eee;
+    }
+
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+      }
+      
+      .day-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,49 +568,462 @@
     </div>
   </header>
 
+  <!-- Trip-specific navigation -->
+  <div class="trip-nav">
+    <div class="container trip-nav-container">
+      <div class="trip-nav-links">
+        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+      </div>
+      <div class="trip-nav-days">
+        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+      </div>
+    </div>
+  </div>
+
   <main>
-    <section class="hero">
+    <!-- Trip Header Section -->
+    <section class="trip-header">
       <div class="container">
-        <h1>Belgium & Netherlands: 10 Day Journey</h1>
-        <p>A comprehensive guide to exploring the heart of Europe.</p>
+        <h1>Belgium & Netherlands</h1>
+        <div class="trip-dates">April 22 - May 2, 2024</div>
       </div>
     </section>
 
     <div class="container">
+      <!-- Trip Route Overview -->
       <section class="card">
-        <h2>Trip Overview</h2>
-        <p>This 10-day itinerary takes you through the highlights of Belgium and the Netherlands, including Amsterdam, Brussels, Bruges, and more. Experience stunning architecture, world-class museums, and picturesque canals.</p>
+        <h2>Trip Route Overview</h2>
+        <div class="map-container">
+          <img src="../assets/images/belgium-netherlands/map.png" alt="Belgium & Netherlands Trip Map" id="trip-map">
+          <p class="map-caption">🇧🇪 🇳🇱 Belgium & Netherlands Trip Route: Ghent - Bruges - Antwerp - Utrecht - Delft - Amsterdam</p>
+          <div class="map-legend">
+            <span class="map-legend-item"><span class="map-red-marker">●</span> Overnight stays: Ghent (4 nights), Utrecht (5 nights)</span>
+            <span class="map-legend-item"><span class="map-blue-marker">●</span> Day trips: Bruges, Antwerp, Delft, Amsterdam</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Modal -->
+      <div id="mapModal" class="map-modal">
+        <span class="map-modal-close">&times;</span>
+        <div class="map-modal-content">
+          <img src="../assets/images/belgium-netherlands/map.png" alt="Belgium & Netherlands Trip Map">
+        </div>
+      </div>
+
+      <!-- Comprehensive Content Sections -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>🗺️ Trip Overview</h2>
+        </div>
+        <div class="content-box">
+          <p>Welcome to your unforgettable journey through Belgium and the Netherlands, where centuries of history, art, and culture meet picturesque canals, medieval architecture, and culinary delights.</p>
+          <p>Your adventure begins in the medieval beauty of Ghent, Belgium, with its stunning castle, winding canals, and vibrant local scene away from the tourist crowds.</p>
+          <p>From Ghent, you'll venture to the fairytale-like charm of Bruges for a day trip, where chocolate shops, breweries, and cobblestone streets create a truly magical atmosphere. Before heading to the Netherlands, you'll enjoy a brief exploration of Antwerp, known for its impressive architecture and fashion scene.</p>
+          <p>In the Netherlands, Utrecht will serve as your home base - a delightful university city with canals and a historic center without Amsterdam's tourist crowds. From here, you'll take day trips to charming Delft with its famous blue pottery and iconic Amsterdam with its distinctive canal rings and lively atmosphere. And as a special bonus, you'll be in the Netherlands during tulip season and for King's Day (April 27), one of the country's biggest celebrations!</p>
+          <p>Throughout your journey, you'll discover local cafés and brown bars, sample distinctive regional specialties from Belgian chocolate and beer to Dutch stroopwafels and jenever, and immerse yourselves in the laid-back yet vibrant culture of these two fascinating countries.</p>
+          <div class="trip-reminder">
+            <p><strong>Remember:</strong> This trip is an adventure. We get to go to the most incredible places. Unexpected and unplanned things will happen and we will find ways to roll with them like we always do. We can handle anything. Everything is figure-out-able. This will become an amazing story.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Day-by-Day Navigation Section -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Day-by-Day Itinerary</h2>
+        </div>
+        <div class="day-grid">
+          <a href="day1.html" class="day-card">
+            <h3>Day 1</h3>
+            <div class="date">Tuesday, April 22, 2024</div>
+            <div class="location">✈️ Travel Day</div>
+            <p>Begin your journey to Belgium & the Netherlands.</p>
+          </a>
+          
+          <a href="day2.html" class="day-card">
+            <h3>Day 2</h3>
+            <div class="date">Wednesday, April 23, 2024</div>
+            <div class="location">🚉 Travel Day & Ghent</div>
+            <p>Arrival and first exploration of Ghent.</p>
+          </a>
+          
+          <a href="day3.html" class="day-card">
+            <h3>Day 3</h3>
+            <div class="date">Thursday, April 24, 2024</div>
+            <div class="location">🏰 Bruges (Day Trip)</div>
+            <p>Explore the fairytale city of Bruges.</p>
+          </a>
+          
+          <a href="day4.html" class="day-card">
+            <h3>Day 4</h3>
+            <div class="date">Friday, April 25, 2024</div>
+            <div class="location">🚶 Ghent</div>
+            <p>Discover the medieval beauty of Ghent.</p>
+          </a>
+          
+          <a href="day5.html" class="day-card">
+            <h3>Day 5</h3>
+            <div class="date">Saturday, April 26, 2024</div>
+            <div class="location">🍺 Ghent OR Bruges</div>
+            <p>Option day: Second day in Ghent or Bruges.</p>
+          </a>
+          
+          <a href="day6.html" class="day-card">
+            <h3>Day 6</h3>
+            <div class="date">Sunday, April 27, 2024</div>
+            <div class="location">🚆 Antwerp & Utrecht</div>
+            <p>Visit Antwerp and travel to Utrecht.</p>
+          </a>
+          
+          <a href="day7.html" class="day-card">
+            <h3>Day 7</h3>
+            <div class="date">Monday, April 28, 2024</div>
+            <div class="location">🌷 Delft</div>
+            <p>Discover Delft's famous blue pottery.</p>
+          </a>
+          
+          <a href="day8.html" class="day-card">
+            <h3>Day 8</h3>
+            <div class="date">Tuesday, April 29, 2024</div>
+            <div class="location">⛵ Utrecht</div>
+            <p>Explore Utrecht's canals and historic center.</p>
+          </a>
+          
+          <a href="day9.html" class="day-card">
+            <h3>Day 9</h3>
+            <div class="date">Wednesday, April 30, 2024</div>
+            <div class="location">🚲 Amsterdam (Day Trip)</div>
+            <p>Experience Amsterdam on King's Day!</p>
+          </a>
+          
+          <a href="day10.html" class="day-card">
+            <h3>Day 10</h3>
+            <div class="date">Thursday, May 1, 2024</div>
+            <div class="location">🏛️ Amsterdam OR Utrecht</div>
+            <p>Option day: Second day in Amsterdam or Utrecht.</p>
+          </a>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Daily Itinerary</h2>
-        <div class="trip-days">
-          <a href="day1.html" class="day-link">Day 1</a>
-          <a href="day2.html" class="day-link">Day 2</a>
-          <a href="day3.html" class="day-link">Day 3</a>
-          <a href="day4.html" class="day-link">Day 4</a>
-          <a href="day5.html" class="day-link">Day 5</a>
-          <a href="day6.html" class="day-link">Day 6</a>
-          <a href="day7.html" class="day-link">Day 7</a>
-          <a href="day8.html" class="day-link">Day 8</a>
-          <a href="day9.html" class="day-link">Day 9</a>
-          <a href="day10.html" class="day-link">Day 10</a>
+        <div class="section-title-container">
+          <h2>🌷 Inspiration</h2>
         </div>
-        
-        <div class="trip-summary">
-          <h3>Quick Summary</h3>
-          <ul>
-            <li><strong>Day 1:</strong> Arrival in Amsterdam</li>
-            <li><strong>Day 2:</strong> Amsterdam City Exploration</li>
-            <li><strong>Day 3:</strong> Amsterdam Museums & Parks</li>
-            <li><strong>Day 4:</strong> Day Trip to Rotterdam</li>
-            <li><strong>Day 5:</strong> Utrecht & Travel to Brussels</li>
-            <li><strong>Day 6:</strong> Brussels City Center</li>
-            <li><strong>Day 7:</strong> Day Trip to Ghent</li>
-            <li><strong>Day 8:</strong> Bruges</li>
-            <li><strong>Day 9:</strong> Antwerp</li>
-            <li><strong>Day 10:</strong> Departure Day</li>
-          </ul>
+        <div class="quote-grid">
+          <div class="quote-item">
+            <p>"The real voyage of discovery consists not in seeking new landscapes, but in having new eyes."</p>
+            <cite>— Marcel Proust</cite>
+          </div>
+          <div class="quote-item">
+            <p>"Tourists don't know where they've been, travelers don't know where they're going."</p>
+            <cite>— Paul Theroux</cite>
+          </div>
+          <div class="quote-item">
+            <p>"Travel makes one modest. You see what a tiny place you occupy in the world."</p>
+            <cite>— Gustave Flaubert</cite>
+          </div>
+          <div class="quote-item">
+            <p>"We travel not to escape life, but for life not to escape us."</p>
+            <cite>— Anonymous</cite>
+          </div>
+          <div class="quote-item">
+            <p>"To travel is to discover that everyone is wrong about other countries."</p>
+            <cite>— Aldous Huxley</cite>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>🗣️ Language Quick Reference</h2>
+        </div>
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Dutch/Flemish Phrases</h3>
+            <p>Dutch is spoken in the Netherlands and northern Belgium (as Flemish). Both variants are very similar, with small pronunciation differences. Here are essential phrases for your trip:</p>
+            <ul class="phrase-list">
+              <li>
+                <span class="phrase-text">Hello/Good day - Hallo/Goedendag</span>
+                <span class="phrase-pronunciation">(HOH-loh/KHOO-den-dakh)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Goodbye - Tot ziens</span>
+                <span class="phrase-pronunciation">(TOT zeens)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Please - Alstublieft</span>
+                <span class="phrase-pronunciation">(AHL-stoo-bleeft)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Thank you - Dank u wel (Belgium)</span>
+                <span class="phrase-pronunciation">(DAHNK-oo-vel)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Thank you - Dank je wel (Netherlands)</span>
+                <span class="phrase-pronunciation">(DAHNK-yuh-vel)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Yes/No - Ja/Nee</span>
+                <span class="phrase-pronunciation">(YAH/NAY)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Excuse me - Excuseer</span>
+                <span class="phrase-pronunciation">(ex-koo-ZAIR)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Excuse me - Pardon</span>
+                <span class="phrase-pronunciation">(par-DON)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Do you speak English? - Spreekt u Engels?</span>
+                <span class="phrase-pronunciation">(SPRAYK oo ENG-els)</span>
+              </li>
+              <li>
+                <span class="phrase-text">Cheers! - Proost!</span>
+                <span class="phrase-pronunciation">(PROHST)</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Pronunciation Tips</h3>
+            <ul>
+              <li>The Dutch 'g' sound is a guttural sound made at the back of the throat</li>
+              <li>The letter combination 'ij' is pronounced like 'ay' in "day"</li>
+              <li>Dutch 'oe' sounds like 'oo' in "boot"</li>
+              <li>Dutch 'ui' has no English equivalent but is close to 'ow' in "how" with rounded lips</li>
+              <li>The letter 'v' is pronounced softer than in English, between English 'v' and 'f'</li>
+            </ul>
+            <p>Most Dutch and Belgian people in tourist areas speak excellent English, but they'll appreciate your effort to use a few Dutch phrases!</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>🍫 Belgian Culture</h2>
+        </div>
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Language</h3>
+            <p>Belgium has three official languages: Dutch (Flemish) in the north, French in the south, and German in a small eastern area. In Ghent and Bruges (Flanders region), Dutch is the primary language, but most people speak excellent English.</p>
+            <p>French is more common in Brussels and southern Belgium (Wallonia). In tourist areas, you'll find staff who speak multiple languages. See the Language Quick Reference section for essential phrases.</p>
+          </div>
+
+          <div class="culture-box">
+            <h3>Food & Drink</h3>
+            <h4>Belgian Specialties</h4>
+            <ul>
+              <li><strong>Waffles:</strong> Brussels waffles (rectangular, light and crispy) and Liège waffles (round, dense, and sweet with pearl sugar)</li>
+              <li><strong>Chocolate:</strong> Belgium produces over 172,000 tons of chocolate per year with over 2,000 chocolate shops</li>
+              <li><strong>Frites (Fries):</strong> Claim to be the original inventors, twice-fried and served in paper cones with a variety of sauces</li>
+              <li><strong>Mussels:</strong> Often prepared with white wine or beer (Moules-frites)</li>
+              <li><strong>Carbonade Flamande:</strong> Beef stew cooked with beer</li>
+              <li><strong>Waterzooi:</strong> Creamy stew with fish or chicken</li>
+              <li><strong>Stoemp:</strong> Mashed potatoes with vegetables</li>
+              <li><strong>Speculoos:</strong> Spiced shortcrust biscuits</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Belgian Beer Culture</h3>
+            <p>Belgian beer is world-renowned with over 1,500 different varieties. Beer in Belgium is more than just a drink; it's a cultural institution with its own rituals and traditions.</p>
+            <ul>
+              <li><strong>Trappist Beers:</strong> Made in monasteries (only 6 in Belgium)</li>
+              <li><strong>Abbey Beers:</strong> Brewed according to monastery traditions but not necessarily in a monastery</li>
+              <li><strong>Lambic Beers:</strong> Spontaneously fermented beers unique to the Brussels area</li>
+              <li><strong>Fruit Beers:</strong> Often lambics with fruits added (cherries, raspberries, etc.)</li>
+              <li><strong>Dubbels, Tripels, Quadrupels:</strong> Refer to strength and brewing methods</li>
+              <li><strong>Proper Glassware:</strong> Each beer has its own specific glass shape designed to enhance its particular qualities</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Meal Times & Customs</h3>
+            <ul>
+              <li><strong>Breakfast:</strong> Typically simple - bread, jam, cheese, coffee</li>
+              <li><strong>Lunch:</strong> Usually 12-2pm, can be the main meal of the day</li>
+              <li><strong>Dinner:</strong> Between 6-8pm, often lighter if lunch was substantial</li>
+              <li><strong>Cafés & Bars:</strong> Belgians love their cafés as social spaces, open through the day</li>
+              <li><strong>Tipping:</strong> Not required as service charge is included, but rounding up or adding 5-10% for excellent service is appreciated</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Cultural Etiquette</h3>
+            <ul>
+              <li><strong>Greeting:</strong> A handshake is standard for first meetings. Three kisses on alternating cheeks is common between close friends (women or women and men)</li>
+              <li><strong>Punctuality:</strong> Belgians tend to be punctual, especially in Flanders</li>
+              <li><strong>Dining:</strong> Keep hands (not elbows) on the table while eating</li>
+              <li><strong>Politeness:</strong> Directness is valued but always coupled with politeness</li>
+              <li><strong>Quiet enjoyment:</strong> Belgians tend to be more reserved in public spaces compared to some other cultures</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>🧀 Dutch Culture</h2>
+        </div>
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Language</h3>
+            <p>The official language is Dutch, though nearly everyone in tourism and most younger Dutch people speak excellent English. Dutch is closely related to German and English, but with unique pronunciations and vocabulary.</p>
+            <p>While English is widely spoken, locals will appreciate your effort to use a few Dutch words. See the Language Quick Reference section for essential phrases.</p>
+          </div>
+
+          <div class="culture-box">
+            <h3>Food & Drink</h3>
+            <h4>Dutch Specialties</h4>
+            <ul>
+              <li><strong>Stroopwafels:</strong> Thin waffles stuck together with caramel syrup</li>
+              <li><strong>Hagelslag:</strong> Chocolate sprinkles eaten on buttered bread (yes, really - for breakfast!)</li>
+              <li><strong>Bitterballen:</strong> Deep-fried crispy meatballs served as bar snacks</li>
+              <li><strong>Haring (Herring):</strong> Raw herring served with onions, often eaten by holding it by the tail</li>
+              <li><strong>Poffertjes:</strong> Tiny, fluffy pancakes served with powdered sugar</li>
+              <li><strong>Stamppot:</strong> Mashed potatoes mixed with vegetables (traditional winter food)</li>
+              <li><strong>Gouda & Edam:</strong> Famous Dutch cheeses</li>
+              <li><strong>Oliebollen:</strong> Deep-fried dough balls, similar to donuts (traditionally eaten on New Year's Eve)</li>
+              <li><strong>Rookworst:</strong> Smoked sausage often served with stamppot</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Dutch Drinking Culture</h3>
+            <ul>
+              <li><strong>Coffee:</strong> The Dutch consume among the most coffee per capita in the world</li>
+              <li><strong>Beer:</strong> Pilsner is the most common style (Heineken, Grolsch, Amstel)</li>
+              <li><strong>Craft Beer:</strong> Growing scene, especially in Amsterdam and Utrecht</li>
+              <li><strong>Jenever:</strong> Traditional Dutch gin, predecessor to modern gin</li>
+              <li><strong>Brown Cafés:</strong> Traditional Dutch pubs with dark wood interiors, named for their nicotine-stained walls from years past</li>
+            </ul>
+            <h4>Brown Cafés</h4>
+            <p>These are traditional Dutch pubs that have existed for centuries, often with dark wood interiors, candles, and a cozy atmosphere. They serve beer, jenever, and simple food. A great place to experience authentic Dutch culture.</p>
+          </div>
+
+          <div class="culture-box">
+            <h3>Meal Times & Customs</h3>
+            <ul>
+              <li><strong>Breakfast:</strong> 7-9am, often simple with bread, cheese, and coffee</li>
+              <li><strong>Coffee time:</strong> 10-11am with a small sweet treat</li>
+              <li><strong>Lunch:</strong> 12-2pm, traditionally a quick, lighter meal</li>
+              <li><strong>Borrel:</strong> Drinks and snacks after work, around 4-6pm</li>
+              <li><strong>Dinner:</strong> Earlier than in southern Europe, typically 6-8pm</li>
+              <li><strong>Tipping:</strong> Not required but 5-10% is appreciated for good service</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Cultural Etiquette</h3>
+            <ul>
+              <li><strong>Directness:</strong> The Dutch are famously direct in conversation - they value honest communication</li>
+              <li><strong>Punctuality:</strong> Arrive on time or even a few minutes early</li>
+              <li><strong>Cycling culture:</strong> Respect bike lanes and cyclists - they have priority</li>
+              <li><strong>Weather talk:</strong> A common conversation starter due to the country's changeable weather</li>
+              <li><strong>"Going Dutch":</strong> The phrase comes from here - splitting the bill is common practice</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Sustainability</h3>
+            <p>Both the Netherlands and Belgium are environmentally conscious:</p>
+            <ul>
+              <li>Tap water is excellent quality and safe to drink</li>
+              <li>Bring reusable bags for shopping</li>
+              <li>Recycling is taken seriously</li>
+              <li>Public transportation is efficient and well-used</li>
+              <li>The Netherlands especially is bike-friendly</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>King's Day (April 27)</h3>
+            <p>This is the biggest Dutch celebration of the year, marking King Willem-Alexander's birthday. The entire country turns orange (the national color) with:</p>
+            <ul>
+              <li>Flea markets (vrijmarkt) where anyone can sell items</li>
+              <li>Street parties and live music</li>
+              <li>Orange-themed everything</li>
+              <li>Boat parties on the canals</li>
+              <li>Festive atmosphere everywhere</li>
+            </ul>
+            <p>This will be one of the highlights of your trip, falling perfectly during your stay!</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>✏️ Personal Notes</h2>
+        </div>
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Travel Tips & Goals</h3>
+            <ul>
+              <li>Always have a small umbrella or rain jacket - weather can change quickly in both countries</li>
+              <li>Bring comfortable walking shoes - cobblestone streets can be rough on feet</li>
+              <li>Try to learn and use at least a few words in Dutch</li>
+              <li>Shop at local markets for unique souvenirs beyond fridge magnets</li>
+              <li>Keep small coins for public toilets (often charge €0.50-€1)</li>
+              <li>Capture photos of canal reflections - early morning or sunset offers the best light</li>
+              <li>Try something completely new each day</li>
+              <li>Take lots of videos this time</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>To-Do Before Trip</h3>
+            <ul>
+              <li>Download offline Google Maps for Ghent, Bruges, Utrecht, Amsterdam</li>
+              <li>Download a good translation app (Google Translate allows you to download Dutch for offline use)</li>
+              <li>Get some euros from your bank before departure</li>
+              <li>Check your credit cards for foreign transaction fees</li>
+              <li>Notify banks of travel</li>
+              <li>Pack adapters for European outlets (Type C/F, 230V)</li>
+              <li>Check train schedules between cities</li>
+              <li>Verify passport expiration dates (must be valid for at least 3 months beyond your planned departure date)</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Packing List</h3>
+            <ul>
+              <li>Rain jacket or small umbrella</li>
+              <li>Comfortable walking shoes (2 pairs)</li>
+              <li>Layers for variable spring weather</li>
+              <li>Camera</li>
+              <li>Portable charger</li>
+              <li>European power adapter</li>
+              <li>Small day bag/backpack</li>
+              <li>Reusable water bottle</li>
+              <li>Small first aid kit with pain relievers, band-aids</li>
+              <li>Copy of passport and travel insurance info</li>
+            </ul>
+          </div>
+
+          <div class="culture-box">
+            <h3>Personal Daily Activity Goals</h3>
+            <ol>
+              <li>Sit down for pastry and coffee in a cute shop</li>
+              <li>Have a drink at a tavern or pub</li>
+              <li>Walk along some water</li>
+              <li>Have a snack or lunch in a park</li>
+              <li>Buy a magnet</li>
+              <li>Visit 2-3 cute shops and consider buying at least one thing artisanal or locally unique</li>
+              <li>People watch and give 2-3 people personas</li>
+            </ol>
+          </div>
         </div>
       </section>
     </div>
@@ -74,6 +1034,64 @@
       <p>&copy; 2023 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    // Add active class to current day link in the trip navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const dayLinks = document.querySelectorAll('.trip-nav-link');
+      
+      dayLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Fix for position of nav bar when scrolling
+      const tripNav = document.querySelector('.trip-nav');
+      const navTop = tripNav ? tripNav.offsetTop : 0;
+      
+      function fixNav() {
+        if (window.scrollY >= navTop) {
+          tripNav.classList.add('fixed-nav');
+        } else {
+          tripNav.classList.remove('fixed-nav');
+        }
+      }
+      
+      window.addEventListener('scroll', fixNav);
+      
+      // Map modal functionality
+      const tripMap = document.getElementById('trip-map');
+      const mapModal = document.getElementById('mapModal');
+      const mapModalContent = document.querySelector('.map-modal-content');
+      const closeBtn = document.querySelector('.map-modal-close');
+      
+      if (tripMap && mapModal && closeBtn) {
+        tripMap.addEventListener('click', function() {
+          // Make modal fullscreen
+          mapModal.style.display = 'flex';
+          
+          // Allow escape key to close the modal
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+              mapModal.style.display = 'none';
+            }
+          });
+        });
+        
+        closeBtn.addEventListener('click', function() {
+          mapModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(event) {
+          if (event.target === mapModal) {
+            mapModal.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
 
   <script src="../assets/js/main.js"></script>
 </body>

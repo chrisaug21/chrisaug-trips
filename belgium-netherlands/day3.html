@@ -3,9 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 3: Amsterdam Museums & Parks | Belgium & Netherlands Trip</title>
+  <title>Day 3: Bruges (Day Trip) | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Trip-specific navigation */
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links, .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      color: var(--dark-text);
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+        top: 59px; /* Adjusted to prevent overlap with top nav */
+      }
+      
+      .trip-nav-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-links {
+        justify-content: flex-start;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap; /* Allow wrapping for day buttons */
+        overflow-x: visible; /* Remove horizontal scrolling */
+        padding-bottom: 0.25rem;
+      }
+      
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+      }
+      
+      .trip-nav-link.all-trips-link {
+        display: none; /* Hide All Trips link on mobile */
+      }
+      
+      .trip-nav-link.trip-home-link span {
+        display: none; /* Hide text on mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trip-nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,76 +116,107 @@
     </div>
   </header>
 
+  <!-- Trip-specific navigation -->
+  <div class="trip-nav">
+    <div class="container trip-nav-container">
+      <div class="trip-nav-links">
+        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+      </div>
+      <div class="trip-nav-days">
+        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+      </div>
+    </div>
+  </div>
+
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Day 3: Amsterdam Museums & Parks</h1>
-        <p>Immerse yourself in art and culture with a visit to world-famous museums.</p>
+        <h1>Day 3: Bruges (Day Trip)</h1>
+        <p>Explore the fairytale city of Bruges.</p>
       </div>
     </section>
 
     <div class="container">
-      <div class="trip-days">
-        <a href="day1.html" class="day-link">Day 1</a>
-        <a href="day2.html" class="day-link">Day 2</a>
-        <a href="day3.html" class="day-link">Day 3</a>
-        <a href="day4.html" class="day-link">Day 4</a>
-        <a href="day5.html" class="day-link">Day 5</a>
-        <a href="day6.html" class="day-link">Day 6</a>
-        <a href="day7.html" class="day-link">Day 7</a>
-        <a href="day8.html" class="day-link">Day 8</a>
-        <a href="day9.html" class="day-link">Day 9</a>
-        <a href="day10.html" class="day-link">Day 10</a>
-      </div>
-
       <section class="card">
         <h2>Morning</h2>
         <ul>
-          <li>Visit the Van Gogh Museum (pre-booking recommended)</li>
-          <li>Explore the Museum Square area</li>
-          <li>Browse the Albert Cuyp Market if time permits</li>
+          <li>Early breakfast in Ghent</li>
+          <li>Train to Bruges (30-40 minutes)</li>
+          <li>Walk from Bruges station to the historic center (15-20 minutes or take a bus)</li>
+          <li>Begin at Markt Square and see the famous Belfry Tower</li>
+          <li>Visit Burg Square and the Basilica of the Holy Blood</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Afternoon</h2>
         <ul>
-          <li>Lunch near Vondelpark</li>
-          <li>Relaxing stroll through Vondelpark</li>
-          <li>Visit the Stedelijk Museum (modern art)</li>
+          <li>Lunch at a local restaurant near one of the canals</li>
+          <li>Take a canal boat tour (30 minutes) - essential Bruges experience</li>
+          <li>Visit the Church of Our Lady to see Michelangelo's Madonna and Child</li>
+          <li>Explore the Groeningemuseum (optional) or wander the cobblestone streets</li>
+          <li>Belgian chocolate tasting - sample from various chocolatiers</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Evening</h2>
         <ul>
-          <li>Dinner at a restaurant in Leidseplein</li>
-          <li>Optional: Visit a concert at Paradiso or Melkweg</li>
-          <li>Evening boat tour of the illuminated canals</li>
+          <li>Dinner in Bruges - try traditional Flemish stew (Carbonade Flamande)</li>
+          <li>Visit De Halve Maan Brewery for a local Bruges beer</li>
+          <li>Evening stroll to see the illuminated buildings</li>
+          <li>Train back to Ghent</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Tips for Day 3</h2>
         <ul>
-          <li>Book museum tickets in advance to skip the lines</li>
-          <li>If visiting multiple museums, ensure your Amsterdam Card is valid</li>
-          <li>Pack a small picnic for Vondelpark if weather permits</li>
+          <li>Buy a return train ticket to save time</li>
+          <li>Bruges is extremely walkable but wear comfortable shoes for cobblestones</li>
+          <li>The Belfry Tower offers amazing views but has 366 narrow steps</li>
+          <li>Book canal boat tours on arrival as they can fill up</li>
+          <li>Consider visiting the Bruges Beer Museum if you're a beer enthusiast</li>
+          <li>Check the train schedule for return times to Ghent</li>
         </ul>
       </section>
 
       <div class="navigation-buttons">
-        <a href="day2.html" class="btn">Previous: Amsterdam City Exploration</a>
-        <a href="day4.html" class="btn btn-accent">Next: Day Trip to Rotterdam</a>
+        <a href="day2.html" class="btn">Previous: Travel Day & Ghent</a>
+        <a href="day4.html" class="btn btn-accent">Next: Ghent</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2023 Chris Augustine. All rights reserved.</p>
+      <p>Explore the fairytale city of Bruges.</p>
     </div>
   </footer>
+
+  <script>
+    // Add active class to current day link in the trip navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const dayLinks = document.querySelectorAll('.trip-nav-link');
+      
+      dayLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 
   <script src="../assets/js/main.js"></script>
 </body>

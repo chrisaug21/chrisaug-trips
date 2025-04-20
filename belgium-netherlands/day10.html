@@ -3,9 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 10: Departure Day | Belgium & Netherlands Trip</title>
+  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Trip-specific navigation */
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links, .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      color: var(--dark-text);
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+        top: 59px; /* Adjusted to prevent overlap with top nav */
+      }
+      
+      .trip-nav-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-links {
+        justify-content: flex-start;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap; /* Allow wrapping for day buttons */
+        overflow-x: visible; /* Remove horizontal scrolling */
+        padding-bottom: 0.25rem;
+      }
+      
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+      }
+      
+      .trip-nav-link.all-trips-link {
+        display: none; /* Hide All Trips link on mobile */
+      }
+      
+      .trip-nav-link.trip-home-link span {
+        display: none; /* Hide text on mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trip-nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,74 +116,102 @@
     </div>
   </header>
 
+  <!-- Trip-specific navigation -->
+  <div class="trip-nav">
+    <div class="container trip-nav-container">
+      <div class="trip-nav-links">
+        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+      </div>
+      <div class="trip-nav-days">
+        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+      </div>
+    </div>
+  </div>
+
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Day 10: Departure Day</h1>
-        <p>Final explorations before heading home.</p>
+        <h1>Day 10: Option Day: Amsterdam or Utrecht</h1>
+        <p>Option day: Second day in Amsterdam or Utrecht.</p>
       </div>
     </section>
 
     <div class="container">
-      <div class="trip-days">
-        <a href="day1.html" class="day-link">Day 1</a>
-        <a href="day2.html" class="day-link">Day 2</a>
-        <a href="day3.html" class="day-link">Day 3</a>
-        <a href="day4.html" class="day-link">Day 4</a>
-        <a href="day5.html" class="day-link">Day 5</a>
-        <a href="day6.html" class="day-link">Day 6</a>
-        <a href="day7.html" class="day-link">Day 7</a>
-        <a href="day8.html" class="day-link">Day 8</a>
-        <a href="day9.html" class="day-link">Day 9</a>
-        <a href="day10.html" class="day-link">Day 10</a>
-      </div>
-
       <section class="card">
         <h2>Morning</h2>
         <ul>
-          <li>Breakfast at your accommodation</li>
-          <li>Last-minute shopping for souvenirs</li>
-          <li>Visit the Red Star Line Museum or Plantin-Moretus Museum if time permits</li>
+          <li>Arrival in Brussels International Airport</li>
+          <li>Navigate to train station at airport</li>
+          <li>Purchase train ticket to Ghent Sint-Pieters</li>
+          <li>Train journey (approximately 1 hour)</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Afternoon</h2>
         <ul>
-          <li>Check out of your accommodation</li>
-          <li>Lunch at a local café</li>
-          <li>Transfer to Brussels Airport or Amsterdam Schiphol Airport, depending on your flight</li>
-          <li>Allow plenty of time for international flight check-in</li>
+          <li>Check-in at accommodation in Ghent</li>
+          <li>Quick lunch at a local café</li>
+          <li>Initial orientation walk around central Ghent</li>
+          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
         </ul>
       </section>
 
       <section class="card">
-        <h2>Trip Reflection</h2>
-        <p>Over the past 10 days, you've experienced the highlights of Belgium and the Netherlands, from historic cities to world-class museums. You've sampled local cuisine, navigated canal systems, and immersed yourself in the rich culture of both countries.</p>
+        <h2>Evening</h2>
+        <ul>
+          <li>Dinner at a traditional Flemish restaurant</li>
+          <li>Stroll along the illuminated medieval buildings and canals</li>
+          <li>Early night to recover from travel fatigue</li>
+        </ul>
       </section>
 
       <section class="card">
-        <h2>Tips for Departure Day</h2>
+        <h2>Tips for Day 2</h2>
         <ul>
-          <li>Confirm your airport transfer well in advance</li>
-          <li>Check if your hotel offers luggage storage if you have a late flight</li>
-          <li>Save some euros for airport expenses</li>
-          <li>Remember to get your VAT refund at the airport if eligible</li>
+          <li>Brussels Airport has clear signage to the train station below the terminal</li>
+          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
+          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
+          <li>Ask your accommodation for a local map and recommendations</li>
         </ul>
       </section>
 
       <div class="navigation-buttons">
-        <a href="day9.html" class="btn">Previous: Antwerp</a>
-        <a href="index.html" class="btn btn-accent">Back to Trip Overview</a>
+        <a href="day1.html" class="btn">Previous: Travel Day</a>
+        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2023 Chris Augustine. All rights reserved.</p>
+      <p>Option day: Second day in Amsterdam or Utrecht.</p>
     </div>
   </footer>
+
+  <script>
+    // Add active class to current day link in the trip navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const dayLinks = document.querySelectorAll('.trip-nav-link');
+      
+      dayLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 
   <script src="../assets/js/main.js"></script>
 </body>
