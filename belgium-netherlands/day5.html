@@ -3,52 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
+  <title>Day 5: Saturday, April 26 - Option Day | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Trip-specific navigation */
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    /* Create a sticky wrapper */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link - no longer needed */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
     .trip-nav-link {
-      text-align: center;
       padding: 0.5rem 1rem;
       background-color: var(--light-bg);
       border-radius: 4px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
@@ -57,51 +177,176 @@
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0; /* Ensure it's at the top */
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
-      
+
       .day-label {
         display: none;
       }
       
       .trip-nav-link {
-      text-align: center;
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
+        width: 100%;
+        text-align: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .trip-nav-link {
-      text-align: center;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-      }
+    /* Added styling for content grids similar to index.html */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+    }
+
+    /* Option Tabs Styling */
+    .option-tabs {
+      display: flex;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--light-bg);
+    }
+
+    .option-tab {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--light-bg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 6px 6px 0 0;
+      margin-right: 0.5rem;
+    }
+
+    .option-tab:hover {
+      background-color: var(--secondary);
+      color: var(--white);
+    }
+
+    .option-tab.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .option-content {
+      display: none;
+    }
+
+    .option-content.active {
+      display: block;
+    }
+
+    /* Activity boxes styling */
+    .activity-box {
+      background-color: #ffffff;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .activity-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Food options styling */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .food-item {
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .food-item-content {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+
+    .food-item h4 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .food-item p {
+      font-size: 0.9rem;
+      color: var(--light-text);
+    }
+
+    /* Sub-option styling */
+    .sub-option {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--secondary);
+    }
+
+    .sub-option h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
     }
   </style>
 </head>
@@ -120,23 +365,27 @@
   </header>
 
   <!-- Trip-specific navigation -->
-  <div class="trip-nav">
-    <div class="container trip-nav-container">
-      <div class="trip-nav-links">
-        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-      </div>
-      <div class="trip-nav-days">
-        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+  <div class="sticky-nav-wrapper">
+    <div class="trip-nav" id="trip-nav-container">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Mon)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Tue)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Wed)</span></a>
+          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Thu)</span></a>
+          <a href="day5.html" class="trip-nav-link active">Day 5 <span class="day-label">(Fri)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sat)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Sun)</span></a>
+          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Mon)</span></a>
+          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Tue)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Wed)</span></a>
+          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Thu)</span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -144,61 +393,684 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Day 5: Option Day: Ghent or Bruges</h1>
-        <p>Option day: Second day in Ghent or Bruges.</p>
+        <h1>🍺 Day 5: Saturday, April 26 - OPTION DAY</h1>
+        <p>Second Ghent Day OR Second Bruges Day</p>
       </div>
     </section>
 
     <div class="container">
-      <section class="card">
-        <h2>Morning</h2>
-        <ul>
-          <li>Arrival in Brussels International Airport</li>
-          <li>Navigate to train station at airport</li>
-          <li>Purchase train ticket to Ghent Sint-Pieters</li>
-          <li>Train journey (approximately 1 hour)</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>Afternoon</h2>
-        <ul>
-          <li>Check-in at accommodation in Ghent</li>
-          <li>Quick lunch at a local café</li>
-          <li>Initial orientation walk around central Ghent</li>
-          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>Evening</h2>
-        <ul>
-          <li>Dinner at a traditional Flemish restaurant</li>
-          <li>Stroll along the illuminated medieval buildings and canals</li>
-          <li>Early night to recover from travel fatigue</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>Tips for Day 2</h2>
-        <ul>
-          <li>Brussels Airport has clear signage to the train station below the terminal</li>
-          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
-          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
-          <li>Ask your accommodation for a local map and recommendations</li>
-        </ul>
-      </section>
-
-      <div class="navigation-buttons">
-        <a href="day1.html" class="btn">Previous: Travel Day</a>
-        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
+      <!-- Option tabs navigation -->
+      <div class="option-tabs">
+        <div class="option-tab active" data-option="option-a">Option A: Second Day in Ghent</div>
+        <div class="option-tab" data-option="option-b">Option B: Second Day in Bruges</div>
       </div>
     </div>
-  </main>
+
+    <!-- Option A Content: Second Day in Ghent -->
+    <div class="option-content active" id="option-a">
+      <!-- Historical Context -->
+      <section class="culture-box">
+        <h3>Historical Context</h3>
+        <p>After exploring Ghent's main highlights, this second day gives you a chance to go deeper into the city's authentic neighborhoods and daily life. Ghent has successfully revitalized many of its historic areas that were once industrial zones or working-class neighborhoods. Today these areas blend historic architecture with contemporary culture, creating spaces where local residents actually live and work, away from tourist crowds.</p>
+      </section>
+
+      <!-- Breakfast Options -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Breakfast</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Madam Bakster</h4>
+              <p>Brabantdam 142</p>
+              <p>Sustainable bakery with healthy options</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Simon Says</h4>
+              <p>Sluizeken 8</p>
+              <p>Coffee shop in a renovated house with garden</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>WASBAR</h4>
+              <p>Korenmarkt 16</p>
+              <p>Combination of laundromat and breakfast spot with great atmosphere</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Other Options</h4>
+              <p>Or Coffee</p>
+              <p>Barista</p>
+              <p>Boon</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Morning Activities Section -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Morning Activities</h2>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Explore Patershol & Prinsenhof Neighborhoods</h3>
+            <p>These two historic neighborhoods offer atmospheric streets with excellent architecture and local shops.</p>
+            
+            <h4>Patershol Quarter</h4>
+            <ul>
+              <li>Medieval quarter with maze-like streets</li>
+              <li>Once the leather crafting district, now home to excellent restaurants</li>
+              <li>Explore the narrow streets around Kraanlei and Haringsteeg</li>
+            </ul>
+            
+            <h4>Prinsenhof District</h4>
+            <ul>
+              <li>Former residence of the Counts of Flanders</li>
+              <li>Winding streets named after crafts and trades</li>
+              <li>Visit Lievekaai and Lieve River with its historic bridges</li>
+              <li>See the Old Fish Market (Oude Vismijn) with its Neptune fountain</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Guided Tour Option</h3>
+            <ul>
+              <li>Gent Free Walking Tours offers daily tours at 10:30 AM and 2:00 PM (€10-15 tip recommended)</li>
+              <li>Ghent Food Tours offers 3-hour culinary walking tours (€65/person)</li>
+              <li>Ghent Local Tours offers private customized tours (€30/hour per group)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-option">
+          <h3>Alternative: Self-Guided Food Tour</h3>
+          
+          <div class="activity-box">
+            <h3>Cultural Context: Ghent's Food Heritage</h3>
+            <p>Food is an essential part of Belgian culture, and this self-guided tour will introduce you to local specialties. Cuberdons (also called "Ghent noses") are unique to this region - cone-shaped candies with a hard exterior and liquid raspberry-flavored interior that must be consumed within 8 weeks of production (they're not exported). The mustard from Tierenteyn-Verlent has been made using the same secret family recipe since 1790 and is still prepared in the cellar of their shop. Belgian waffles come in different regional styles, with Brussels waffles being light and rectangular while Liège waffles are denser with caramelized sugar chunks.</p>
+          </div>
+          
+          <h4>Create your own food walk around Ghent:</h4>
+          <ul>
+            <li>Start with coffee at Mokabon (Donkersteeg 35) - Ghent's oldest coffee house</li>
+            <li>Sample traditional cuberdons (cone-shaped purple candies) from street vendors at Groentenmarkt</li>
+            <li>Try Belgian waffles at Etablissement Max (Goudenleeuwplein 3)</li>
+            <li>Visit Groot Vleeshuis (Groentenmarkt 7) - historic meat hall now housing various local food vendors</li>
+            <li>Taste local cheese at Van Tricht (Klein Turkije 20)</li>
+            <li>Sample mustard at Tierenteyn-Verlent (Groentenmarkt 3)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Lunch Section -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Lunch</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Gekroonde Hoofden</h4>
+              <p>Historic pub with good Belgian food</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Het Gouden Hoofd</h4>
+              <p>Slachthuisstraat 96</p>
+              <p>Local dishes in a cozy setting</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Lepelblad</h4>
+              <p>Onderbergen 40</p>
+              <p>Fresh, healthy lunch options</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Superette</h4>
+              <p>Guldenspoorstraat 29</p>
+              <p>Excellent sourdough bread and lunch</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Afternoon Activities -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Afternoon: Urban Nature & Alternative Ghent or Waffles n Beer</h2>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Option 1: Promenade Along Coupure</h3>
+            <ul>
+              <li>Scenic canal built in 1751 to connect Ghent to Bruges</li>
+              <li>Lined with impressive townhouses and trees</li>
+              <li>Quiet escape from the city center</li>
+              <li>Follow the paths along the water</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Option 2: Explore the Arts Quarter</h3>
+            <ul>
+              <li>Area around Museum of Contemporary Art (SMAK) and Museum of Fine Arts (MSK)</li>
+              <li>Citadelpark - 19th-century park on the site of a former Dutch citadel</li>
+              <li>Street art in the surrounding neighborhoods</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Option 3: Visit the Rabot Area</h3>
+            <ul>
+              <li>Former industrial zone transformed into creative neighborhood</li>
+              <li>The Rabot Towers - three distinctive residential towers</li>
+              <li>Site Vande Velde - formerly a textile factory, now a community space</li>
+              <li>Urban agriculture initiatives like De Site community garden</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Option 4: Waffles & Beer Workshop</h3>
+            <p>Combines the rich flavors of Belgian beer with the art of Belgian waffle-making in a hands-on, interactive session.</p>
+            <ul>
+              <li>Participants enjoy a curated beer tasting, selecting a brew to infuse into their waffle batter</li>
+              <li>Engage in a personalized waffle baking class</li>
+              <li>The perfect Belgian combination of Waffles & Beer, coupled with expert guidance</li>
+              <li>The finale: a self-indulgent feast of freshly baked Brussels waffles paired with chosen toppings and beer</li>
+              <li>Take home the knowledge to recreate this extraordinary pairing</li>
+            </ul>
+            <p><strong>Book here:</strong> The Waffles 'n Beer Workshop in Ghent Centre</p>
+            <p><strong>Duration:</strong> 1h 30m</p>
+            <p><strong>Options:</strong> 11am, 1:30pm, or 4:00pm</p>
+            <p><strong>Cost:</strong> around €60 per person</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coffee Break -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Coffee & Cake Break</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Julie's House</h4>
+              <p>Kraanlei 13</p>
+              <p>Known for elaborate cakes</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Mosquito Coast</h4>
+              <p>Hoogpoort 28</p>
+              <p>Travel-themed café with global influences</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Huize Colette</h4>
+              <p>Belfortstraat 6</p>
+              <p>Literary café with excellent pastries</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pre-Dinner -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Pre-Dinner</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Jigger's</h4>
+              <p>Oudburg 16</p>
+              <p>Craft cocktail bar in historic building</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>VROUWEN KUNNEN ALLES</h4>
+              <p>Oudburg 34</p>
+              <p>Wine bar specialized in natural wines</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dinner -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Dinner</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Café Théâtre</h4>
+              <p>Schouwburgstraat 5</p>
+              <p>Belgian classics in a theatrical setting</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Indonesian Padang Restaurant</h4>
+              <p>Better Indonesian option</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Het Pakhuis</h4>
+              <p>Schuurkenstraat 4</p>
+              <p>Beautiful restaurant in a converted warehouse</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Acht Zaligheden</h4>
+              <p>Oudburg 20</p>
+              <p>Cozy Belgian restaurant very close to Gado Gado</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Karel de Stoute</h4>
+              <p>Sint-Veerleplein 1</p>
+              <p>Lovely restaurant near Gravensteen with traditional Belgian cuisine</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Evening -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Evening</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Minor Swing</h4>
+              <p>Kraanlei 55</p>
+              <p>Jazz bar with occasional live music</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Het Waterhuis aan de Bierkant</h4>
+              <p>Groentenmarkt 9</p>
+              <p>Classic beer café</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Dulle Griet</h4>
+              <p>Vrijdagmarkt 50</p>
+              <p>Historic beer café with over 500 beers</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Café Het Spijker</h4>
+              <p>Pensmarkt 3</p>
+              <p>Atmospheric old café with a good beer selection</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rainy Day Option -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Rainy Day Option: Museum Visits in Ghent</h2>
+        </div>
+        
+        <div class="activity-box">
+          <p>If you encounter rainy weather during your stay in Ghent, these museums offer excellent indoor options:</p>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>STAM (Ghent City Museum)</h3>
+            <p>Located in Bijloke Abbey, this interactive exhibition tells the story of Ghent from the Middle Ages to the present. The museum is housed in the historic Bijloke Abbey, a former Cistercian monastery dating from the 13th century.</p>
+            <p><strong>Hours:</strong> Open until 6:00 PM (closed Wednesdays)</p>
+            <p><strong>Entrance fee:</strong> €8</p>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Design Museum Gent</h3>
+            <p>Founded in 1903 and housed in an 18th-century rococo mansion, the Design Museum chronicles Belgian and international design from the Middle Ages to the present. The museum is particularly known for its extensive Art Nouveau and Art Deco collections.</p>
+            <p><strong>Hours:</strong> Open until 6:00 PM</p>
+            <p><strong>Entrance fee:</strong> €8</p>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Caermersklooster Provincial Cultural Centre</h3>
+            <p>This former Carmelite monastery dating from the 14th century offers rotating exhibitions of art and culture. The complex includes a beautiful Gothic church and monastery buildings arranged around a serene cloister.</p>
+            <p><strong>Hours:</strong> Open Tuesday-Sunday, 10:00 AM - 5:00 PM</p>
+            <p><strong>Entrance fee:</strong> Varies by exhibition (€5-10)</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Option B Content: Second Day in Bruges -->
+    <div class="option-content" id="option-b">
+      <!-- Historical Context -->
+      <section class="culture-box">
+        <h3>Historical Context</h3>
+        <p>Bruges deserves more than a rushed day trip. With a second day, you can explore beyond the main tourist areas to discover quiet corners and local secrets of this medieval gem. While the first day covered the central highlights, this second visit allows you to explore the windmills along the old city walls, enjoy the parks, and see how local residents experience their historic city. Bruges is particularly magical in the early morning and evening when day-trippers have departed.</p>
+      </section>
+
+      <!-- Getting to Bruges -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Getting to Bruges</h2>
+        </div>
+        
+        <div class="activity-box">
+          <h3>Same as before: Train from Gent Sint-Pieters to Bruges</h3>
+          <ul>
+            <li>Journey time: 25-30 minutes</li>
+            <li>Cost: around €7 each way</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Breakfast -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Breakfast</h2>
+        </div>
+        
+        <div class="activity-box">
+          <p>Grab something quick in Ghent or have breakfast on arrival in Bruges:</p>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>That's Toast</h4>
+              <p>Wollestraat 8</p>
+              <p>Creative toast options</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Blackbird</h4>
+              <p>Jan van Eyckplein 7</p>
+              <p>Stylish café with breakfast options</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Sanseveria Bagelsalon</h4>
+              <p>Predikherenstraat 11</p>
+              <p>Excellent bagels and coffee</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Morning Activities -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Morning Activity: Bruges Waterways & Windmills</h2>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Exploring East Bruges</h3>
+            <ul>
+              <li>Walk along the eastern canals to discover the four remaining windmills</li>
+              <li>These 18th-century windmills stand on the ramparts that once encircled the city</li>
+              <li>Visit Sint-Janshuis Mill (one is open for interior visits from April-September)</li>
+              <li>Explore Kruisvest park area along the old city walls</li>
+              <li>Minnewater Park ("Lake of Love") with its peaceful lake and swans</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Guided Tour Option</h3>
+            <ul>
+              <li>Legends of Bruges Free Walking Tours (€10-15 tip recommended)</li>
+              <li>Bruges Beer Experience Walking Tour (€63/person)</li>
+              <li>Boat and Brewery Tour combining canal cruise with brewery visits (€45/person)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lunch -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Lunch</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Park Restaurant</h4>
+              <p>Minderbroedersstraat 1</p>
+              <p>Elegant lunch in a historic building</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Blackbird Café</h4>
+              <p>Jan van Eyckplein 7</p>
+              <p>Light lunches in a scenic square</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Halve Maan Brewery</h4>
+              <p>Walplein 26</p>
+              <p>Traditional food at the brewery</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Republiek</h4>
+              <p>Café-restaurant with spacious terrace and cultural center housed in a former printing workshop</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Afternoon Activities -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Afternoon: Hidden Bruges</h2>
+        </div>
+        
+        <div class="culture-grid">
+          <div class="culture-box">
+            <h3>Option 1: Church Hopping</h3>
+            <ul>
+              <li>Jerusalem Chapel - Private family chapel built to resemble Church of the Holy Sepulchre</li>
+              <li>English Convent - Monastery founded by English nuns fleeing persecution</li>
+              <li>Lace Museum (Kantcentrum) - Demonstrates the traditional craft Bruges is famous for</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Option 2: Quieter Canals & Neighborhoods</h3>
+            <ul>
+              <li>Explore the Sint-Anna district, a quieter residential area with well-preserved architecture</li>
+              <li>Visit the Folklore Museum to see recreated historic interiors</li>
+              <li>Stroll along the Langerei canal for beautiful views</li>
+            </ul>
+          </div>
+          
+          <div class="culture-box">
+            <h3>Option 3: Artistic Bruges</h3>
+            <ul>
+              <li>Groeningemuseum - Contains masterpieces by Flemish primitives</li>
+              <li>Arentshuis - Museum focused on prints and applied arts</li>
+              <li>St. John's Hospital - One of Europe's oldest hospital buildings, now housing art exhibitions</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coffee & Belgian Waffles -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Coffee & Belgian Waffles</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Lizzie's Waffles</h4>
+              <p>Mariastraat 17</p>
+              <p>Considered by many to have the best waffles in Bruges</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Books & Brunch</h4>
+              <p>Garenmarkt 30</p>
+              <p>Combination of bookstore and café</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Tearoom Carpe Diem</h4>
+              <p>Wijngaardstraat 15</p>
+              <p>Charming tearoom near the main square</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Gingerbread Tea Room</h4>
+              <p>Mariastraat 30</p>
+              <p>Cozy tea room</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>The Old Chocolate House</h4>
+              <p>Mariastraat 1</p>
+              <p>Famous for hot chocolate and waffles</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>De Republiek</h4>
+              <p>Café-restaurant with spacious terrace and cultural center housed in a former printing workshop</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dinner Options -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Dinner in Bruges or Return to Ghent</h2>
+        </div>
+        
+        <div class="food-grid">
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Den Amand</h4>
+              <p>Vlamingstraat 42</p>
+              <p>Traditional Belgian cuisine</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Rock Fort</h4>
+              <p>Langestraat 15</p>
+              <p>Contemporary Belgian food</p>
+            </div>
+          </div>
+          
+          <div class="food-item">
+            <div class="food-item-content">
+              <h4>Pomperlut</h4>
+              <p>Oude Burg 8</p>
+              <p>Charming restaurant in historic building</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Evening -->
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Evening</h2>
+        </div>
+        
+        <div class="activity-box">
+          <ul>
+            <li>Enjoy Bruges illuminated at night</li>
+            <li>Stroll the quiet evening streets after the day visitors have left</li>
+            <li>Return to Ghent for the night</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="navigation-buttons">
+      <a href="day4.html" class="btn">Previous: Ghent</a>
+      <a href="day6.html" class="btn btn-accent">Next: Antwerp</a>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
-      <p>Option day: Second day in Ghent or Bruges.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
 
@@ -212,6 +1084,28 @@
         if (link.getAttribute('href') === currentPage) {
           link.classList.add('active');
         }
+      });
+      
+      // Option tabs functionality
+      const optionTabs = document.querySelectorAll('.option-tab');
+      const optionContents = document.querySelectorAll('.option-content');
+      
+      optionTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs and contents
+          optionTabs.forEach(t => t.classList.remove('active'));
+          optionContents.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked tab
+          tab.classList.add('active');
+          
+          // Show corresponding content
+          const targetId = tab.dataset.option;
+          const targetContent = document.getElementById(targetId);
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        });
       });
     });
   </script>
