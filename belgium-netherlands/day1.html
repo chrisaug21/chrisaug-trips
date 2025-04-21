@@ -87,25 +87,50 @@
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-days {
       display: flex;
       gap: 0.5rem;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
     }
 
     .trip-nav-link {
@@ -115,32 +140,40 @@
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
     }
 
+    .all-trips-link i,
+    .trip-home-link i,
+    .mobile-trip-home-link i {
+      margin-right: 5px;
+    }
+
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0; /* Ensure it's at the top */
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
       }
       
       .trip-nav-days {
@@ -149,30 +182,24 @@
         flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Allow columns to adjust based on content */
+        gap: 0.3rem;
       }
-      
+
       .day-label {
         display: none;
       }
       
       .trip-nav-link {
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
       }
       
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
-      }
-    }
-
-    @media (max-width: 480px) {
-      .trip-nav-link {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
+      .mobile-trip-home-link {
+        display: inline-block;
       }
     }
   </style>
@@ -187,7 +214,7 @@
     <div id="trip-nav-container"></div>
   </div>
 
-  <main>
+  <main style="margin-top: 0; padding-top: 0;">
     <section class="hero">
       <div class="container">
         <h1>Day 1: Travel Day</h1>
@@ -241,7 +268,7 @@
 
   <footer>
     <div class="container">
-      <p>Begin your journey to Belgium <p>&copy; 2023 Chris Augustine. All rights reserved.</p> the Netherlands.</p>
+      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
     </div>
   </footer>
 
@@ -350,7 +377,34 @@
             link.classList.add('active');
           }
         });
-      }, 100); // Slight delay to ensure components are loaded
+
+        // Add scroll class on scroll
+        const handleScroll = () => {
+          if (window.scrollY > 10) {
+            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.15)';
+          } else {
+            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+          }
+        };
+        
+        // Listen for scroll events
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initialize on page load
+        handleScroll();
+        
+        // Handle resize events to update the Trip Home button text
+        window.addEventListener('resize', () => {
+          const clonedLink = tripNavDays.querySelector('.trip-home-link');
+          if (clonedLink) {
+            if (window.innerWidth <= 768) {
+              clonedLink.innerHTML = 'Trip';
+            } else {
+              clonedLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
+            }
+          }
+        });
+      }, 100); // Short delay to ensure components are fully loaded
     });
   </script>
 </body>
