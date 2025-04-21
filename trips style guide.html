@@ -731,9 +731,10 @@ function loadTripNav() {
             <li>Always include both Previous and Next buttons for consistent navigation</li>
             <li>The Previous button should be blue (primary color)</li>
             <li>The Next button should be yellow (accent color)</li>
-            <li>Include the day number in the button text</li>
-            <li>For the first day, still include a Previous button that links to the trip home page</li>
-            <li>For the last day, still include a Next button that links to the trip home page</li>
+            <li><strong>Button Text Format:</strong> Always use the exact format "Previous: Day X" and "Next: Day X" where X is the day number (e.g., "Previous: Day 2", "Next: Day 3")</li>
+            <li>Do NOT use descriptive day names (like "Previous: Travel Day") or any other format</li>
+            <li>For the first day, still include a Previous button that links to the trip home page with text "Previous: Trip Home"</li>
+            <li>For the last day, still include a Next button that links to the trip home page with text "Next: Trip Home"</li>
           </ul>
           
           <div class="code-block">
@@ -795,6 +796,7 @@ function loadTripNav() {
           <h3>Flexible Layout Components</h3>
           <div class="section-description">
             <p>The following components can be used flexibly in layouts. They can be full-width or arranged side-by-side to avoid creating unnecessary white space.</p>
+            <p><strong>IMPORTANT:</strong> Option boxes, location highlights, and other flexible components should be placed side by side at half-width whenever possible, rather than stacked full-width. This creates more visually balanced layouts, reduces excessive scrolling, and makes better use of screen space on larger displays. Reserve full-width layouts for when the content truly requires the additional space.</p>
           </div>
         </div>
         
@@ -945,6 +947,7 @@ function loadTripNav() {
             <li><strong>Flexibility:</strong> Choose appropriate components based on content type</li>
             <li><strong>Mobile-first:</strong> Ensure all components work well on mobile devices</li>
             <li><strong>Visual hierarchy:</strong> Use styling to guide the user's attention</li>
+            <li><strong>Side-by-side layouts:</strong> Prioritize placing flexible components side by side over stacking them full-width</li>
           </ul>
         </div>
         <div class="travel-tip">
@@ -961,12 +964,31 @@ function loadTripNav() {
           </ul>
         </div>
       </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Footer Guidelines</h2>
+        </div>
+        <div class="travel-detail">
+          <h3>Footer Requirements</h3>
+          <p>All trip pages must include a consistent footer with the following copyright notice exactly as shown:</p>
+          <div class="code-block">
+            &lt;div class="container"&gt;
+              &lt;p&gt;&copy; 2025 Chris Augustine. All rights reserved.&lt;/p&gt;
+            &lt;/div&gt;
+          </div>
+          <p>This footer text must be used on every page without variations or additional content. The copyright year should be set to 2025 across all pages.</p>
+        </div>
+        <div class="travel-tip">
+          <p><i class="fas fa-lightbulb"></i> When creating new pages or templates, remember to copy the exact footer text specified above to maintain consistency across the entire site.</p>
+        </div>
+      </section>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
 </body>

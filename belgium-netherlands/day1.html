@@ -275,6 +275,49 @@
     .card {
       margin-bottom: 3rem;
     }
+    
+    /* Navigation Buttons */
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 2rem 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary);
+      color: var(--white);
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0065b0;
+      color: var(--white);
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: var(--dark-text);
+    }
+
+    .btn-accent:hover {
+      background-color: #e0b73b;
+      color: var(--dark-text);
+    }
+    
+    @media (max-width: 768px) {
+      .navigation-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .btn {
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -325,6 +368,13 @@
           <p><i class="fas fa-lightbulb"></i> Set your watch to Amsterdam time during the flight to help adjust to the time difference.</p>
         </div>
       </section>
+    </div>
+    
+    <div class="container">
+      <div class="navigation-buttons">
+        <a href="index.html" class="btn">Previous: Trip Home</a>
+        <a href="day2.html" class="btn btn-accent">Next: Day 2</a>
+      </div>
     </div>
   </main>
 
