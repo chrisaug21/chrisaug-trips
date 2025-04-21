@@ -142,6 +142,7 @@
       transition: all 0.2s ease;
       white-space: nowrap;
       display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
@@ -179,14 +180,13 @@
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
         border-top: none; /* Remove top border */
         padding-top: 0; /* Remove top padding */
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Allow columns to adjust based on content */
-        gap: 0.3rem;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
 
       .day-label {
@@ -196,10 +196,17 @@
       .trip-nav-link {
         padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
+        width: 100%;
+        text-align: center;
       }
       
       .mobile-trip-home-link {
         display: inline-block;
+      }
+      
+      /* Remove icon from Trip Home button in mobile view */
+      .trip-home-link i {
+        display: none;
       }
     }
   </style>
@@ -341,14 +348,22 @@
           // Hide the original
           tripHomeLink.parentElement.style.display = 'none';
           
-          // Modify the content for mobile view
-          if (window.innerWidth <= 768) {
-            // Just text "Trip" with no icon on mobile
-            clonedTripHomeLink.innerHTML = 'Trip';
-          } else {
-            // Keep "Trip Home" with icon on desktop
-            // No changes needed as we're using the original cloned content
-          }
+          // Function to update Trip Home text based on screen size
+          const updateTripHomeText = () => {
+            if (window.innerWidth <= 768) {
+              // Just text "Trip" with no icon on mobile
+              clonedTripHomeLink.innerHTML = 'Trip';
+            } else {
+              // Keep "Trip Home" with icon on desktop
+              clonedTripHomeLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
+            }
+          };
+          
+          // Call initially
+          updateTripHomeText();
+          
+          // And add a resize listener
+          window.addEventListener('resize', updateTripHomeText);
         }
 
         // Hide the mobile-only Trip Home link
@@ -392,18 +407,6 @@
         
         // Initialize on page load
         handleScroll();
-        
-        // Handle resize events to update the Trip Home button text
-        window.addEventListener('resize', () => {
-          const clonedLink = tripNavDays.querySelector('.trip-home-link');
-          if (clonedLink) {
-            if (window.innerWidth <= 768) {
-              clonedLink.innerHTML = 'Trip';
-            } else {
-              clonedLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
-            }
-          }
-        });
       }, 100); // Short delay to ensure components are fully loaded
     });
   </script>

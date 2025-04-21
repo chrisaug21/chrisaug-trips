@@ -7,14 +7,6 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Override any conflicting styles and force stickiness */
-    #trip-nav-container {
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-    }
-    
     /* Create a sticky wrapper */
     .sticky-nav-wrapper {
       position: sticky;
@@ -24,23 +16,80 @@
       background-color: white;
     }
     
-    /* Ensure secondary nav sticks correctly */
+    /* Navigation styles */
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
     .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
       border-top: 1px solid var(--light-bg);
       padding-top: 0.75rem;
       background-color: var(--white);
     }
 
-    /* Remove the All Trips link */
-    .all-trips-link {
-      display: none !important;
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
     }
     
-    /* Move Trip Home button to the day navigation row */
-    .trip-nav-links {
-      display: none !important; /* Hide the container for desktop */
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
     }
-    
+
     /* Display the Trip Home link in the day navigation */
     .trip-home-link {
       display: inline-block !important;
@@ -48,24 +97,23 @@
       margin-right: 0.5rem;
     }
     
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
     /* Hide the mobile-only Trip Home link */
     .mobile-trip-home-link {
       display: none !important;
     }
 
-    /* Mobile responsive adjustments - simplified to avoid conflicts */
-    @media (max-width: 768px) {
-      /* We'll handle this with JavaScript to avoid CSS/JS conflicts */
+    .all-trips-link i,
+    .trip-home-link i,
+    .mobile-trip-home-link i {
+      margin-right: 5px;
     }
 
-    /* Reset trip-nav-container styles that may interfere */
-    #trip-nav-container, 
-    #trip-nav-container * {
-      transform: none !important;
-      contain: none !important;
-    }
-
-    /* Remove gap between navigation and header */
+    /* Trip header section */
     .trip-header {
       background-color: var(--primary);
       color: var(--white);
@@ -111,30 +159,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .trip-intro {
-      max-width: 800px;
-      margin: 1.5rem auto 0;
-      background-color: rgba(255, 255, 255, 0.15);
-      padding: 1.5rem 2rem;
-      border-radius: 8px;
-      text-align: left;
-      line-height: 1.7;
-    }
-
-    .trip-intro p {
-      margin-bottom: 0.75rem;
-    }
-
-    .trip-highlights h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: var(--primary);
-      font-size: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
-    }
-
+    /* Content section styles */
     .section-title-container {
       text-align: center;
       margin-bottom: 2rem;
@@ -179,224 +204,11 @@
       padding-left: 1.5rem;
     }
 
-    .day-card {
-      background-color: var(--white);
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 1.2rem;
-      text-align: left;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .day-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .day-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-
-    .day-card .date {
-      color: var(--light-text);
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .day-card .location {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .day-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    .map-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      text-align: center;
-    }
-
-    .map-container img {
-      max-width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-      margin-bottom: 1rem;
-      cursor: pointer; /* Make cursor show this is clickable */
-      transition: transform 0.3s ease;
-    }
-
-    .map-container img:hover {
-      transform: scale(1.02);
-    }
-
-    .map-caption {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
-
-    .map-legend {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
-    }
-
-    .map-legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .map-red-marker {
-      color: #e74c3c;
-      font-size: 1.2rem;
-    }
-
-    .map-blue-marker {
-      color: #3498db;
-      font-size: 1.2rem;
-    }
-
-    .trip-nav {
-      background-color: var(--white);
-      padding: 0.75rem 0;
-      position: sticky;
-      top: 0; /* Start at the very top */
-      z-index: 1000; /* Higher z-index to ensure it stays above everything */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 0; /* Remove gap between nav and header */
-      transition: all 0.3s ease-in-out;
-      width: 100%;
-    }
-    
-    .fixed-nav {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
-
-    .trip-nav-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .trip-nav-links {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .trip-nav-days {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
-      max-width: 100%;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .trip-nav-days::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .trip-nav-days::-webkit-scrollbar-thumb {
-      background-color: var(--secondary);
-      border-radius: 4px;
-    }
-
-    .trip-nav-days::-webkit-scrollbar-track {
-      background-color: var(--light-bg);
-      border-radius: 4px;
-    }
-
-    .trip-nav-link {
-      padding: 0.5rem 1rem;
-      background-color: var(--light-bg);
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      display: inline-block;
-    }
-
-    .trip-nav-link:hover {
-      background-color: var(--primary);
-      color: var(--white);
-    }
-    
-    .trip-nav-link.active {
-      background-color: var(--primary);
-      color: var(--white);
-    }
-
-    /* Map Modal Styles */
-    .map-modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .map-modal-content {
-      width: 95%;
-      height: 95%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .map-modal-content img {
-      max-width: 100%;
-      max-height: 95vh;
-      border-radius: 8px;
-      object-fit: contain;
-      width: auto;
-      height: auto;
-      min-height: 85vh; /* Ensure the image is large enough */
-    }
-
-    .map-modal-close {
-      position: absolute;
-      top: 15px;
-      right: 35px;
-      color: #f1f1f1;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .all-trips-link i,
-    .trip-home-link i,
-    .mobile-trip-home-link i {
-      margin-right: 5px;
-    }
-
+    /* Mobile responsive adjustments */
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
         top: 0; /* Ensure it's at the top */
-      }
-      
-      .day-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
       
       .trip-nav-container {
@@ -405,21 +217,19 @@
       
       .trip-nav-links {
         justify-content: flex-start;
-        /* Move trip home link into the day nav row */
         display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
         border-top: none; /* Remove top border */
         padding-top: 0; /* Remove top padding */
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Allow columns to adjust based on content */
-        gap: 0.3rem;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
 
       .day-label {
@@ -429,22 +239,62 @@
       .trip-nav-link {
         padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
+        width: 100%;
+        text-align: center;
       }
       
       .mobile-trip-home-link {
         display: inline-block;
       }
+      
+      /* Remove icon from Trip Home button in mobile view */
+      .trip-home-link i {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Header will be inserted here -->
-  <div id="header-container"></div>
+  <!-- Header -->
+  <header>
+    <div class="container site-header">
+      <h1 class="site-title"><a href="../index.html">Trip Guides</a></h1>
+      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="index.html">Belgium & Netherlands</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
   
-  <!-- Create a sticky wrapper for navigation -->
+  <!-- Navigation -->
   <div class="sticky-nav-wrapper">
-    <!-- Trip Nav will be inserted here -->
-    <div id="trip-nav-container"></div>
+    <div class="trip-nav">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <!-- Mobile-only Trip Home button -->
+          <a href="index.html" class="trip-nav-link mobile-trip-home-link"><i class="fas fa-map-marked-alt"></i></a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
+        </div>
+      </div>
+    </div>
   </div>
   
   <main style="margin-top: 0; padding-top: 0;">
@@ -526,145 +376,56 @@
     </div>
   </footer>
 
-  <!-- Components.js for template loading -->
-  <script src="../assets/js/components.js"></script>
-  
   <!-- Main scripts -->
   <script src="../assets/js/main.js"></script>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Wait a short time for all components to load fully
-      setTimeout(() => {
-        // Apply styles to sticky wrapper
-        const stickyWrapper = document.querySelector('.sticky-nav-wrapper');
-        if (stickyWrapper) {
-          stickyWrapper.style.position = 'sticky';
-          stickyWrapper.style.top = '0';
-          stickyWrapper.style.zIndex = '1000';
-          stickyWrapper.style.width = '100%';
-          stickyWrapper.style.backgroundColor = 'white';
-          stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-          stickyWrapper.style.marginBottom = '0';
-          stickyWrapper.style.paddingBottom = '0';
-        }
-
-        // Force the trip-nav-container to be part of the sticky flow
-        const tripNavContainer = document.getElementById('trip-nav-container');
-        if (tripNavContainer) {
-          tripNavContainer.style.position = 'static';
-          tripNavContainer.style.width = '100%';
-          tripNavContainer.style.marginBottom = '0';
-          tripNavContainer.style.paddingBottom = '0';
-        }
-
-        // Find the actual trip-nav element inside the container
-        const tripNav = document.querySelector('.trip-nav');
-        if (tripNav) {
-          tripNav.style.position = 'static';
-          tripNav.style.width = '100%';
-          tripNav.style.boxShadow = 'none';
-          tripNav.style.marginBottom = '0';
-          tripNav.style.paddingBottom = '0.5rem';
-        }
-
-        // Remove margins from trip header
-        const tripHeader = document.querySelector('.trip-header');
-        if (tripHeader) {
-          tripHeader.style.marginTop = '0';
-        }
+      // Highlight active page in navigation
+      const currentLocation = window.location.pathname;
+      const navLinks = document.querySelectorAll('.trip-nav-link');
+      
+      // Function to update the Trip Home button text based on screen size
+      const updateTripHomeText = () => {
+        const tripHomeLinks = document.querySelectorAll('.trip-home-link');
         
-        // Remove margin from main content
-        const mainContent = document.querySelector('main');
-        if (mainContent) {
-          mainContent.style.marginTop = '0';
-          mainContent.style.paddingTop = '0';
-        }
-
-        // Hide "All Trips" link
-        const allTripsLink = document.querySelector('.all-trips-link');
-        if (allTripsLink) {
-          allTripsLink.style.display = 'none';
-        }
-
-        // Move Trip Home link to the day navigation
-        const tripHomeLink = document.querySelector('.trip-home-link');
-        const tripNavDays = document.querySelector('.trip-nav-days');
-        
-        if (tripHomeLink && tripNavDays) {
-          // Clone the Trip Home link
-          const clonedTripHomeLink = tripHomeLink.cloneNode(true);
-          
-          // Add it to the beginning of the day navigation
-          tripNavDays.insertBefore(clonedTripHomeLink, tripNavDays.firstChild);
-          
-          // Hide the original
-          tripHomeLink.parentElement.style.display = 'none';
-          
-          // Modify the content for mobile view
+        tripHomeLinks.forEach(link => {
           if (window.innerWidth <= 768) {
-            // Just text "Trip" with no icon on mobile
-            clonedTripHomeLink.innerHTML = 'Trip';
+            // Mobile view - just "Trip"
+            link.innerHTML = 'Trip';
           } else {
-            // Keep "Trip Home" with icon on desktop
-            // No changes needed as we're using the original cloned content
-          }
-        }
-
-        // Hide the mobile-only Trip Home link
-        const mobileTripHomeLink = document.querySelector('.mobile-trip-home-link');
-        if (mobileTripHomeLink) {
-          mobileTripHomeLink.style.display = 'none';
-        }
-
-        // Find the day navigation (the bottom part)
-        if (tripNavDays) {
-          tripNavDays.style.position = 'static';
-          tripNavDays.style.background = 'white';
-          tripNavDays.style.width = '100%';
-          tripNavDays.style.display = 'flex';
-        }
-
-        // Get all navigation links
-        const navLinks = document.querySelectorAll('.trip-nav-link');
-        
-        // Find the current page URL
-        const currentPage = window.location.pathname.split('/').pop();
-        
-        // Add active class to matching link
-        navLinks.forEach(link => {
-          if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
+            // Desktop view - "Trip Home" with icon
+            link.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
           }
         });
-
-        // Add scroll class on scroll
-        const handleScroll = () => {
+      };
+      
+      // Call initially
+      updateTripHomeText();
+      
+      // Call on window resize
+      window.addEventListener('resize', updateTripHomeText);
+      
+      navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (currentLocation.endsWith(linkPath) && linkPath !== '#') {
+          link.classList.add('active');
+        }
+      });
+      
+      // Apply sticky nav styles
+      const tripNav = document.querySelector('.trip-nav');
+      if (tripNav) {
+        tripNav.classList.add('fixed-nav');
+        
+        window.addEventListener('scroll', function() {
           if (window.scrollY > 10) {
-            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.15)';
+            tripNav.classList.add('scrolled');
           } else {
-            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-          }
-        };
-        
-        // Listen for scroll events
-        window.addEventListener('scroll', handleScroll);
-        
-        // Initialize on page load
-        handleScroll();
-        
-        // Handle resize events to update the Trip Home button text
-        window.addEventListener('resize', () => {
-          const clonedLink = tripNavDays.querySelector('.trip-home-link');
-          if (clonedLink) {
-            if (window.innerWidth <= 768) {
-              clonedLink.innerHTML = 'Trip';
-            } else {
-              clonedLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
-            }
+            tripNav.classList.remove('scrolled');
           }
         });
-      }, 100); // Short delay to ensure components are fully loaded
+      }
     });
   </script>
 </body>

@@ -1,105 +1,36 @@
 #!/bin/bash
 
-# Update the navigation links for all day pages
+# Script to update navigation styling on all day pages
 
-DIR="belgium-netherlands"
-
-# Titles for each day page
-declare -a titles=(
-  "Day 1: Travel Day | Belgium & Netherlands Trip"
-  "Day 2: Travel Day & Ghent | Belgium & Netherlands Trip"
-  "Day 3: Bruges (Day Trip) | Belgium & Netherlands Trip"
-  "Day 4: Ghent | Belgium & Netherlands Trip"
-  "Day 5: Option Day: Ghent or Bruges | Belgium & Netherlands Trip"
-  "Day 6: Antwerp & Utrecht | Belgium & Netherlands Trip"
-  "Day 7: Delft | Belgium & Netherlands Trip"
-  "Day 8: Utrecht | Belgium & Netherlands Trip"
-  "Day 9: Amsterdam (Day Trip) | Belgium & Netherlands Trip"
-  "Day 10: Option Day: Amsterdam or Utrecht | Belgium & Netherlands Trip"
+# Array of all day files
+DAY_FILES=(
+  "belgium-netherlands/day1.html"
+  "belgium-netherlands/day2.html"
+  "belgium-netherlands/day3.html"
+  "belgium-netherlands/day4.html"
+  "belgium-netherlands/day5.html"
+  "belgium-netherlands/day6.html"
+  "belgium-netherlands/day7.html"
+  "belgium-netherlands/day8.html"
+  "belgium-netherlands/day9.html"
+  "belgium-netherlands/day10.html"
+  "belgium-netherlands/day11.html"
 )
 
-# Headers for each day page
-declare -a headers=(
-  "Day 1: Travel Day"
-  "Day 2: Travel Day & Ghent"
-  "Day 3: Bruges (Day Trip)"
-  "Day 4: Ghent"
-  "Day 5: Option Day: Ghent or Bruges"
-  "Day 6: Antwerp & Utrecht"
-  "Day 7: Delft"
-  "Day 8: Utrecht"
-  "Day 9: Amsterdam (Day Trip)"
-  "Day 10: Option Day: Amsterdam or Utrecht"
-)
-
-# Descriptions for each day page
-declare -a descriptions=(
-  "Begin your journey to Belgium & the Netherlands."
-  "Arrival and first exploration of Ghent."
-  "Explore the fairytale city of Bruges."
-  "Discover the medieval beauty of Ghent."
-  "Option day: Second day in Ghent or Bruges."
-  "Visit Antwerp and travel to Utrecht."
-  "Discover Delft's famous blue pottery."
-  "Explore Utrecht's canals and historic center."
-  "Experience Amsterdam on King's Day!"
-  "Option day: Second day in Amsterdam or Utrecht."
-)
-
-# Update navigation buttons text
-declare -a prevText=(
-  ""
-  "Previous: Travel Day"
-  "Previous: Travel Day & Ghent"
-  "Previous: Bruges (Day Trip)"
-  "Previous: Ghent"
-  "Previous: Option Day: Ghent or Bruges"
-  "Previous: Antwerp & Utrecht"
-  "Previous: Delft"
-  "Previous: Utrecht"
-  "Previous: Amsterdam (Day Trip)"
-)
-
-declare -a nextText=(
-  "Next: Travel Day & Ghent"
-  "Next: Bruges (Day Trip)"
-  "Next: Ghent"
-  "Next: Option Day: Ghent or Bruges"
-  "Next: Antwerp & Utrecht"
-  "Next: Delft"
-  "Next: Utrecht"
-  "Next: Amsterdam (Day Trip)"
-  "Next: Option Day: Amsterdam or Utrecht"
-  ""
-)
-
-# Loop through the day pages
-for i in {1..10}; do
-  file="${DIR}/day${i}.html"
+# For each day file
+for file in "${DAY_FILES[@]}"; do
   echo "Updating $file..."
   
-  # Update the title
-  sed -i '' "s|<title>.*</title>|<title>${titles[$i-1]}</title>|" "$file"
+  # 1. Add text-align: center to desktop trip-nav-link
+  sed -i '' 's/\.trip-nav-link {/\.trip-nav-link {\n      text-align: center;/g' "$file"
   
-  # Update the hero header and description
-  sed -i '' "s|<h1>.*</h1>|<h1>${headers[$i-1]}</h1>|" "$file"
-  sed -i '' "s|<p>.*</p>|<p>${descriptions[$i-1]}</p>|" "$file"
+  # 2. Update mobile trip-nav-link with width and center alignment
+  sed -i '' 's/\.trip-nav-link {\n        padding: 0\.4rem 0\.5rem;\n        font-size: 0\.85rem;/\.trip-nav-link {\n        padding: 0\.4rem 0\.5rem;\n        font-size: 0\.85rem;\n        width: 100%;\n        text-align: center;/g' "$file"
   
-  # Update navigation buttons
-  if [[ $i -eq 1 ]]; then
-    # First day has only next button
-    sed -i '' "s|<div class=\"navigation-buttons\">.*</div>|<div class=\"navigation-buttons\"><a href=\"day2.html\" class=\"btn btn-accent\">${nextText[$i-1]}</a></div>|" "$file"
-  elif [[ $i -eq 10 ]]; then
-    # Last day has only previous button
-    sed -i '' "s|<div class=\"navigation-buttons\">.*</div>|<div class=\"navigation-buttons\"><a href=\"day9.html\" class=\"btn\">${prevText[$i-1]}</a></div>|" "$file"
-  else
-    # Middle days have both buttons
-    prev=$((i-1))
-    next=$((i+1))
-    sed -i '' "s|<div class=\"navigation-buttons\">.*</div>|<div class=\"navigation-buttons\"><a href=\"day${prev}.html\" class=\"btn\">${prevText[$i-1]}</a> <a href=\"day${next}.html\" class=\"btn btn-accent\">${nextText[$i-1]}</a></div>|" "$file"
-  fi
+  # 3. Add rule to hide icon in mobile view
+  sed -i '' 's/\.mobile-trip-home-link {\n        display: inline-block;\n      }/\.mobile-trip-home-link {\n        display: inline-block;\n      }\n      \n      \/* Remove icon from Trip Home button in mobile view *\/\n      \.trip-home-link i {\n        display: none;\n      }/g' "$file"
   
-  echo "Updated $file"
+  echo "✅ Updated $file"
 done
 
-echo "All day page navigations updated successfully!" 
+echo "All day pages updated with consistent navigation styling." 
