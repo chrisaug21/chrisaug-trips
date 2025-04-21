@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trips Style Guide | Chris Augustine</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts Import */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap');
+
+    /* Color Variables */
+    :root {
+      --primary: #0077CC;
+      --secondary: #8DA2C0;
+      --accent: #F2C94C;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --dark-text: #333333;
+      --light-text: #666666;
+    }
+
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: var(--dark-text);
+      background-color: var(--light-bg);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Nunito', sans-serif;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary);
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--secondary);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: var(--white);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .site-title a {
+      color: var(--primary);
+    }
+
+    /* Navigation */
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      padding: 0.5rem;
+    }
+
+    nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      color: var(--white);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Main Content */
+    main {
+      padding: 2rem 0;
+      min-height: calc(100vh - 150px);
+    }
+
+    /* Trip-specific Navigation */
+    .trip-nav {
+      background-color: var(--white);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0;
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+
+    .trip-nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .trip-nav-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-link {
+      padding: 0.5rem 1rem;
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .trip-nav-link:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    
+    .trip-nav-link.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    /* Section Titles */
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    /* Content Boxes */
+    .card {
+      margin-bottom: 3rem;
+    }
+
+    /* Primary Content Component */
+    .content-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .content-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .content-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .content-box ul, .content-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Travel Information Component */
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Secondary Content Component (Accent Color) */
+    .accent-box {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .accent-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    /* Secondary Content Component (Secondary Color) */
+    .secondary-box {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .secondary-box h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .secondary-box ul, .secondary-box ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .secondary-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Tips Component */
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    /* Text Styling */
+    .trip-details strong {
+      color: var(--primary);
+    }
+
+    /* Navigation Buttons */
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 2rem 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--light-bg);
+      color: var(--primary);
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: var(--dark-text);
+    }
+
+    .btn-accent:hover {
+      background-color: #e0b73b;
+      color: var(--dark-text);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--white);
+      padding: 1.5rem 0;
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .trip-nav {
+        padding: 0.5rem 0;
+      }
+      
+      .trip-nav-container {
+        gap: 0.5rem;
+      }
+      
+      .trip-nav-days {
+        justify-content: flex-start;
+        width: 100%;
+        overflow-x: visible;
+        padding-bottom: 0.25rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 0.3rem;
+      }
+
+      .day-label {
+        display: none;
+      }
+      
+      .trip-nav-link {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.85rem;
+        width: 100%;
+        text-align: center;
+      }
+      
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .navigation-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .btn {
+        text-align: center;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container site-header">
+      <h1 class="site-title"><a href="index.html">Trip Guides</a></h1>
+      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="belgium-netherlands/index.html">Belgium & Netherlands</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Trips Website Style Guide</h1>
+        <p>A comprehensive guide to styling components across the travel site</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Color Palette</h2>
+        </div>
+        <div class="content-grid">
+          <div class="content-box">
+            <h3>Primary Colors</h3>
+            <ul>
+              <li style="color: #0077CC; font-weight: bold;">Primary: #0077CC - Used for headings, links, and key elements</li>
+              <li style="color: #8DA2C0; font-weight: bold;">Secondary: #8DA2C0- Used for secondary elements and accents</li>
+              <li style="color: #F2C94C; font-weight: bold;">Accent: #F2C94C - Used for highlights, calls to action, and important elements</li>
+            </ul>
+          </div>
+          <div class="content-box">
+            <h3>Neutral Colors</h3>
+            <ul>
+              <li style="color: #333333; font-weight: bold;">Dark Text: #333333 - Used for main body text</li>
+              <li style="color: #666666; font-weight: bold;">Light Text: #666666 - Used for secondary text</li>
+              <li style="color: #f8f9fa; background-color: #333; padding: 0 5px; font-weight: bold;">Light Background: #f8f9fa - Used for content backgrounds</li>
+              <li style="color: #ffffff; background-color: #333; padding: 0 5px; font-weight: bold;">White: #ffffff - Used for card backgrounds, text on dark backgrounds</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Typography</h2>
+        </div>
+        <div class="travel-detail">
+          <h3>Fonts</h3>
+          <ul>
+            <li><strong>Headings:</strong> Nunito (300, 400, 600, 700)</li>
+            <li><strong>Body:</strong> Lato (300, 400, 700)</li>
+          </ul>
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> For consistency, always use the defined fonts and weights. These are loaded via Google Fonts.</p>
+          </div>
+        </div>
+        <div class="content-grid">
+          <div class="content-box">
+            <h3>Heading Styles</h3>
+            <h1 style="font-size: 2.5rem;">H1: Page Title (2.5rem)</h1>
+            <h2 style="font-size: 2rem;">H2: Section Title (2rem)</h2>
+            <h3 style="font-size: 1.3rem;">H3: Content Heading (1.3rem)</h3>
+            <h4 style="font-size: 1.2rem; color: var(--secondary);">H4: Subsection (1.2rem)</h4>
+          </div>
+          <div class="content-box">
+            <h3>Text Styles</h3>
+            <p>Regular paragraph text (1rem, Lato). This is used for the main body content throughout the site.</p>
+            <p><strong>Strong text</strong> is used for emphasis and important information, typically colored in the primary color.</p>
+            <p><em>Italic text</em> is used for quotes, tips, and to provide emphasis within a paragraph.</p>
+            <p><a href="#">Links</a> use the primary color and transition to secondary color on hover.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Content Components</h2>
+        </div>
+        <div class="travel-detail">
+          <h3>Standard Content Box</h3>
+          <p>The standard content box is used for most general content. It has a light background with an accent-colored left border.</p>
+        </div>
+        <div class="content-box">
+          <h3>Content Box Example</h3>
+          <p>This is an example of a standard content box. It can contain paragraphs, lists, and other elements.</p>
+          <p>Use this for general information and the main content of your pages.</p>
+          <ul>
+            <li>List item one</li>
+            <li>List item two</li>
+            <li>List item three</li>
+          </ul>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Travel Detail Component</h3>
+          <p>The travel detail component is used for key information like itineraries, schedules, and logistical details.</p>
+        </div>
+        
+        <div class="content-grid">
+          <div class="accent-box">
+            <h3>Accent Box</h3>
+            <p>This component uses a lighter accent color background with an accent-colored left border.</p>
+            <p>Ideal for highlighting specific locations, routes, or key attractions.</p>
+          </div>
+          
+          <div class="secondary-box">
+            <h3>Secondary Box</h3>
+            <p>This component uses a light primary color background with a secondary-colored left border.</p>
+            <p>Great for alternative options, evening activities, or secondary information.</p>
+            <ul>
+              <li>Option one</li>
+              <li>Option two</li>
+              <li>Option three</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="travel-tip">
+          <p><i class="fas fa-lightbulb"></i> Use the Travel Tip component for advice, insider information, or helpful hints. Always include the lightbulb icon for consistency.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Layout Components</h2>
+        </div>
+        <div class="travel-detail">
+          <h3>Content Grid</h3>
+          <p>The content grid is used to arrange multiple content boxes in a responsive grid format. On mobile devices, it will collapse to a single column.</p>
+        </div>
+        <div class="content-grid">
+          <div class="content-box">
+            <h3>Grid Item 1</h3>
+            <p>Content grid items automatically adjust based on available space, with a minimum width of 300px.</p>
+          </div>
+          <div class="content-box">
+            <h3>Grid Item 2</h3>
+            <p>Each grid item maintains consistent styling and automatically adjusts height to match other items in the row.</p>
+          </div>
+          <div class="content-box">
+            <h3>Grid Item 3</h3>
+            <p>On smaller screens, these items will stack vertically for better readability.</p>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Navigation Buttons</h3>
+          <p>Navigation buttons are used at the bottom of day pages to move between consecutive days.</p>
+        </div>
+        <div class="navigation-buttons">
+          <a href="#" class="btn">Previous: Example</a>
+          <a href="#" class="btn btn-accent">Next: Example</a>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Implementation Tips</h2>
+        </div>
+        <div class="travel-detail">
+          <h3>General Guidelines</h3>
+          <ul>
+            <li><strong>Consistency:</strong> Maintain consistent styling across all pages</li>
+            <li><strong>Flexibility:</strong> Choose appropriate components based on content type</li>
+            <li><strong>Mobile-first:</strong> Ensure all components work well on mobile devices</li>
+            <li><strong>Visual hierarchy:</strong> Use styling to guide the user's attention</li>
+          </ul>
+        </div>
+        <div class="travel-tip">
+          <p><i class="fas fa-lightbulb"></i> Not every page will need all component types. Choose the most appropriate components for your specific content.</p>
+        </div>
+        <div class="content-box">
+          <h3>Component Selection Guide</h3>
+          <ul>
+            <li><strong>Content Box:</strong> General information, cultural context, descriptions</li>
+            <li><strong>Travel Detail:</strong> Logistical information, schedules, itineraries</li>
+            <li><strong>Accent Box:</strong> Highlights, routes, key attractions</li>
+            <li><strong>Secondary Box:</strong> Alternative options, evening activities, additional information</li>
+            <li><strong>Travel Tip:</strong> Advice, insider information, helpful hints</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html> 

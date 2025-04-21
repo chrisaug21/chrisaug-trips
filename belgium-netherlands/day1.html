@@ -66,6 +66,17 @@
       .trip-home-link i {
         display: none !important; /* Hide icon on mobile */
       }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
     }
 
     /* Reset trip-nav-container styles that may interfere */
@@ -204,6 +215,66 @@
         text-align: center;
       }
     }
+    
+    /* Added styling for content similar to day2.html and index.html */
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .trip-details strong {
+      color: var(--primary);
+    }
+    
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    .card {
+      margin-bottom: 3rem;
+    }
   </style>
 </head>
 <body>
@@ -224,8 +295,12 @@
     </section>
 
     <div class="container">
-      <section class="card">
-        <h2>Departure Details</h2>
+      <div class="section-title-container">
+        <h2>Flight Information</h2>
+      </div>
+      
+      <section class="travel-detail">
+        <h3>Departure Details</h3>
         <div class="trip-details">
           <ul>
             <li><strong>Flight:</strong> JetBlue Flight B6 31 BOS → AMS</li>
@@ -237,13 +312,17 @@
         </div>
       </section>
 
-      <section class="card">
-        <h2>Important Reminders</h2>
+      <section class="travel-detail">
+        <h3>Important Reminders</h3>
         <div class="trip-details">
           <ul>
             <li>Arrive at Logan airport 3 hours before departure (around 7:20 PM)</li>
             <li>Try to sleep on the plane (eye mask, neck pillow, etc.)</li>
           </ul>
+        </div>
+        
+        <div class="travel-tip">
+          <p><i class="fas fa-lightbulb"></i> Set your watch to Amsterdam time during the flight to help adjust to the time difference.</p>
         </div>
       </section>
     </div>
