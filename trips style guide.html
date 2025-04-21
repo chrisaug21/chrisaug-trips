@@ -937,6 +937,227 @@ function loadTripNav() {
 
       <section class="card">
         <div class="section-title-container">
+          <h2>Option Tabs for Multiple Day Options</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Purpose and Usage</h3>
+          <p>Option tabs are used on days that offer multiple alternative itineraries (e.g., "Option Day" where travelers can choose between different activities or destinations). This component allows users to switch between different day plans without leaving the page.</p>
+          
+          <div class="section-description">
+            <p>The option tabs system consists of two main components:</p>
+            <ol>
+              <li><strong>Tab Navigation</strong> - A row of tabs at the top that users click to switch between options</li>
+              <li><strong>Tab Content</strong> - The corresponding content sections that are shown/hidden based on which tab is active</li>
+            </ol>
+          </div>
+        </div>
+
+        <style>
+          /* Option Tabs Styling for Preview */
+          .option-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--light-bg);
+          }
+
+          .option-tab {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--light-bg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 6px 6px 0 0;
+            margin-right: 0.5rem;
+          }
+
+          .option-tab:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+          }
+
+          .option-tab.active {
+            background-color: var(--primary);
+            color: var(--white);
+          }
+
+          .option-content {
+            display: none;
+            width: 100%;
+            max-width: 100%;
+          }
+
+          .option-content.active {
+            display: block;
+          }
+
+          /* Tab demo script */
+          .demo-tabs .option-content {
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 0 0 8px 8px;
+          }
+        </style>
+        
+        <div class="component-example">
+          <div class="component-label">Option Tabs Example</div>
+          <div class="demo-tabs">
+            <div class="option-tabs">
+              <div class="option-tab active" data-option="demo-option-a">Option A</div>
+              <div class="option-tab" data-option="demo-option-b">Option B</div>
+            </div>
+            <div class="option-content active" id="demo-option-a">
+              <p>This is the content for Option A. In a real implementation, this would contain a full day itinerary with various components like cultural boxes, travel details, etc.</p>
+            </div>
+            <div class="option-content" id="demo-option-b">
+              <p>This is the content for Option B. Users can click between tabs to view different day options without leaving the page.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Tab Labeling Guidelines</h3>
+          <p><strong>IMPORTANT:</strong> Tabs should be labeled simply with "Option A", "Option B", etc., rather than including subtitles or descriptions directly on the tab. This approach:</p>
+          <ul>
+            <li>Saves valuable space in the navigation area, especially on mobile devices</li>
+            <li>Creates a cleaner, more consistent interface</li>
+            <li>Improves readability and click targets on smaller screens</li>
+            <li>Allows for better responsiveness across different device sizes</li>
+          </ul>
+          
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>❌ Incorrect Tab Labels</h3>
+              <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;div class="option-tabs"&gt;
+  &lt;div class="option-tab active"&gt;Option A: Full Day in Amsterdam with Museum Visits&lt;/div&gt;
+  &lt;div class="option-tab"&gt;Option B: Day Trip to Haarlem and Local Sightseeing&lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+            
+            <div class="location-highlight">
+              <h3>✅ Correct Tab Labels</h3>
+              <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;div class="option-tabs"&gt;
+  &lt;div class="option-tab active"&gt;Option A&lt;/div&gt;
+  &lt;div class="option-tab"&gt;Option B&lt;/div&gt;
+&lt;/div&gt;</pre>
+              <p>Then include a descriptive heading within each option's content area:</p>
+              <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;div class="option-content active" id="option-a"&gt;
+  &lt;div class="section-title-container"&gt;
+    &lt;h2&gt;Full Day in Amsterdam with Museum Visits&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;!-- Rest of option A content --&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+          
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> You can include a brief description of the options directly beneath the tabs in a small introduction paragraph to help users choose between options.</p>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Implementation Code</h3>
+          <h4>HTML Structure</h4>
+          <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;!-- Option tabs navigation --&gt;
+&lt;div class="option-tabs"&gt;
+  &lt;div class="option-tab active" data-option="option-a"&gt;Option A&lt;/div&gt;
+  &lt;div class="option-tab" data-option="option-b"&gt;Option B&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Option A Content --&gt;
+&lt;div class="option-content active" id="option-a"&gt;
+  &lt;!-- Content for Option A --&gt;
+&lt;/div&gt;
+
+&lt;!-- Option B Content --&gt;
+&lt;div class="option-content" id="option-b"&gt;
+  &lt;!-- Content for Option B --&gt;
+&lt;/div&gt;</pre>
+
+          <h4>CSS Styling</h4>
+          <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+/* Option Tabs Styling */
+.option-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.option-tab {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--light-bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 6px 6px 0 0;
+  margin-right: 0.5rem;
+}
+
+.option-tab:hover {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+.option-tab.active {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.option-content {
+  display: none;
+  width: 100%;
+  max-width: 100%;
+}
+
+.option-content.active {
+  display: block;
+}</pre>
+
+          <h4>JavaScript Functionality</h4>
+          <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+document.addEventListener('DOMContentLoaded', function() {
+  // Option tabs functionality
+  const optionTabs = document.querySelectorAll('.option-tab');
+  const optionContents = document.querySelectorAll('.option-content');
+  
+  optionTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs and contents
+      optionTabs.forEach(t => t.classList.remove('active'));
+      optionContents.forEach(c => c.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      
+      // Show corresponding content
+      const targetId = tab.dataset.option;
+      const targetContent = document.getElementById(targetId);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
+});</pre>
+        </div>
+
+        <div class="travel-detail">
+          <h3>Responsive Behavior</h3>
+          <p>The tab system is responsive by design:</p>
+          <ul>
+            <li>On desktop, tabs appear side by side in a horizontal row</li>
+            <li>On mobile, tabs maintain their horizontal layout but use more compact padding</li>
+            <li>Each tab content area contains its own responsive components</li>
+          </ul>
+          <p>The option tabs should always remain visible at the top of the page, with content scrolling below.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
           <h2>Mobile Responsiveness Guidelines</h2>
         </div>
         
@@ -1045,5 +1266,43 @@ function loadTripNav() {
       <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.querySelector('.mobile-nav-toggle');
+      const nav = document.querySelector('nav');
+      
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+          nav.classList.toggle('active');
+        });
+      }
+      
+      // Demo option tabs functionality
+      const demoTabs = document.querySelectorAll('.demo-tabs .option-tab');
+      const demoContents = document.querySelectorAll('.demo-tabs .option-content');
+      
+      if (demoTabs.length > 0) {
+        demoTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // Remove active class from all tabs and contents
+            demoTabs.forEach(t => t.classList.remove('active'));
+            demoContents.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            tab.classList.add('active');
+            
+            // Show corresponding content
+            const targetId = tab.dataset.option;
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html> 
