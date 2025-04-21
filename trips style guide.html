@@ -212,8 +212,8 @@
       margin-bottom: 3rem;
     }
 
-    /* Primary Content Component */
-    .content-box {
+    /* Primary Content Component - Accent Border */
+    .cultural-box {
       background-color: #f8f9fa;
       border-left: 4px solid var(--accent);
       padding: 1.5rem;
@@ -222,7 +222,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .content-box h3 {
+    .cultural-box h3 {
       color: var(--primary);
       margin-bottom: 1rem;
       font-size: 1.3rem;
@@ -230,11 +230,11 @@
       padding-bottom: 0.5rem;
     }
 
-    .content-box p {
+    .cultural-box p {
       margin-bottom: 0.75rem;
     }
 
-    .content-box ul, .content-box ol {
+    .cultural-box ul, .cultural-box ol {
       padding-left: 1.5rem;
       margin-bottom: 1rem;
     }
@@ -247,7 +247,7 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Travel Information Component */
+    /* Travel Information Component - Primary Border */
     .travel-detail {
       background-color: #f8f9fa;
       border-left: 4px solid var(--primary);
@@ -272,8 +272,8 @@
       margin-bottom: 0.5rem;
     }
 
-    /* Secondary Content Component (Accent Color) */
-    .accent-box {
+    /* Location Highlight Component - Accent Background */
+    .location-highlight {
       background-color: rgba(242, 201, 76, 0.1);
       border-left: 4px solid var(--accent);
       padding: 1.2rem 1.5rem;
@@ -281,14 +281,18 @@
       margin-bottom: 1.5rem;
     }
     
-    .accent-box h3 {
+    .location-highlight h3 {
       color: var(--primary);
       margin-bottom: 1rem;
       font-size: 1.2rem;
     }
 
-    /* Secondary Content Component (Secondary Color) */
-    .secondary-box {
+    .location-highlight p {
+      margin-bottom: 0.75rem;
+    }
+
+    /* Options Component - Secondary Background */
+    .options-box {
       background-color: rgba(0, 119, 204, 0.05);
       border-radius: 8px;
       padding: 1.5rem 2rem;
@@ -296,19 +300,19 @@
       border-left: 4px solid var(--secondary);
     }
 
-    .secondary-box h3 {
+    .options-box h3 {
       color: var(--secondary);
       margin-bottom: 1.2rem;
       border-bottom: 1px solid var(--secondary);
       padding-bottom: 0.5rem;
     }
     
-    .secondary-box ul, .secondary-box ol {
+    .options-box ul, .options-box ol {
       padding-left: 2rem;
       margin-bottom: 1rem;
     }
     
-    .secondary-box li {
+    .options-box li {
       margin-bottom: 0.5rem;
     }
 
@@ -332,7 +336,7 @@
       color: var(--primary);
     }
 
-    /* Navigation Buttons */
+    /* Lower Navigation Buttons */
     .navigation-buttons {
       display: flex;
       justify-content: space-between;
@@ -342,15 +346,15 @@
     .btn {
       display: inline-block;
       padding: 0.8rem 1.5rem;
-      background-color: var(--light-bg);
-      color: var(--primary);
+      background-color: var(--primary);
+      color: var(--white);
       border-radius: 4px;
       font-weight: 600;
       transition: all 0.3s ease;
     }
 
     .btn:hover {
-      background-color: var(--primary);
+      background-color: #0065b0;
       color: var(--white);
     }
 
@@ -370,6 +374,37 @@
       padding: 1.5rem 0;
       text-align: center;
       box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Example styling elements */
+    .component-example {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      position: relative;
+    }
+    
+    .component-label {
+      position: absolute;
+      top: -12px;
+      left: 15px;
+      background-color: var(--white);
+      padding: 0 10px;
+      font-size: 0.8rem;
+      color: var(--light-text);
+    }
+    
+    /* Code styling */
+    .code-block {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: monospace;
+      margin: 1rem 0;
     }
 
     /* Mobile Responsive */
@@ -419,6 +454,48 @@
       .hero h1 {
         font-size: 2rem;
       }
+      
+      .mobile-nav-toggle {
+        display: block;
+      }
+      
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--white);
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+      
+      nav.active {
+        display: block;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Section spacing */
+    .section-description {
+      margin-bottom: 2rem;
+    }
+
+    .navigation-section, 
+    .content-section {
+      margin-bottom: 3rem;
+    }
+    
+    /* Two-column layout for component examples */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -430,7 +507,6 @@
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="belgium-netherlands/index.html">Belgium & Netherlands</a></li>
         </ul>
       </nav>
     </div>
@@ -450,7 +526,7 @@
           <h2>Color Palette</h2>
         </div>
         <div class="content-grid">
-          <div class="content-box">
+          <div class="cultural-box">
             <h3>Primary Colors</h3>
             <ul>
               <li style="color: #0077CC; font-weight: bold;">Primary: #0077CC - Used for headings, links, and key elements</li>
@@ -458,7 +534,7 @@
               <li style="color: #F2C94C; font-weight: bold;">Accent: #F2C94C - Used for highlights, calls to action, and important elements</li>
             </ul>
           </div>
-          <div class="content-box">
+          <div class="cultural-box">
             <h3>Neutral Colors</h3>
             <ul>
               <li style="color: #333333; font-weight: bold;">Dark Text: #333333 - Used for main body text</li>
@@ -485,14 +561,14 @@
           </div>
         </div>
         <div class="content-grid">
-          <div class="content-box">
+          <div class="cultural-box">
             <h3>Heading Styles</h3>
             <h1 style="font-size: 2.5rem;">H1: Page Title (2.5rem)</h1>
             <h2 style="font-size: 2rem;">H2: Section Title (2rem)</h2>
             <h3 style="font-size: 1.3rem;">H3: Content Heading (1.3rem)</h3>
             <h4 style="font-size: 1.2rem; color: var(--secondary);">H4: Subsection (1.2rem)</h4>
           </div>
-          <div class="content-box">
+          <div class="cultural-box">
             <h3>Text Styles</h3>
             <p>Regular paragraph text (1rem, Lato). This is used for the main body content throughout the site.</p>
             <p><strong>Strong text</strong> is used for emphasis and important information, typically colored in the primary color.</p>
@@ -502,84 +578,359 @@
         </div>
       </section>
 
-      <section class="card">
+      <section class="card navigation-section">
         <div class="section-title-container">
-          <h2>Content Components</h2>
+          <h2>Navigation Components</h2>
         </div>
+        
         <div class="travel-detail">
-          <h3>Standard Content Box</h3>
-          <p>The standard content box is used for most general content. It has a light background with an accent-colored left border.</p>
-        </div>
-        <div class="content-box">
-          <h3>Content Box Example</h3>
-          <p>This is an example of a standard content box. It can contain paragraphs, lists, and other elements.</p>
-          <p>Use this for general information and the main content of your pages.</p>
+          <h3>Primary Navigation (Site Header)</h3>
+          <div class="section-description">
+            <p>The primary navigation appears at the top of every page and includes the site title and main navigation links. This is implemented using a component-based approach to ensure consistency across all pages.</p>
+          </div>
+          
+          <div class="component-example">
+            <div class="component-label">Example</div>
+            <div style="background-color: var(--white); padding: 1rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+              <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0;">
+                <a href="#" style="color: var(--primary);">Trip Guides</a>
+              </h1>
+              <nav>
+                <ul style="display: flex; list-style: none; gap: 1.5rem;">
+                  <li><a href="#" style="font-family: 'Nunito', sans-serif; font-weight: 600; padding: 0.5rem;">Home</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          
+          <h4 style="margin-top: 1.5rem; color: var(--secondary);">Component-Based Implementation</h4>
+          <p>The site uses a component-based approach for navigation rather than hard-coding the navigation on each page:</p>
           <ul>
-            <li>List item one</li>
-            <li>List item two</li>
-            <li>List item three</li>
+            <li>Navigation is loaded dynamically using JavaScript components</li>
+            <li>The header-container element is populated by components.js</li>
+            <li>This ensures consistent navigation across all pages without duplication</li>
+            <li>Updates to navigation only need to be made in one place</li>
+          </ul>
+          
+          <div class="code-block">
+            <pre>// HTML placeholder in each page
+&lt;div id="header-container"&gt;&lt;/div&gt;
+
+// JavaScript in components.js loads the header dynamically
+document.addEventListener('DOMContentLoaded', function() {
+  // Load header component
+  const headerContainer = document.getElementById('header-container');
+  if (headerContainer) {
+    headerContainer.innerHTML = `
+      &lt;header&gt;
+        &lt;div class="container site-header"&gt;
+          &lt;h1 class="site-title"&gt;&lt;a href="index.html"&gt;Trip Guides&lt;/a&gt;&lt;/h1&gt;
+          &lt;button class="mobile-nav-toggle"&gt;&lt;i class="fas fa-bars"&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;nav&gt;
+            &lt;ul&gt;
+              &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/nav&gt;
+        &lt;/div&gt;
+      &lt;/header&gt;
+    `;
+  }
+});</pre>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Trip-specific Navigation</h3>
+          <div class="section-description">
+            <p>The trip-specific navigation appears below the main navigation on trip pages and provides navigation to specific days of the trip. Like the primary navigation, this is also implemented using a component-based approach.</p>
+          </div>
+          
+          <div class="component-example">
+            <div class="component-label">Example</div>
+            <div style="background-color: var(--white); padding: 0.75rem 0; border-radius: 4px;">
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <a href="#" style="padding: 0.5rem 1rem; background-color: var(--primary); color: var(--white); border-radius: 4px; font-weight: 600; font-size: 0.9rem; white-space: nowrap; display: inline-block; text-align: center;">Trip Home</a>
+                <a href="#" style="padding: 0.5rem 1rem; background-color: var(--light-bg); color: var(--dark-text); border-radius: 4px; font-weight: 600; font-size: 0.9rem; white-space: nowrap; display: inline-block; text-align: center;">Day 1</a>
+                <a href="#" style="padding: 0.5rem 1rem; background-color: var(--light-bg); color: var(--dark-text); border-radius: 4px; font-weight: 600; font-size: 0.9rem; white-space: nowrap; display: inline-block; text-align: center;">Day 2</a>
+                <a href="#" style="padding: 0.5rem 1rem; background-color: var(--light-bg); color: var(--dark-text); border-radius: 4px; font-weight: 600; font-size: 0.9rem; white-space: nowrap; display: inline-block; text-align: center;">Day 3</a>
+              </div>
+            </div>
+          </div>
+          
+          <h4 style="margin-top: 1.5rem; color: var(--secondary);">Component-Based Implementation</h4>
+          <p>The trip-specific navigation is implemented as a component that's dynamically loaded on each page:</p>
+          <ul>
+            <li>Navigation is loaded into the trip-nav-container element</li>
+            <li>The component script automatically determines the current page and highlights the active day</li>
+            <li>This approach ensures consistent navigation across all trip pages</li>
+            <li>Changes to navigation structure only need to be made in one place</li>
+          </ul>
+          
+          <div class="code-block">
+            <pre>// HTML placeholder in each page
+&lt;div id="trip-nav-container"&gt;&lt;/div&gt;
+
+// JavaScript in components.js loads the trip navigation dynamically
+function loadTripNav() {
+  const tripNavContainer = document.getElementById('trip-nav-container');
+  if (tripNavContainer) {
+    // Determine current page for active highlighting
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    // Generate day links with appropriate active class
+    let dayLinks = '';
+    for (let i = 1; i <= 11; i++) {
+      const isActive = currentPage === `day${i}.html` ? 'active' : '';
+      dayLinks += `&lt;a href="day${i}.html" class="trip-nav-link ${isActive}"&gt;Day ${i}&lt;/a&gt;`;
+    }
+    
+    tripNavContainer.innerHTML = `
+      &lt;div class="trip-nav"&gt;
+        &lt;div class="container"&gt;
+          &lt;div class="trip-nav-container"&gt;
+            &lt;div class="trip-nav-days"&gt;
+              &lt;a href="index.html" class="trip-nav-link trip-home-link"&gt;
+                &lt;i class="fas fa-home"&gt;&lt;/i&gt; &lt;span&gt;Trip Home&lt;/span&gt;
+              &lt;/a&gt;
+              ${dayLinks}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `;
+  }
+}</pre>
+          </div>
+          
+          <h4 style="margin-top: 1.5rem; color: var(--secondary);">Implementation Notes</h4>
+          <ul>
+            <li>Always include a "Trip Home" link that returns to the trip's main page</li>
+            <li>Highlight the active day using the <code>.active</code> class</li>
+            <li>The navigation should be sticky at the top of the screen during scrolling</li>
+            <li>On mobile, the navigation collapses to a grid of buttons</li>
+            <li>Never hard-code the navigation directly in each page's HTML</li>
           </ul>
         </div>
         
         <div class="travel-detail">
-          <h3>Travel Detail Component</h3>
-          <p>The travel detail component is used for key information like itineraries, schedules, and logistical details.</p>
-        </div>
-        
-        <div class="content-grid">
-          <div class="accent-box">
-            <h3>Accent Box</h3>
-            <p>This component uses a lighter accent color background with an accent-colored left border.</p>
-            <p>Ideal for highlighting specific locations, routes, or key attractions.</p>
+          <h3>Lower Navigation</h3>
+          <div class="section-description">
+            <p>Lower navigation buttons appear at the bottom of day pages to allow users to move between consecutive days.</p>
           </div>
           
-          <div class="secondary-box">
-            <h3>Secondary Box</h3>
-            <p>This component uses a light primary color background with a secondary-colored left border.</p>
-            <p>Great for alternative options, evening activities, or secondary information.</p>
+          <div class="component-example">
+            <div class="component-label">Example</div>
+            <div style="display: flex; justify-content: space-between; margin: 2rem 0;">
+              <a href="#" style="display: inline-block; padding: 0.8rem 1.5rem; background-color: var(--primary); color: var(--white); border-radius: 4px; font-weight: 600;">Previous: Day 1</a>
+              <a href="#" style="display: inline-block; padding: 0.8rem 1.5rem; background-color: var(--accent); color: var(--dark-text); border-radius: 4px; font-weight: 600;">Next: Day 3</a>
+            </div>
+          </div>
+          
+          <h4 style="margin-top: 1.5rem; color: var(--secondary);">Implementation Notes</h4>
+          <ul>
+            <li>Always include both Previous and Next buttons for consistent navigation</li>
+            <li>The Previous button should be blue (primary color)</li>
+            <li>The Next button should be yellow (accent color)</li>
+            <li>Include the day number in the button text</li>
+            <li>For the first day, still include a Previous button that links to the trip home page</li>
+            <li>For the last day, still include a Next button that links to the trip home page</li>
+          </ul>
+          
+          <div class="code-block">
+            <pre>&lt;div class="navigation-buttons"&gt;
+  &lt;a href="day1.html" class="btn"&gt;Previous: Day 1&lt;/a&gt;
+  &lt;a href="day3.html" class="btn btn-accent"&gt;Next: Day 3&lt;/a&gt;
+&lt;/div&gt;</pre>
+          </div>
+          
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> Remember to add these navigation buttons to all day pages, including day1.html which is currently missing them.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card content-section">
+        <div class="section-title-container">
+          <h2>Content Components</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Content Component Overview</h3>
+          <div class="section-description">
+            <p>There are several distinct content components designed for different types of information. Each has a specific purpose and visual style to help users identify the type of content.</p>
+          </div>
+        </div>
+        
+        <div class="component-example">
+          <div class="component-label">Cultural Box (Yellow Left Border)</div>
+          <div class="cultural-box">
+            <h3>Cultural Box</h3>
+            <p>This component is used for general information, cultural context, and descriptive content. It features a yellow/accent-colored left border with a light background.</p>
+            <p>Use this component for:</p>
             <ul>
-              <li>Option one</li>
-              <li>Option two</li>
-              <li>Option three</li>
+              <li>Historical information</li>
+              <li>Cultural context</li>
+              <li>General descriptions</li>
+              <li>Background information</li>
             </ul>
           </div>
         </div>
         
-        <div class="travel-tip">
-          <p><i class="fas fa-lightbulb"></i> Use the Travel Tip component for advice, insider information, or helpful hints. Always include the lightbulb icon for consistency.</p>
+        <div class="component-example">
+          <div class="component-label">Travel Detail (Blue Left Border)</div>
+          <div class="travel-detail">
+            <h3>Travel Detail</h3>
+            <p>This component is used for key travel logistics, schedules, and itinerary information. It features a blue/primary-colored left border with a light background.</p>
+            <p>Use this component for:</p>
+            <ul>
+              <li>Transportation details</li>
+              <li>Accommodation information</li>
+              <li>Schedules and timetables</li>
+              <li>Logistical information</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Flexible Layout Components</h3>
+          <div class="section-description">
+            <p>The following components can be used flexibly in layouts. They can be full-width or arranged side-by-side to avoid creating unnecessary white space.</p>
+          </div>
+        </div>
+        
+        <div class="component-grid">
+          <div class="component-example" style="margin-top: 0;">
+            <div class="component-label">Location Highlight (Yellow Background)</div>
+            <div class="location-highlight">
+              <h3>Location Highlight</h3>
+              <p>This component is used to highlight specific locations, routes, or attractions. It features a light yellow/accent background with a yellow/accent-colored left border.</p>
+            </div>
+          </div>
+          
+          <div class="component-example" style="margin-top: 0;">
+            <div class="component-label">Options Box (Blue Background)</div>
+            <div class="options-box">
+              <h3>Options Box</h3>
+              <p>This component is used for alternative options, evening activities, or secondary information. It features a light blue/primary background with a blue/secondary-colored left border.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Flexible Layout Examples</h3>
+          <p>Location highlights and option boxes can be arranged side-by-side with themselves or with each other to create balanced layouts:</p>
+        </div>
+        
+        <div class="component-example">
+          <div class="component-label">Side-by-Side Layout Example</div>
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Morning Activities</h3>
+              <p>Visit the city center and main cathedral. Take a guided walking tour of the historic district.</p>
+            </div>
+            
+            <div class="location-highlight">
+              <h3>Afternoon Activities</h3>
+              <p>Explore the castle grounds and enjoy a boat tour along the river.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-example">
+          <div class="component-label">Mixed Components Side-by-Side</div>
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Must-See Attraction</h3>
+              <p>Visit the world-famous museum featuring works by local artists.</p>
+            </div>
+            
+            <div class="options-box">
+              <h3>Alternative Options</h3>
+              <p>If museums aren't your thing, consider taking the scenic hiking trail or visiting the botanical gardens instead.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-example">
+          <div class="component-label">Travel Tip</div>
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> This component is used for advice, insider information, or helpful hints. Always include the lightbulb icon for consistency.</p>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Content Grid Layout</h3>
+          <p>Use the content grid to arrange multiple components in a responsive grid format. On mobile devices, the grid will collapse to a single column.</p>
+        </div>
+        
+        <div class="content-grid">
+          <div class="cultural-box">
+            <h3>Grid Item 1</h3>
+            <p>Content grid items automatically adjust based on available space, with a minimum width of 300px.</p>
+          </div>
+          <div class="cultural-box">
+            <h3>Grid Item 2</h3>
+            <p>Each grid item maintains consistent styling and automatically adjusts height to match other items in the row.</p>
+          </div>
+          <div class="cultural-box">
+            <h3>Grid Item 3</h3>
+            <p>On smaller screens, these items will stack vertically for better readability.</p>
+          </div>
         </div>
       </section>
 
       <section class="card">
         <div class="section-title-container">
-          <h2>Layout Components</h2>
-        </div>
-        <div class="travel-detail">
-          <h3>Content Grid</h3>
-          <p>The content grid is used to arrange multiple content boxes in a responsive grid format. On mobile devices, it will collapse to a single column.</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-box">
-            <h3>Grid Item 1</h3>
-            <p>Content grid items automatically adjust based on available space, with a minimum width of 300px.</p>
-          </div>
-          <div class="content-box">
-            <h3>Grid Item 2</h3>
-            <p>Each grid item maintains consistent styling and automatically adjusts height to match other items in the row.</p>
-          </div>
-          <div class="content-box">
-            <h3>Grid Item 3</h3>
-            <p>On smaller screens, these items will stack vertically for better readability.</p>
-          </div>
+          <h2>Mobile Responsiveness Guidelines</h2>
         </div>
         
         <div class="travel-detail">
-          <h3>Navigation Buttons</h3>
-          <p>Navigation buttons are used at the bottom of day pages to move between consecutive days.</p>
+          <h3>General Principles</h3>
+          <p>All components and layouts should be responsive and function well on mobile devices. The site uses a mobile-first approach, with layouts that adapt to larger screens.</p>
+          
+          <ul>
+            <li><strong>Breakpoint:</strong> The main responsive breakpoint is 768px, below which mobile styles are applied</li>
+            <li><strong>Container width:</strong> Use percentage-based widths with max-width constraints</li>
+            <li><strong>Typography:</strong> Font sizes should remain readable on small screens</li>
+          </ul>
         </div>
-        <div class="navigation-buttons">
-          <a href="#" class="btn">Previous: Example</a>
-          <a href="#" class="btn btn-accent">Next: Example</a>
+        
+        <div class="content-grid">
+          <div class="cultural-box">
+            <h3>Header & Navigation</h3>
+            <ul>
+              <li>Primary navigation collapses to a hamburger menu on mobile</li>
+              <li>Trip day navigation transforms to a grid layout on mobile</li>
+              <li>The "Trip Home" link text changes to just "Trip" on mobile</li>
+              <li>Navigation buttons become full-width and stack vertically</li>
+            </ul>
+          </div>
+          
+          <div class="cultural-box">
+            <h3>Content Components</h3>
+            <ul>
+              <li>Content grids collapse to a single column on mobile</li>
+              <li>Padding and margins are reduced on mobile for better space usage</li>
+              <li>Content boxes maintain the same styling but adjust width</li>
+              <li>Font sizes may be slightly reduced on very small screens</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="options-box">
+          <h3>Mobile Testing Guidelines</h3>
+          <ul>
+            <li>Test all pages on multiple device sizes</li>
+            <li>Ensure all text is readable without zooming</li>
+            <li>Verify that touch targets (buttons, links) are large enough (minimum 44x44px)</li>
+            <li>Check that navigation remains usable and intuitive</li>
+            <li>Test on both iOS and Android devices when possible</li>
+            <li>Use Chrome DevTools device emulation for initial testing</li>
+          </ul>
+        </div>
+        
+        <div class="travel-tip">
+          <p><i class="fas fa-lightbulb"></i> Always test new pages and components on actual mobile devices or using responsive design mode in your browser's developer tools.</p>
         </div>
       </section>
 
@@ -599,13 +950,13 @@
         <div class="travel-tip">
           <p><i class="fas fa-lightbulb"></i> Not every page will need all component types. Choose the most appropriate components for your specific content.</p>
         </div>
-        <div class="content-box">
+        <div class="cultural-box">
           <h3>Component Selection Guide</h3>
           <ul>
-            <li><strong>Content Box:</strong> General information, cultural context, descriptions</li>
+            <li><strong>Cultural Box:</strong> General information, cultural context, descriptions</li>
             <li><strong>Travel Detail:</strong> Logistical information, schedules, itineraries</li>
-            <li><strong>Accent Box:</strong> Highlights, routes, key attractions</li>
-            <li><strong>Secondary Box:</strong> Alternative options, evening activities, additional information</li>
+            <li><strong>Location Highlight:</strong> Key attractions, points of interest, routes</li>
+            <li><strong>Options Box:</strong> Alternative options, evening activities, additional information</li>
             <li><strong>Travel Tip:</strong> Advice, insider information, helpful hints</li>
           </ul>
         </div>
