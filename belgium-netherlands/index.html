@@ -124,7 +124,7 @@
     .trip-header {
       background-color: var(--primary);
       color: var(--white);
-      padding: 3rem 0;
+      padding: 2rem 0; /* Reduced padding to compensate for removed trip-intro */
       text-align: center;
       margin-top: 0;
       margin-bottom: 2rem; /* Add space between header and first card */
@@ -315,14 +315,20 @@
       gap: 0.5rem;
     }
 
+    .map-red-marker, .map-blue-marker {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    
     .map-red-marker {
-      color: #e74c3c;
-      font-size: 1.2rem;
+      background-color: #e74c3c;
     }
 
     .map-blue-marker {
-      color: #3498db;
-      font-size: 1.2rem;
+      background-color: #3498db;
     }
 
     /* Map Modal Styles */
@@ -372,6 +378,20 @@
       .trip-nav {
         padding: 0.5rem 0;
         top: 0; /* Ensure it's at the top */
+      }
+      
+      /* Fix for map legend icons alignment on mobile */
+      .map-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .map-red-marker, .map-blue-marker {
+        position: relative;
+        top: 2px;
+        line-height: 0;
       }
       
       .trip-nav-container {
@@ -651,6 +671,21 @@
       .highlight-box {
         padding: 0.75rem;
       }
+      
+      /* Improve map legend on very narrow screens */
+      .map-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .map-legend-item {
+        width: 100%;
+      }
+      
+      .map-red-marker, .map-blue-marker {
+        margin-top: 3px;
+      }
     }
   </style>
 </head>
@@ -670,9 +705,6 @@
       <div class="container">
         <h1>Belgium & Netherlands</h1>
         <div class="trip-dates">April 21 - May 2, 2025</div>
-        <div class="trip-intro">
-          <p>Explore the historic cities of Belgium and Holland - from medieval Bruges and artistic Amsterdam to the flower paradise of Keukenhof and King's Day celebrations. A 11-day journey through canals, culture, and culinary delights of the Low Countries.</p>
-        </div>
       </div>
     </section>
 
@@ -684,8 +716,8 @@
           <img src="../assets/images/belgium-netherlands/map.png" alt="Belgium & Netherlands Trip Map" id="trip-map">
           <p class="map-caption">🇧🇪 🇳🇱 Belgium & Netherlands Trip Route: Ghent - Bruges - Antwerp - Utrecht - Delft - Amsterdam</p>
           <div class="map-legend">
-            <span class="map-legend-item"><span class="map-red-marker">●</span> Overnight stays: Ghent (4 nights), Utrecht (5 nights)</span>
-            <span class="map-legend-item"><span class="map-blue-marker">●</span> Day trips: Bruges, Antwerp, Delft, Amsterdam</span>
+            <span class="map-legend-item"><div class="map-red-marker"></div> Overnight stays: Ghent (4 nights), Utrecht (5 nights)</span>
+            <span class="map-legend-item"><div class="map-blue-marker"></div> Day trips: Bruges, Antwerp, Delft, Amsterdam</span>
           </div>
         </div>
       </section>
