@@ -3,52 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
+  <title>Day 4: Friday, April 25 - Ghent | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Trip-specific navigation */
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    /* Create a sticky wrapper */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link - no longer needed */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
     .trip-nav-link {
-      text-align: center;
       padding: 0.5rem 1rem;
       background-color: var(--light-bg);
       border-radius: 4px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
@@ -57,51 +177,186 @@
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0; /* Ensure it's at the top */
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
-      
+
       .day-label {
         display: none;
       }
       
       .trip-nav-link {
-      text-align: center;
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
+        width: 100%;
+        text-align: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .trip-nav-link {
+    /* Added styling for content grids similar to index.html */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title-container {
       text-align: center;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-      }
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .trip-details strong {
+      color: var(--primary);
+    }
+
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+
+    .location-highlight {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .location-highlight h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .location-highlight p {
+      margin-bottom: 0.75rem;
+    }
+
+    .options-box {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .options-box h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .options-box ul, .options-box ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .options-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    .card {
+      margin-bottom: 3rem;
+    }
+    
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -118,103 +373,316 @@
       </nav>
     </div>
   </header>
-
-  <!-- Trip-specific navigation -->
-  <div class="trip-nav">
-    <div class="container trip-nav-container">
-      <div class="trip-nav-links">
-        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-      </div>
-      <div class="trip-nav-days">
-        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+  
+  <!-- Create a sticky wrapper for navigation -->
+  <div class="sticky-nav-wrapper">
+    <!-- Trip Navigation -->
+    <div class="trip-nav">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+          <a href="day4.html" class="trip-nav-link active">Day 4 <span class="day-label">(Fri)</span></a>
+          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
+        </div>
       </div>
     </div>
   </div>
 
-  <main>
+  <main style="margin-top: 0; padding-top: 0;">
     <section class="hero">
       <div class="container">
-        <h1>Day 4: Ghent</h1>
-        <p>Discover the medieval beauty of Ghent.</p>
+        <h1>🚶 Day 4: Friday, April 25 - Ghent</h1>
       </div>
     </section>
 
     <div class="container">
       <section class="card">
-        <h2>Morning</h2>
-        <ul>
-          <li>Arrival in Brussels International Airport</li>
-          <li>Navigate to train station at airport</li>
-          <li>Purchase train ticket to Ghent Sint-Pieters</li>
-          <li>Train journey (approximately 1 hour)</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Breakfast Options</h2>
+        </div>
+        <div class="content-grid">
+          <div class="location-highlight">
+            <h3>Maison Elza</h3>
+            <p><strong>Address:</strong> Nieuwland 11</p>
+            <p>Artisanal bakery with great coffee - perfect for a morning pastry and espresso before starting your day.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Brood en Boter</h3>
+            <p><strong>Address:</strong> Sint-Jacobsnieuwstraat 32</p>
+            <p>Excellent for fresh baked goods and a full breakfast spread with Belgian specialties.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Café Labath</h3>
+            <p><strong>Address:</strong> Oude Houtlei 1</p>
+            <p>Known for their specialty coffees and delicious pastries in a cozy atmosphere.</p>
+          </div>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Afternoon</h2>
-        <ul>
-          <li>Check-in at accommodation in Ghent</li>
-          <li>Quick lunch at a local café</li>
-          <li>Initial orientation walk around central Ghent</li>
-          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Morning Activity</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Gravensteen Castle</h3>
+          <p>One of the most impressive medieval castles in Belgium and a must-visit attraction in Ghent.</p>
+          <ul>
+            <li><strong>Opening Hours:</strong> 10:00 AM - 6:00 PM</li>
+            <li><strong>Entrance Fee:</strong> €12</li>
+            <li><strong>Audio Guide:</strong> Included (narrated with humor)</li>
+            <li><strong>Duration:</strong> Allow 1-2 hours for visit</li>
+          </ul>
+        </div>
+          
+        <div class="location-highlight">
+          <h3>Historical Context</h3>
+          <p>The imposing "Castle of the Counts" dates back to 1180 and was built by Count Philip of Alsace as a display of power and to intimidate the growing middle class of Ghent. The castle served as the residence of the Counts of Flanders until the 14th century, later becoming a courthouse, prison, and even a factory during the Industrial Revolution.</p>
+          <p>It was nearly demolished in the 19th century before being restored to its medieval glory. The castle boasts an impressive moat, turrets, and a genuine medieval torture chamber with original instruments. The audio guide is famously entertaining, narrated with a dose of dark humor by a local comedian.</p>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Evening</h2>
-        <ul>
-          <li>Dinner at a traditional Flemish restaurant</li>
-          <li>Stroll along the illuminated medieval buildings and canals</li>
-          <li>Early night to recover from travel fatigue</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Lunch Options</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="options-box">
+            <h3>De Superette</h3>
+            <p><strong>Address:</strong> Guldenspoorstraat 29</p>
+            <p>Artisanal bakery and lunch spot known for wood-fired breads and seasonal ingredients.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Brasserie Pakhuis</h3>
+            <p><strong>Address:</strong> Schuurkenstraat 4</p>
+            <p>Beautiful industrial space offering Belgian cuisine in a stunning converted warehouse.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Souplounge</h3>
+            <p><strong>Address:</strong> Jan Breydelstraat 8</p>
+            <p>Soup and sandwich bar just steps from Gravensteen Castle - perfect for a quick lunch.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Ellis Gourmet Burger</h3>
+            <p><strong>Address:</strong> Korenmarkt 10</p>
+            <p>Quality burgers in a prime location on Korenmarkt, close to the walking route for your afternoon.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Café René</h3>
+            <p><strong>Address:</strong> Graslei 7</p>
+            <p>Traditional Belgian fare with a great location right on the Graslei with beautiful canal views.</p>
+          </div>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Tips for Day 2</h2>
-        <ul>
-          <li>Brussels Airport has clear signage to the train station below the terminal</li>
-          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
-          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
-          <li>Ask your accommodation for a local map and recommendations</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Afternoon Activities</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Historic Center Walking Tour</h3>
+          
+          <ol>
+            <li>Start at <strong>Sint-Baafskathedraal (St. Bavo's Cathedral)</strong> - Worth entering to see the famous Ghent Altarpiece</li>
+            <li>Continue to <strong>Belfort en Lakenhalle (Belfry and Cloth Hall)</strong></li>
+            <li>Visit <strong>Sint-Niklaaskerk (St. Nicholas' Church)</strong></li>
+            <li>Walk along the <strong>Graslei and Korenlei</strong> - historic port with guild houses</li>
+            <li>Explore <strong>Patershol neighborhood</strong> - medieval quarter with small streets and restaurants</li>
+            <li>Visit <strong>Vrijdagmarkt (Friday Market square)</strong></li>
+          </ol>
+        </div>
+          
+        <div class="location-highlight">
+          <h3>Historical Context</h3>
+          <p>As you explore Ghent's historic center, you'll be walking through centuries of history. The area around Graslei and Korenlei harbors showcases guild houses dating from the 12th to 17th centuries, representing different trades and guilds that controlled the city's commerce.</p>
+          <p>St. Bavo's Cathedral houses the Van Eyck brothers' masterpiece "The Adoration of the Mystic Lamb" (also called the Ghent Altarpiece), completed in 1432 and considered one of the most important works in European art history.</p>
+          <p>The Patershol neighborhood, with its narrow cobblestone streets and medieval houses, was home to the leather industry in the Middle Ages before becoming a working-class district, and now houses boutique restaurants and shops.</p>
+        </div>
+        
+        <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Hidden Historical Gem - Saint Bavo Abbey</h3>
+              <p>Not to be confused with Saint Bavo Cathedral in the city center, the ancient Abbey of Saint Bavo (Sint-Baafsabdij) sits on the outskirts of Ghent and represents one of the city's most important historical sites. Founded in the 7th century by Saint Amand and later named after Saint Bavo, a local nobleman who gave up his wealth to become a monk, this Benedictine abbey was once one of the most influential religious institutions in the region.</p>
+              <p>The abbey was largely destroyed during the religious conflicts of the 16th century, but its atmospheric ruins provide a tangible connection to medieval Ghent. The remaining structures include parts of the abbey church, the refectory, and the chapter house, surrounded by a peaceful park area. The site now houses a museum with archaeological findings and provides insight into monastic life during the Middle Ages.</p>
+              <ul>
+                <li><strong>Location:</strong> Herfsttijdenlaan 20, 9051 Ghent</li>
+                <li><strong>Hours:</strong> Tuesday-Sunday 10:00 AM - 5:00 PM (Closed on Mondays)</li>
+                <li><strong>Entrance Fee:</strong> €6 (Free with Ghent City Card)</li>
+              </ul>
+            </div>
+            
+            <div class="location-highlight">
+              <h3>Hidden Historical Gem - The Great Butchers' Hall</h3>
+              <p>The Great Butchers' Hall (Groot Vleeshuis) represents a fascinating piece of Ghent's commercial history. This medieval covered market dating from the 15th century is an impressive brick building with a wooden truss ceiling where butchers sold their meat for centuries. Today, it houses a market for regional East Flemish products where you can sample local specialties.</p>
+              <p>Look up to see the ham and sausages still hanging from the ceiling beams to cure - a tradition dating back centuries. The building stands as a testament to the importance of the meat trade in medieval Ghent and provides insight into how food markets operated in the past. The current regional food focus allows visitors to taste authentic local products in a historically significant setting.</p>
+              <ul>
+                <li><strong>Location:</strong> Groentenmarkt 7</li>
+                <li><strong>Hours:</strong> Monday-Thursday and Sunday 10:00 AM - 6:00 PM, Friday-Saturday 10:00 AM - 7:00 PM</li>
+                <li><strong>Entrance:</strong> Free (pay for any food or drinks you consume)</li>
+              </ul>
+            </div>
+        </div>
+          
+        <div class="travel-detail">
+          <h3>Alternative: Boat Tour</h3>
+          <p>If you prefer to see Ghent from the water instead of walking, consider taking a canal tour:</p>
+          <ul>
+            <li>Several companies offer canal tours of Ghent</li>
+            <li><strong>Duration:</strong> Approximately 40 minutes</li>
+            <li><strong>Cost:</strong> Around €8-10</li>
+            <li><strong>Departures:</strong> from Graslei or Korenlei</li>
+          </ul>
+          
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> Boat tours provide a unique perspective of Ghent and allow you to see many historic buildings from the water while resting your feet.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Coffee and Pastry Break</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="location-highlight">
+            <h3>Maison Hancké</h3>
+            <p><strong>Address:</strong> Gentpoortstraat 9</p>
+            <p>Historic patisserie with beautiful desserts and pastries in an elegant setting.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Alice</h3>
+            <p><strong>Address:</strong> Sint-Pietersnieuwstraat 124</p>
+            <p>Charming café with gorgeous pastries and quality coffee in a cozy atmosphere.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Barista</h3>
+            <p><strong>Address:</strong> Hippoliet Lippensplein 25</p>
+            <p>Specialty coffee shop with expert baristas and a selection of sweet treats.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Mokabon</h3>
+            <p><strong>Address:</strong> Donkersteeg 35</p>
+            <p>Ghent's oldest coffee house, close to the historic center with traditional charm.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Shopping for Local Specialties</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="location-highlight">
+            <h3>Tierenteyn-Verlent</h3>
+            <p><strong>Address:</strong> Groentenmarkt 3</p>
+            <p>Famous for mustard, in business since 1790. Their mustard is freshly made and served from a wooden barrel - a unique Ghent specialty.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Chocolaterie Van Hoorebeke</h3>
+            <p><strong>Address:</strong> Jakobijnenstraat 1</p>
+            <p>Artisanal Belgian chocolates handmade by master chocolatiers. A perfect place to buy high-quality souvenirs.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Himschoot</h3>
+            <p><strong>Address:</strong> Groentenmarkt 1</p>
+            <p>One of the oldest bakeries in Ghent, offering traditional Belgian baked goods and breads.</p>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Huis Lousbergmarkt</h3>
+            <p><strong>Address:</strong> Zandberg 8</p>
+            <p>Local products and delicacies from around East Flanders, perfect for food gifts or treats.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Dinner Options</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="options-box">
+            <h3>Volta</h3>
+            <p><strong>Address:</strong> Nieuwe Wandeling 2B</p>
+            <p>Higher-end restaurant in a former power station (splurge option) with industrial-chic decor and innovative Belgian cuisine.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Oak</h3>
+            <p>Innovative Belgian cuisine with great reviews, focusing on seasonal ingredients and creative preparation.</p>
+          </div>
+          
+          <div class="options-box">
+            <h3>Lokaal</h3>
+            <p><strong>Address:</strong> Brabantdam 100</p>
+            <p>Farm-to-table concept with local ingredients, offering a taste of authentic Flemish cuisine in a modern setting.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Evening Activity</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Ghent Light Plan Walking Tour</h3>
+          <p>Ghent has a special urban lighting plan that beautifully illuminates its medieval buildings. Take a self-guided evening walk:</p>
+          <ol>
+            <li>Start at <strong>Sint-Baafsplein</strong></li>
+            <li>Walk to <strong>Korenmarkt</strong></li>
+            <li>Continue along <strong>Graslei and Korenlei</strong></li>
+            <li>Cross to <strong>Gravensteen Castle</strong></li>
+            <li>End at <strong>Sint-Michielsbrug</strong> for panoramic views</li>
+          </ol>
+          
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> Ghent's illumination plan has won international awards and transforms the city into a magical setting at night. Don't forget your camera!</p>
+          </div>
+        </div>
       </section>
 
       <div class="navigation-buttons">
-        <a href="day1.html" class="btn">Previous: Travel Day</a>
-        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
+        <a href="day3.html" class="btn">Previous: Day 3</a>
+        <a href="day5.html" class="btn btn-accent">Next: Day 5</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>Discover the medieval beauty of Ghent.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
-
-  <script>
-    // Add active class to current day link in the trip navigation
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop();
-      const dayLinks = document.querySelectorAll('.trip-nav-link');
-      
-      dayLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
 
   <script src="../assets/js/main.js"></script>
 </body>

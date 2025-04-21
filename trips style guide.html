@@ -819,6 +819,60 @@ function loadTripNav() {
         </div>
         
         <div class="travel-detail">
+          <h3>Historical and Cultural Context Styling</h3>
+          <p><strong>IMPORTANT:</strong> All historical and cultural context information should be visually distinct with a background color that contrasts with its surrounding container. These elements can be nested inside other components, but must use a different background color than their parent container.</p>
+          <p>For example, if historical context is nested inside a travel-detail box (blue border with white background), the historical context should use a location-highlight style (yellow background). If nested inside a component with a yellow background, consider using a light blue background instead.</p>
+          
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>❌ Incorrect Implementation</h3>
+              <p>Never use the same background color for nested historical context as its parent container:</p>
+              <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;div class="travel-detail"&gt;
+  &lt;h3&gt;Castle Information&lt;/h3&gt;
+  &lt;p&gt;Practical information...&lt;/p&gt;
+  
+  &lt;div class="culture-box"&gt; &lt;!-- Same white background as parent --&gt;
+    &lt;h3&gt;Historical Context&lt;/h3&gt;
+    &lt;p&gt;Historical information...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+            
+            <div class="location-highlight">
+              <h3>✅ Correct Implementation</h3>
+              <p>Use contrasting background colors for nested components:</p>
+              <pre style="background: #f5f5f5; padding: 10px; font-size: 0.9em;">
+&lt;!-- Option 1: Separate components --&gt;
+&lt;div class="travel-detail"&gt;
+  &lt;h3&gt;Castle Information&lt;/h3&gt;
+  &lt;p&gt;Practical information...&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="location-highlight"&gt;
+  &lt;h3&gt;Historical Context&lt;/h3&gt;
+  &lt;p&gt;Historical information...&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Option 2: Nested with contrasting background --&gt;
+&lt;div class="travel-detail"&gt;
+  &lt;h3&gt;Castle Information&lt;/h3&gt;
+  &lt;p&gt;Practical information...&lt;/p&gt;
+  
+  &lt;div class="location-highlight"&gt; &lt;!-- Yellow background contrasts with parent --&gt;
+    &lt;h3&gt;Historical Context&lt;/h3&gt;
+    &lt;p&gt;Historical information...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+
+          <div class="travel-tip">
+            <p><i class="fas fa-lightbulb"></i> The key is visual distinction - if you're nesting content components, always ensure they have different background colors to clearly separate the content types for users.</p>
+          </div>
+        </div>
+        
+        <div class="travel-detail">
           <h3>Flexible Layout Examples</h3>
           <p>Location highlights and option boxes can be arranged side-by-side with themselves or with each other to create balanced layouts:</p>
         </div>
