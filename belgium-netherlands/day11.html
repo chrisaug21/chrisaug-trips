@@ -102,14 +102,13 @@
       display: none !important;
     }
     
-    /* Hide the mobile-only Trip Home link */
+    /* Hide the mobile-only Trip Home link - no longer needed */
     .mobile-trip-home-link {
       display: none !important;
     }
 
     .all-trips-link i,
-    .trip-home-link i,
-    .mobile-trip-home-link i {
+    .trip-home-link i {
       margin-right: 5px;
     }
 
@@ -204,7 +203,7 @@
       padding-left: 1.5rem;
     }
 
-    /* Mobile responsive adjustments */
+    /* Mobile styles */
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
@@ -243,58 +242,21 @@
         text-align: center;
       }
       
-      .mobile-trip-home-link {
-        display: inline-block;
-      }
-      
-      /* Remove icon from Trip Home button in mobile view */
+      /* Handle responsive text for Trip Home button */
       .trip-home-link i {
-        display: none;
+        display: none !important; /* Hide icon on mobile */
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container site-header">
-      <h1 class="site-title"><a href="../index.html">Trip Guides</a></h1>
-      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
-      <nav>
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="index.html">Belgium & Netherlands</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <!-- Header will be inserted here -->
+  <div id="header-container"></div>
   
-  <!-- Navigation -->
+  <!-- Create a sticky wrapper for navigation -->
   <div class="sticky-nav-wrapper">
-    <div class="trip-nav">
-      <div class="container trip-nav-container">
-        <div class="trip-nav-links">
-          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-        </div>
-        <div class="trip-nav-days">
-          <!-- Mobile-only Trip Home button -->
-          <a href="index.html" class="trip-nav-link mobile-trip-home-link"><i class="fas fa-map-marked-alt"></i></a>
-          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
-          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
-        </div>
-      </div>
-    </div>
+    <!-- Trip Nav will be inserted here -->
+    <div id="trip-nav-container"></div>
   </div>
   
   <main style="margin-top: 0; padding-top: 0;">
@@ -376,57 +338,10 @@
     </div>
   </footer>
 
+  <!-- Components.js for template loading -->
+  <script src="../assets/js/components.js"></script>
+  
   <!-- Main scripts -->
   <script src="../assets/js/main.js"></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Highlight active page in navigation
-      const currentLocation = window.location.pathname;
-      const navLinks = document.querySelectorAll('.trip-nav-link');
-      
-      // Function to update the Trip Home button text based on screen size
-      const updateTripHomeText = () => {
-        const tripHomeLinks = document.querySelectorAll('.trip-home-link');
-        
-        tripHomeLinks.forEach(link => {
-          if (window.innerWidth <= 768) {
-            // Mobile view - just "Trip"
-            link.innerHTML = 'Trip';
-          } else {
-            // Desktop view - "Trip Home" with icon
-            link.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
-          }
-        });
-      };
-      
-      // Call initially
-      updateTripHomeText();
-      
-      // Call on window resize
-      window.addEventListener('resize', updateTripHomeText);
-      
-      navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (currentLocation.endsWith(linkPath) && linkPath !== '#') {
-          link.classList.add('active');
-        }
-      });
-      
-      // Apply sticky nav styles
-      const tripNav = document.querySelector('.trip-nav');
-      if (tripNav) {
-        tripNav.classList.add('fixed-nav');
-        
-        window.addEventListener('scroll', function() {
-          if (window.scrollY > 10) {
-            tripNav.classList.add('scrolled');
-          } else {
-            tripNav.classList.remove('scrolled');
-          }
-        });
-      }
-    });
-  </script>
 </body>
 </html> 

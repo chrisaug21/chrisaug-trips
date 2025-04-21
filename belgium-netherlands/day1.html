@@ -48,14 +48,24 @@
       margin-right: 0.5rem;
     }
     
-    /* Hide the mobile-only Trip Home link */
+    /* Hide the mobile-only Trip Home link - no longer needed */
     .mobile-trip-home-link {
       display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
     }
 
     /* Mobile responsive adjustments - simplified to avoid conflicts */
     @media (max-width: 768px) {
       /* We'll handle this with JavaScript to avoid CSS/JS conflicts */
+      
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
     }
 
     /* Reset trip-nav-container styles that may interfere */
@@ -155,12 +165,6 @@
       color: var(--white);
     }
 
-    .all-trips-link i,
-    .trip-home-link i,
-    .mobile-trip-home-link i {
-      margin-right: 5px;
-    }
-
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
@@ -198,15 +202,6 @@
         font-size: 0.85rem;
         width: 100%;
         text-align: center;
-      }
-      
-      .mobile-trip-home-link {
-        display: inline-block;
-      }
-      
-      /* Remove icon from Trip Home button in mobile view */
-      .trip-home-link i {
-        display: none;
       }
     }
   </style>
@@ -284,131 +279,5 @@
   
   <!-- Main scripts -->
   <script src="../assets/js/main.js"></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wait a short time for all components to load fully
-      setTimeout(() => {
-        // Apply styles to sticky wrapper
-        const stickyWrapper = document.querySelector('.sticky-nav-wrapper');
-        if (stickyWrapper) {
-          stickyWrapper.style.position = 'sticky';
-          stickyWrapper.style.top = '0';
-          stickyWrapper.style.zIndex = '1000';
-          stickyWrapper.style.width = '100%';
-          stickyWrapper.style.backgroundColor = 'white';
-          stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-          stickyWrapper.style.marginBottom = '0';
-          stickyWrapper.style.paddingBottom = '0';
-        }
-
-        // Force the trip-nav-container to be part of the sticky flow
-        const tripNavContainer = document.getElementById('trip-nav-container');
-        if (tripNavContainer) {
-          tripNavContainer.style.position = 'static';
-          tripNavContainer.style.width = '100%';
-          tripNavContainer.style.marginBottom = '0';
-          tripNavContainer.style.paddingBottom = '0';
-        }
-
-        // Find the actual trip-nav element inside the container
-        const tripNav = document.querySelector('.trip-nav');
-        if (tripNav) {
-          tripNav.style.position = 'static';
-          tripNav.style.width = '100%';
-          tripNav.style.boxShadow = 'none';
-          tripNav.style.marginBottom = '0';
-          tripNav.style.paddingBottom = '0.5rem';
-        }
-        
-        // Remove margin from main content
-        const mainContent = document.querySelector('main');
-        if (mainContent) {
-          mainContent.style.marginTop = '0';
-          mainContent.style.paddingTop = '0';
-        }
-
-        // Hide "All Trips" link
-        const allTripsLink = document.querySelector('.all-trips-link');
-        if (allTripsLink) {
-          allTripsLink.style.display = 'none';
-        }
-
-        // Move Trip Home link to the day navigation
-        const tripHomeLink = document.querySelector('.trip-home-link');
-        const tripNavDays = document.querySelector('.trip-nav-days');
-        
-        if (tripHomeLink && tripNavDays) {
-          // Clone the Trip Home link
-          const clonedTripHomeLink = tripHomeLink.cloneNode(true);
-          
-          // Add it to the beginning of the day navigation
-          tripNavDays.insertBefore(clonedTripHomeLink, tripNavDays.firstChild);
-          
-          // Hide the original
-          tripHomeLink.parentElement.style.display = 'none';
-          
-          // Function to update Trip Home text based on screen size
-          const updateTripHomeText = () => {
-            if (window.innerWidth <= 768) {
-              // Just text "Trip" with no icon on mobile
-              clonedTripHomeLink.innerHTML = 'Trip';
-            } else {
-              // Keep "Trip Home" with icon on desktop
-              clonedTripHomeLink.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
-            }
-          };
-          
-          // Call initially
-          updateTripHomeText();
-          
-          // And add a resize listener
-          window.addEventListener('resize', updateTripHomeText);
-        }
-
-        // Hide the mobile-only Trip Home link
-        const mobileTripHomeLink = document.querySelector('.mobile-trip-home-link');
-        if (mobileTripHomeLink) {
-          mobileTripHomeLink.style.display = 'none';
-        }
-
-        // Find the day navigation (the bottom part)
-        if (tripNavDays) {
-          tripNavDays.style.position = 'static';
-          tripNavDays.style.background = 'white';
-          tripNavDays.style.width = '100%';
-          tripNavDays.style.display = 'flex';
-        }
-
-        // Get all navigation links
-        const navLinks = document.querySelectorAll('.trip-nav-link');
-        
-        // Find the current page URL
-        const currentPage = window.location.pathname.split('/').pop();
-        
-        // Add active class to matching link
-        navLinks.forEach(link => {
-          if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-          }
-        });
-
-        // Add scroll class on scroll
-        const handleScroll = () => {
-          if (window.scrollY > 10) {
-            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.15)';
-          } else {
-            if (stickyWrapper) stickyWrapper.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-          }
-        };
-        
-        // Listen for scroll events
-        window.addEventListener('scroll', handleScroll);
-        
-        // Initialize on page load
-        handleScroll();
-      }, 100); // Short delay to ensure components are fully loaded
-    });
-  </script>
 </body>
 </html> 

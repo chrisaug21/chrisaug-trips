@@ -110,14 +110,13 @@
       display: none !important;
     }
     
-    /* Hide the mobile-only Trip Home link */
+    /* Hide the mobile-only Trip Home link - no longer needed */
     .mobile-trip-home-link {
       display: none !important;
     }
 
     .all-trips-link i,
-    .trip-home-link i,
-    .mobile-trip-home-link i {
+    .trip-home-link i {
       margin-right: 5px;
     }
 
@@ -407,18 +406,24 @@
         text-align: center;
       }
       
-      .mobile-trip-home-link {
-        display: inline-block;
-      }
-      
-      /* Remove icon from Trip Home button in mobile view */
+      /* Handle responsive text for Trip Home button */
       .trip-home-link i {
-        display: none;
+        display: none !important; /* Hide icon on mobile */
       }
       
-      /* For mobile only, change text to just "Trip" */
+      /* Change text to just "Trip" on mobile */
       .trip-home-link span {
+        display: inline !important;
+      }
+      
+      .trip-home-link span:after {
         content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
       }
     }
 
@@ -650,64 +655,23 @@
   </style>
 </head>
 <body>
-  <!-- Replace the header container with actual header HTML -->
-  <header>
-    <div class="container site-header">
-      <h1 class="site-title"><a href="../index.html">Trip Guides</a></h1>
-      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
-      <nav>
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="index.html">Belgium & Netherlands</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <!-- Header will be inserted here -->
+  <div id="header-container"></div>
   
   <!-- Create a sticky wrapper for navigation -->
   <div class="sticky-nav-wrapper">
-    <!-- Trip Navigation -->
-    <div class="trip-nav">
-      <div class="container trip-nav-container">
-        <div class="trip-nav-links">
-          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-        </div>
-        <div class="trip-nav-days">
-          <!-- Mobile-only Trip Home button -->
-          <a href="index.html" class="trip-nav-link mobile-trip-home-link"><i class="fas fa-map-marked-alt"></i></a>
-          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
-          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
-        </div>
-      </div>
-    </div>
+    <!-- Trip Nav will be inserted here -->
+    <div id="trip-nav-container"></div>
   </div>
 
-  <main style="margin-top: 0; padding-top: 0;">
+  <main>
     <!-- Trip Header Section -->
-    <section class="trip-header" style="margin-top: 0;">
+    <section class="trip-header">
       <div class="container">
-        <h1>Belgium & Netherlands Trip</h1>
-        <div class="trip-dates">April 22 - May 2, 2025</div>
+        <h1>Belgium & Netherlands</h1>
+        <div class="trip-dates">April 21 - May 2, 2025</div>
         <div class="trip-intro">
-          <p>Welcome to your unforgettable journey through Belgium and the Netherlands, where centuries of history, art, and culture meet picturesque canals, medieval architecture, and culinary delights.</p>
-          <p>Your adventure begins in the medieval beauty of Ghent, Belgium, with its stunning castle, winding canals, and vibrant local scene away from the tourist crowds.</p>
-          <p>From Ghent, you'll venture to the fairytale-like charm of Bruges for a day trip, where chocolate shops, breweries, and cobblestone streets create a truly magical atmosphere. Before heading to the Netherlands, you'll enjoy a brief exploration of Antwerp, known for its impressive architecture and fashion scene.</p>
-          <p>In the Netherlands, Utrecht will serve as your home base - a delightful university city with canals and a historic center without Amsterdam's tourist crowds. From here, you'll take day trips to charming Delft with its famous blue pottery and iconic Amsterdam with its distinctive canal rings and lively atmosphere. And as a special bonus, you'll be in the Netherlands during tulip season and for King's Day (April 27), one of the country's biggest celebrations!</p>
-          <p>Throughout your journey, you'll discover local cafés and brown bars, sample distinctive regional specialties from Belgian chocolate and beer to Dutch stroopwafels and jenever, and immerse yourselves in the laid-back yet vibrant culture of these two fascinating countries.</p>
-          <div class="trip-reminder">
-            <p><strong>Remember:</strong> This trip is an adventure. We get to go to the most incredible places. Unexpected and unplanned things will happen and we will find ways to roll with them like we always do. We can handle anything. Everything is figure-out-able. This will become an amazing story.</p>
-          </div>
+          <p>Explore the historic cities of Belgium and Holland - from medieval Bruges and artistic Amsterdam to the flower paradise of Keukenhof and King's Day celebrations. A 11-day journey through canals, culture, and culinary delights of the Low Countries.</p>
         </div>
       </div>
     </section>
@@ -1148,89 +1112,10 @@
     </div>
   </footer>
 
+  <!-- Components.js for template loading -->
+  <script src="../assets/js/components.js"></script>
+  
   <!-- Main scripts -->
   <script src="../assets/js/main.js"></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Highlight active page in navigation
-      const currentLocation = window.location.pathname;
-      const navLinks = document.querySelectorAll('.trip-nav-link');
-      
-      // Function to update the Trip Home button text based on screen size
-      const updateTripHomeText = () => {
-        const tripHomeLinks = document.querySelectorAll('.trip-home-link');
-        
-        tripHomeLinks.forEach(link => {
-          if (window.innerWidth <= 768) {
-            // Mobile view - just "Trip"
-            link.innerHTML = 'Trip';
-          } else {
-            // Desktop view - "Trip Home" with icon
-            link.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
-          }
-        });
-      };
-      
-      // Call initially
-      updateTripHomeText();
-      
-      // Call on window resize
-      window.addEventListener('resize', updateTripHomeText);
-      
-      navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (currentLocation.endsWith(linkPath) && linkPath !== '#') {
-          link.classList.add('active');
-        }
-        
-        // Mark the Trip button as active since we're on index.html
-        if (currentLocation.endsWith('index.html') && linkPath === 'index.html') {
-          link.classList.add('active');
-        }
-      });
-      
-      // Apply sticky nav styles
-      const tripNav = document.querySelector('.trip-nav');
-      if (tripNav) {
-        tripNav.classList.add('fixed-nav');
-        
-        window.addEventListener('scroll', function() {
-          if (window.scrollY > 10) {
-            tripNav.classList.add('scrolled');
-          } else {
-            tripNav.classList.remove('scrolled');
-          }
-        });
-      }
-      
-      // Initialize map modal functionality if present
-      const tripMap = document.getElementById('trip-map');
-      const mapModal = document.getElementById('mapModal');
-      const closeBtn = document.querySelector('.map-modal-close');
-      
-      if (tripMap && mapModal && closeBtn) {
-        tripMap.addEventListener('click', function() {
-          mapModal.style.display = 'flex';
-          
-          document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-              mapModal.style.display = 'none';
-            }
-          });
-        });
-        
-        closeBtn.addEventListener('click', function() {
-          mapModal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', function(event) {
-          if (event.target === mapModal) {
-            mapModal.style.display = 'none';
-          }
-        });
-      }
-    });
-  </script>
 </body>
 </html> 

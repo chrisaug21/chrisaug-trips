@@ -27,6 +27,7 @@ function initComponents() {
       // After trip nav is loaded, set active links and initialize sticky behavior
       setActiveNavLinks();
       initializeStickyNav();
+      updateTripHomeText(); // Handle responsive Trip Home button text
     })
     .catch(error => console.error('Error loading trip nav:', error));
 }
@@ -81,6 +82,33 @@ function setupMobileNavigation() {
 }
 
 /**
+ * Handle the responsive display of the Trip Home button text
+ * Shows "Trip Home" on desktop and "Trip" on mobile
+ */
+function updateTripHomeText() {
+  const tripHomeLinks = document.querySelectorAll('.trip-home-link');
+  
+  // Define the update function
+  const updateText = () => {
+    tripHomeLinks.forEach(link => {
+      if (window.innerWidth <= 768) {
+        // Mobile view - just "Trip"
+        link.innerHTML = 'Trip';
+      } else {
+        // Desktop view - "Trip Home" with icon
+        link.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
+      }
+    });
+  };
+  
+  // Call initially
+  updateText();
+  
+  // And add a resize listener
+  window.addEventListener('resize', updateText);
+}
+
+/**
  * Set active state for navigation links based on current page
  */
 function setActiveNavLinks() {
@@ -108,10 +136,12 @@ function setActiveNavLinks() {
     }
   });
   
-  // Handle mobile trip home link
-  const mobileHomeLink = document.querySelector('.mobile-trip-home-link');
-  if (mobileHomeLink && (currentPage === '' || currentPage === 'index.html')) {
-    mobileHomeLink.classList.add('active');
+  // Mark the Trip Home button as active on index.html
+  if (currentPage === '' || currentPage === 'index.html') {
+    const tripHomeLinks = document.querySelectorAll('.trip-home-link');
+    tripHomeLinks.forEach(link => {
+      link.classList.add('active');
+    });
   }
 }
 
