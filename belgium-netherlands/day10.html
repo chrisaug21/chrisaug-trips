@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 10: Thursday, May 1 - OPTION DAY | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -407,6 +406,29 @@
         text-align: center;
       }
     }
+
+    /* Desktop Trip button with home icon */
+    @media (min-width: 769px) {
+      .trip-home-link i.fas.fa-map-marked-alt,
+      .trip-home-link i.fas.fa-home {
+        display: none !important;
+      }
+      
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.5rem;
+      }
+    }
+    
+    /* Mobile Trip button without icon */
+    @media (max-width: 768px) {
+      .trip-home-link i, 
+      .trip-home-link:before {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -417,7 +439,6 @@
       <nav>
         <ul>
           <li><a href="../index.html">Home</a></li>
-          <li><a href="index.html">Belgium & Netherlands</a></li>
         </ul>
       </nav>
     </div>
@@ -429,7 +450,7 @@
         <div class="trip-nav-container">
           <div class="trip-nav-days">
             <a href="index.html" class="trip-nav-link trip-home-link">
-              <i class="fas fa-home"></i> <span>Trip Home</span>
+              <i class="fas fa-home"></i> <span>Trip</span>
             </a>
             <a href="day1.html" class="trip-nav-link">Day 1</a>
             <a href="day2.html" class="trip-nav-link">Day 2</a>

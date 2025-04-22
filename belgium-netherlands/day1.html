@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 1: Travel Day | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -318,11 +317,42 @@
         text-align: center;
       }
     }
+
+    /* Desktop Trip button with home icon */
+    @media (min-width: 769px) {
+      .trip-home-link i.fas.fa-map-marked-alt {
+        display: none !important;
+      }
+      
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.5rem;
+      }
+    }
+    
+    /* Mobile Trip button without icon */
+    @media (max-width: 768px) {
+      .trip-home-link i, 
+      .trip-home-link:before {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Header will be inserted here -->
-  <div id="header-container"></div>
+  <header>
+    <div class="container site-header">
+      <h1 class="site-title"><a href="../index.html">Trip Guides</a></h1>
+      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
   
   <!-- Create a sticky wrapper for navigation -->
   <div class="sticky-nav-wrapper">
@@ -372,7 +402,7 @@
     
     <div class="container">
       <div class="navigation-buttons">
-        <a href="index.html" class="btn">Previous: Trip Home</a>
+        <a href="index.html" class="btn">Previous: Trip</a>
         <a href="day2.html" class="btn btn-accent">Next: Day 2</a>
       </div>
     </div>

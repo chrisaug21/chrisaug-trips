@@ -174,18 +174,20 @@
 
     .map-legend-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.5rem;
     }
 
     .map-red-marker {
       color: #e74c3c;
       font-size: 1.2rem;
+      margin-top: 3px;
     }
 
     .map-blue-marker {
       color: #3498db;
       font-size: 1.2rem;
+      margin-top: 3px;
     }
 
     .trip-nav {
@@ -352,6 +354,37 @@
       
       .mobile-trip-home-link {
         display: inline-block;
+      }
+    }
+
+    /* Desktop Trip button with home icon */
+    @media (min-width: 769px) {
+      .trip-home-link i.fas.fa-map-marked-alt {
+        display: none !important;
+      }
+      
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.5rem;
+      }
+    }
+
+    /* Mobile Trip button without icon */
+    @media (max-width: 768px) {
+      .trip-home-link i, 
+      .trip-home-link:before {
+        display: none !important;
+      }
+      
+      .map-legend-item {
+        align-items: flex-start;
+      }
+      
+      .map-red-marker, 
+      .map-blue-marker {
+        margin-top: 3px;
       }
     }
   </style>

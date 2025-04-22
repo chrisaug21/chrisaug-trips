@@ -83,7 +83,7 @@ function setupMobileNavigation() {
 
 /**
  * Handle the responsive display of the Trip Home button text
- * Shows "Trip Home" on desktop and "Trip" on mobile
+ * Shows "Trip" on both desktop and mobile, with icon only on desktop
  */
 function updateTripHomeText() {
   const tripHomeLinks = document.querySelectorAll('.trip-home-link');
@@ -92,11 +92,11 @@ function updateTripHomeText() {
   const updateText = () => {
     tripHomeLinks.forEach(link => {
       if (window.innerWidth <= 768) {
-        // Mobile view - just "Trip"
+        // Mobile view - just "Trip" without icon
         link.innerHTML = 'Trip';
       } else {
-        // Desktop view - "Trip Home" with icon
-        link.innerHTML = '<i class="fas fa-map-marked-alt"></i> <span>Trip Home</span>';
+        // Desktop view - "Trip" with home icon (icon is added via CSS)
+        link.innerHTML = '<span>Trip</span>';
       }
     });
   };
