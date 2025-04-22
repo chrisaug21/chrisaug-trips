@@ -3,52 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
+  <title>Day 8: Utrecht | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Trip-specific navigation */
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    /* Create a sticky wrapper */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link - no longer needed */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
     .trip-nav-link {
-      text-align: center;
       padding: 0.5rem 1rem;
       background-color: var(--light-bg);
       border-radius: 4px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
@@ -57,51 +177,204 @@
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0; /* Ensure it's at the top */
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
-      
+
       .day-label {
         display: none;
       }
       
       .trip-nav-link {
-      text-align: center;
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
+        width: 100%;
+        text-align: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .trip-nav-link {
+    /* Added styling for content grids similar to index.html */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title-container {
       text-align: center;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-      }
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .trip-details strong {
+      color: var(--primary);
+    }
+
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+
+    .location-highlight {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .location-highlight h3 {
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .evening-options {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .evening-options h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .evening-options ul, .evening-options ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .evening-options li {
+      margin-bottom: 0.5rem;
+    }
+
+    .options-box {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .options-box h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .options-box ul, .options-box ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .options-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    .card {
+      margin-bottom: 3rem;
+    }
+    
+    .evening-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
@@ -118,87 +391,233 @@
       </nav>
     </div>
   </header>
-
-  <!-- Trip-specific navigation -->
-  <div class="trip-nav">
-    <div class="container trip-nav-container">
-      <div class="trip-nav-links">
-        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-      </div>
-      <div class="trip-nav-days">
-        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+  
+  <!-- Create a sticky wrapper for navigation -->
+  <div class="sticky-nav-wrapper">
+    <!-- Trip Navigation -->
+    <div class="trip-nav">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+          <a href="day8.html" class="trip-nav-link active">Day 8 <span class="day-label">(Tue)</span></a>
+          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
+        </div>
       </div>
     </div>
   </div>
 
-  <main>
+  <main style="margin-top: 0; padding-top: 0;">
     <section class="hero">
       <div class="container">
-        <h1>Day 8: Utrecht</h1>
-        <p>Explore Utrecht's canals and historic center.</p>
+        <h1>⛪ Day 8: Tuesday, April 29 - Utrecht</h1>
       </div>
     </section>
 
     <div class="container">
       <section class="card">
-        <h2>Morning</h2>
-        <ul>
-          <li>Arrival in Brussels International Airport</li>
-          <li>Navigate to train station at airport</li>
-          <li>Purchase train ticket to Ghent Sint-Pieters</li>
-          <li>Train journey (approximately 1 hour)</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Hidden Historical Gem</h2>
+        </div>
+        <div class="culture-box">
+          <h3>St. Martin's Cathedral & DOMunder</h3>
+          <p>While the Dom Tower is Utrecht's most visible landmark, take time to explore St. Martin's Cathedral (Domkerk) itself and consider the fascinating DOMunder archaeological experience. The cathedral was separated from its tower after a devastating tornado destroyed the nave in 1674, leaving the tower and church separated by a large square (Domplein).</p>
+          <p>DOMunder is a relatively new underground attraction where you can explore 2,000 years of Utrecht's history beneath Domplein square. Using a special torch, you'll discover Roman foundations, medieval artifacts, and learn about Utrecht's development through an interactive experience.</p>
+          <div class="location-highlight">
+            <h3>Location & Details</h3>
+            <p><strong>Location:</strong> Domplein</p>
+            <p><strong>Hours:</strong> Tuesday-Saturday 10:00 AM - 5:00 PM, Sunday 12:00 PM - 5:00 PM</p>
+            <p><strong>Cost:</strong> €11 (requires advance booking as groups are small)</p>
+          </div>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Afternoon</h2>
-        <ul>
-          <li>Check-in at accommodation in Ghent</li>
-          <li>Quick lunch at a local café</li>
-          <li>Initial orientation walk around central Ghent</li>
-          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Breakfast Options</h2>
+        </div>
+        <div class="travel-detail">
+          <ul>
+            <li><strong>Blackbird Coffee</strong> (Oudegracht 222) - Excellent coffee and breakfast</li>
+            <li><strong>Yoghurt Barn</strong> (Oudegracht 183) - Healthy breakfast options</li>
+            <li><strong>Ted's</strong> (Janskerkhof 9) - All-day breakfast with local ingredients</li>
+          </ul>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Evening</h2>
-        <ul>
-          <li>Dinner at a traditional Flemish restaurant</li>
-          <li>Stroll along the illuminated medieval buildings and canals</li>
-          <li>Early night to recover from travel fatigue</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Morning Activity: Utrecht City Exploration</h2>
+        </div>
+        
+        <div class="travel-detail">
+          <h3>Utrecht Dom Tower</h3>
+          <ul>
+            <li>The tallest church tower in the Netherlands (112m/367ft)</li>
+            <li>Tours available (€11, book in advance recommended)</li>
+            <li>465 steps to the top with amazing views</li>
+            <li>Tours last 1 hour and start every hour</li>
+          </ul>
+          
+          <div class="location-highlight">
+            <h3>Historical Context</h3>
+            <p>The Dom Tower (Domtoren) is the symbol of Utrecht and the tallest church tower in the Netherlands. Construction began in 1321 and took 61 years to complete, reaching a height of 112.5 meters (369 feet). The tower was intended to demonstrate Utrecht's wealth and religious significance as the center of Christianity in the northern Netherlands.</p>
+            <p>Originally attached to St. Martin's Cathedral, the nave connecting them collapsed during a tornado in 1674 and was never rebuilt, leaving the iconic tower standing independently. The tower contains 14 bells, the largest weighing 8,200 kg (18,080 lbs), and the carillon plays automatically every 15 minutes. From the top, on clear days, you can see both Amsterdam and Rotterdam.</p>
+          </div>
+        </div>
+
+        <div class="travel-detail">
+          <h3>Alternative: Utrecht's Unique Canals</h3>
+          <p>Utrecht's canals are unique because of their "wharf cellars" - double-level canals with restaurants and cafés at water level.</p>
+          <ul>
+            <li>Walk along the Oudegracht (Old Canal)</li>
+            <li>Visit the Ledig Erf area where canals converge</li>
+            <li>Explore the wharf cellars, now housing shops and restaurants</li>
+          </ul>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Tips for Day 2</h2>
-        <ul>
-          <li>Brussels Airport has clear signage to the train station below the terminal</li>
-          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
-          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
-          <li>Ask your accommodation for a local map and recommendations</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Lunch Options</h2>
+        </div>
+        <div class="travel-detail">
+          <ul>
+            <li><strong>Dogma Hotdogbar</strong> (Voorstraat 96) - Creative gourmet hotdogs</li>
+            <li><strong>De Rechtbank</strong> (Korte Nieuwstraat 14) - Beautiful courtyard restaurant in former courthouse</li>
+            <li><strong>KEEK</strong> (Twijnstraat 23) - Organic café with excellent lunch options</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Afternoon Options</h2>
+        </div>
+        
+        <div class="options-box">
+          <h3>Option 1: Museum Speelklok</h3>
+          <ul>
+            <li>Museum of self-playing musical instruments</li>
+            <li>Fascinating demonstrations of music boxes, street organs, and orchestrions</li>
+            <li>Open daily 10:00 AM - 5:00 PM</li>
+            <li>Entrance fee: €14</li>
+          </ul>
+          
+          <div class="location-highlight">
+            <h3>Historical Context</h3>
+            <p>Museum Speelklok (Musical Clock Museum) houses a unique collection of self-playing musical instruments from the 16th century to the present. The museum's centerpiece collection of street organs reflects the Netherlands' distinctive street music tradition.</p>
+            <p>Unlike in other countries, Dutch street organs were large, elaborate instruments on wheels that played entire orchestral arrangements using punched books rather than simple barrel organs. These "orchestrions" were a defining element of Dutch street life from the late 19th through mid-20th centuries. The museum brings these mechanical marvels to life with regular demonstrations and tours, providing a musical journey through Dutch cultural history.</p>
+          </div>
+        </div>
+        
+        <div class="options-box">
+          <h3>Option 2: Centraal Museum</h3>
+          <ul>
+            <li>Utrecht's main art museum, features works by Utrecht-based artists</li>
+            <li>Houses the largest collection of Rietveld's works</li>
+            <li>Open Tuesday-Sunday 11:00 AM - 5:00 PM</li>
+            <li>Entrance fee: €15</li>
+          </ul>
+          
+          <div class="location-highlight">
+            <h3>Historical Context</h3>
+            <p>Founded in 1838, the Centraal Museum is the oldest municipal museum in the Netherlands. The museum is particularly known for its collection of works by Utrecht Caravaggisti (Utrecht painters influenced by Caravaggio) from the Dutch Golden Age, including Jan van Scorel and Abraham Bloemaert.</p>
+            <p>It also houses the world's largest collection of works by Gerrit Rietveld, the Utrecht-born designer and architect who was a principal member of the De Stijl movement. The Rietveld Schröder House, a UNESCO World Heritage site located nearby, can be visited with a separate ticket. The museum itself is housed in a former medieval monastery, adding another layer of historical interest.</p>
+          </div>
+        </div>
+        
+        <div class="options-box">
+          <h3>Option 3: Canal Tour</h3>
+          <ul>
+            <li>Several companies offer boat tours of Utrecht's unique canals</li>
+            <li>Some allow you to rent your own small electric boat (no license needed)</li>
+            <li>Duration: 1-2 hours</li>
+            <li>Cost: €15-20 for guided tour, €45-60 for private boat rental (up to 6 people)</li>
+          </ul>
+          
+          <div class="location-highlight">
+            <h3>Historical Context</h3>
+            <p>A canal tour provides the perfect vantage point to understand Utrecht's unique two-level canal system. As you cruise along the Oudegracht (Old Canal), you'll see the distinctive wharf cellars that distinguish Utrecht's waterways from those in Amsterdam.</p>
+            <p>These cellars, built in the 12th and 13th centuries as storage spaces for merchants, now house cafés and restaurants at water level. From the boat, you can spot architectural details not visible from street level, including the medieval crane that was used to hoist goods from boats, ancient bridges, and ornate façades of canal-side buildings.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Coffee Break</h2>
+        </div>
+        <div class="travel-detail">
+          <ul>
+            <li><strong>30ml Coffee Roasters</strong> (Vredenburg 26) - Specialty coffee</li>
+            <li><strong>Maastricht in Utrecht</strong> (Zadelstraat 26) - Dutch pie and coffee</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Dinner Options</h2>
+        </div>
+        <div class="travel-detail">
+          <ul>
+            <li><strong>Vino Veritas</strong> (Schalkwijkstraat 26) - Wine bar with excellent food</li>
+            <li><strong>Brass Boer Thuis</strong> (Agnietenstraat 2) - Relaxed bistro by Michelin-starred chefs (splurge option)</li>
+            <li><strong>Podium onder de Dom</strong> (Domstraat 4) - Modern Dutch cuisine very close to Domplein and the Dom Tower</li>
+            <li><strong>Restaurant Driftwood</strong> (Hoog Catharijne 50) - Contemporary restaurant near Utrecht Centraal station</li>
+            <li><strong>Humphrey's</strong> (Stadhuisbrug 3) - Reliable Dutch-international menu with canal views in the heart of the city</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Evening Activity</h2>
+        </div>
+        <div class="evening-options">
+          <h3>Sports & Entertainment</h3>
+          <p>Champions League Semi-finals are tonight (Arsenal vs PSG), must find a bar to watch one or both:</p>
+          <ul>
+            <li><strong>Champions Sportsbar & Grill</strong> (18min walk from hotel)</li>
+            <li><strong>Mick O'Connell's</strong> (13min walk from hotel)</li>
+            <li><strong>O'Leary's</strong> (17min walk from hotel)</li>
+          </ul>
+        </div>
+        
+        <div class="evening-options">
+          <h3>Other Evening Options</h3>
+          <ul>
+            <li><strong>Rum Club</strong> - Excellent rum-based cocktails in a cozy atmosphere with knowledgeable bartenders</li>
+            <li><strong>Spring Beer Festival at Café Olivier</strong> (if happening during your visit)</li>
+            <li><strong>Louis Hartlooper Complex</strong> (Tolsteegbrug 1) - Cinema and café in former police station</li>
+            <li><strong>TivoliVredenburg</strong> (Vredenburgkade 11) - Check program for possible concerts</li>
+          </ul>
+        </div>
       </section>
 
       <div class="navigation-buttons">
-        <a href="day1.html" class="btn">Previous: Travel Day</a>
-        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
+        <a href="day7.html" class="btn">Previous: Day 7</a>
+        <a href="day9.html" class="btn btn-accent">Next: Day 9</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>Explore Utrecht's canals and historic center.</p>
+      <p>&copy; 2023 Trip Guides. All rights reserved.</p>
     </div>
   </footer>
 
@@ -215,7 +634,5 @@
       });
     });
   </script>
-
-  <script src="../assets/js/main.js"></script>
 </body>
 </html> 
