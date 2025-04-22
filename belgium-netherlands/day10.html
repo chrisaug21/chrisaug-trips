@@ -3,52 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
+  <title>Day 10: Thursday, May 1 - OPTION DAY | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Trip-specific navigation */
+    /* Trip Navigation Styling */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    .trip-nav-links {
+      display: none !important;
+    }
+    
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1;
+      margin-right: 0.5rem;
+    }
+    
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .trip-home-link i {
+        display: none !important;
+      }
+      
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0;
+      z-index: 1000;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0;
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
     .trip-nav-link {
-      text-align: center;
       padding: 0.5rem 1rem;
       background-color: var(--light-bg);
       border-radius: 4px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
@@ -57,24 +163,28 @@
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0;
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
-        overflow-x: visible; /* Remove horizontal scrolling */
+        overflow-x: visible;
         padding-bottom: 0.25rem;
+        border-top: none;
+        padding-top: 0;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 0.3rem;
       }
       
       .day-label {
@@ -82,25 +192,219 @@
       }
       
       .trip-nav-link {
-      text-align: center;
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
+        width: 100%;
+        text-align: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .trip-nav-link {
-      text-align: center;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
+    /* Option Tabs Styling */
+    .option-tabs {
+      display: flex;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--light-bg);
+    }
+
+    .option-tab {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--light-bg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 6px 6px 0 0;
+      margin-right: 0.5rem;
+    }
+
+    .option-tab:hover {
+      background-color: var(--secondary);
+      color: var(--white);
+    }
+
+    .option-tab.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .option-content {
+      display: none;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .option-content.active {
+      display: block;
+    }
+    
+    /* Content components styling */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cultural-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .cultural-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .cultural-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .cultural-box ul, .cultural-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Travel Detail Component */
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Location Highlight Component */
+    .location-highlight {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .location-highlight h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .location-highlight p {
+      margin-bottom: 0.75rem;
+    }
+    
+    /* Options Box Component */
+    .options-box {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .options-box h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .options-box ul, .options-box ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .options-box li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Travel Tip Component */
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    /* Food options styling */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .food-item {
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .food-item-content {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+
+    .food-item h4 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .food-item p {
+      font-size: 0.9rem;
+      color: var(--light-text);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .navigation-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .btn {
+        text-align: center;
       }
     }
   </style>
@@ -119,24 +423,27 @@
     </div>
   </header>
 
-  <!-- Trip-specific navigation -->
-  <div class="trip-nav">
-    <div class="container trip-nav-container">
-      <div class="trip-nav-links">
-        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-      </div>
-      <div class="trip-nav-days">
-        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+  <div class="sticky-nav-wrapper">
+    <div class="trip-nav">
+      <div class="container">
+        <div class="trip-nav-container">
+          <div class="trip-nav-days">
+            <a href="index.html" class="trip-nav-link trip-home-link">
+              <i class="fas fa-home"></i> <span>Trip Home</span>
+            </a>
+            <a href="day1.html" class="trip-nav-link">Day 1</a>
+            <a href="day2.html" class="trip-nav-link">Day 2</a>
+            <a href="day3.html" class="trip-nav-link">Day 3</a>
+            <a href="day4.html" class="trip-nav-link">Day 4</a>
+            <a href="day5.html" class="trip-nav-link">Day 5</a>
+            <a href="day6.html" class="trip-nav-link">Day 6</a>
+            <a href="day7.html" class="trip-nav-link">Day 7</a>
+            <a href="day8.html" class="trip-nav-link">Day 8</a>
+            <a href="day9.html" class="trip-nav-link">Day 9</a>
+            <a href="day10.html" class="trip-nav-link active">Day 10</a>
+            <a href="day11.html" class="trip-nav-link">Day 11</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -144,78 +451,808 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Day 10: Option Day: Amsterdam or Utrecht</h1>
-        <p>Option day: Second day in Amsterdam or Utrecht.</p>
+        <h1>🏛 Day 10: Thursday, May 1 - OPTION DAY</h1>
+        <p>Second Amsterdam Day OR Second Utrecht Day OR Tulips</p>
       </div>
     </section>
 
     <div class="container">
-      <section class="card">
-        <h2>Morning</h2>
-        <ul>
-          <li>Arrival in Brussels International Airport</li>
-          <li>Navigate to train station at airport</li>
-          <li>Purchase train ticket to Ghent Sint-Pieters</li>
-          <li>Train journey (approximately 1 hour)</li>
-        </ul>
-      </section>
+      <!-- Option tabs navigation -->
+      <div class="option-tabs">
+        <div class="option-tab active" data-option="option-a">Option A</div>
+        <div class="option-tab" data-option="option-b">Option B</div>
+        <div class="option-tab" data-option="option-c">Option C</div>
+      </div>
 
-      <section class="card">
-        <h2>Afternoon</h2>
-        <ul>
-          <li>Check-in at accommodation in Ghent</li>
-          <li>Quick lunch at a local café</li>
-          <li>Initial orientation walk around central Ghent</li>
-          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
-        </ul>
-      </section>
+      <!-- Option A: Second Day in Amsterdam -->
+      <div class="option-content active" id="option-a">
+        <div class="section-title-container">
+          <h2>Second Day in Amsterdam</h2>
+        </div>
+        
+        <!-- Historical Context -->
+        <section class="cultural-box">
+          <h3>Historical Context</h3>
+          <p>A second day in Amsterdam allows you to explore beyond the central canal belt to discover fascinating areas that showcase different aspects of the city's character and history. From the industrial-turned-creative Noord district to the elegant canal houses of the Golden Age, this additional day provides a deeper understanding of Amsterdam's diverse neighborhoods and heritage.</p>
+        </section>
 
-      <section class="card">
-        <h2>Evening</h2>
-        <ul>
-          <li>Dinner at a traditional Flemish restaurant</li>
-          <li>Stroll along the illuminated medieval buildings and canals</li>
-          <li>Early night to recover from travel fatigue</li>
-        </ul>
-      </section>
+        <!-- Breakfast and Transportation Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Morning Start</h2>
+          </div>
 
-      <section class="card">
-        <h2>Tips for Day 2</h2>
-        <ul>
-          <li>Brussels Airport has clear signage to the train station below the terminal</li>
-          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
-          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
-          <li>Ask your accommodation for a local map and recommendations</li>
-        </ul>
-      </section>
+          <div class="food-grid">
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Breakfast in Utrecht</h4>
+                <ul>
+                  <li>The Village Coffee (Voorstraat 46) - Great coffee and breakfast options</li>
+                  <li>Yoghurt Barn (Oudegracht 183) - Healthy breakfast options</li>
+                  <li>Ted's (Janskerkhof 9) - All-day breakfast with local ingredients</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Train to Amsterdam</h4>
+                <ul>
+                  <li>Trains run frequently between Utrecht Centraal and Amsterdam Centraal</li>
+                  <li>Journey time: approximately 30 minutes</li>
+                  <li>Cost: around €9 each way</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Morning Options Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Morning Activities</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Morning Option 1: Amsterdam Noord & NDSM Wharf</h3>
+              <p>Amsterdam Noord (North Amsterdam) offers a completely different perspective on the city – less touristic and more industrial-turned-creative.</p>
+              <ul>
+                <li>Take the free ferry behind Amsterdam Centraal Station (ferries leave every 10-15 minutes)</li>
+                <li>Visit NDSM Wharf, a former shipyard transformed into a cultural hotspot</li>
+                <li>Explore street art, creative workshops, and waterfront restaurants</li>
+                <li>Climb the A'DAM Lookout tower for panoramic views (€14.50, includes a swing over the edge for the brave)</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> Until the 1980s, the NDSM shipyard was one of Europe's largest shipbuilding companies. When the industry collapsed, the massive industrial complex fell into disuse before artists and creative entrepreneurs gradually reclaimed the abandoned spaces. Today, it represents Amsterdam's talent for adaptive reuse, transforming industrial heritage into vibrant new urban spaces. The contrast between the industrial structures and their new cultural functions creates a distinctive atmosphere quite different from central Amsterdam's historical charm.</p>
+              </div>
+            </div>
+
+            <div class="location-highlight">
+              <h3>Morning Option 2: Museum Van Loon & Canal House Museums</h3>
+              <p>For a glimpse into the life of Amsterdam's wealthy merchant class during the Golden Age:</p>
+              <ul>
+                <li>Museum Van Loon (Keizersgracht 672) - Perfectly preserved 17th-century canal house</li>
+                <li>Museum Willet-Holthuysen (Herengracht 605) - Another beautiful canal house museum</li>
+                <li>Museum of the Canals (Het Grachtenhuis, Herengracht 386) - Interactive exhibits about canal construction</li>
+                <li>Cat Cabinet (Kattenkabinet, Herengracht 497) - Eccentric museum dedicated to cats in art</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> The grand canal houses along the Herengracht, Keizersgracht, and Prinsengracht represent the pinnacle of Amsterdam's Golden Age prosperity. Built by wealthy merchants, these houses featured elegant facades with decorative gables facing the canal, but stretched far back on narrow plots due to taxation based on canal frontage. Most combined business and residential use, with goods stored in basement warehouses accessed directly from the canal. Museum Van Loon offers a rare opportunity to see not only the lavish interiors but also the coach house and gardens that typically exist behind these seemingly modest facades.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Lunch Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Lunch</h2>
+          </div>
+          
+          <div class="food-grid">
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>IJ-Kantine</h4>
+                <p>NDSM-Pier 5</p>
+                <p>Industrial-chic restaurant on Amsterdam Noord waterfront</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>De Plantage</h4>
+                <p>Plantage Kerklaan 36</p>
+                <p>Beautiful café-restaurant in a historic greenhouse</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Omelegg</h4>
+                <p>Ferdinand Bolstraat 143</p>
+                <p>Specialty omelet restaurant in De Pijp</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Additional Options</h4>
+                <p>Singel 404 (Singel 404) - Beloved sandwich shop</p>
+                <p>Café de Ceuve - Sustainable restaurant</p>
+                <p>Pllek - Waterfront restaurant in NDSM with great views</p>
+                <p>Foodhallen - Food hall with multiple options</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Afternoon Activities Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Afternoon Activities</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Afternoon Option 1: Western Canal Belt & Jordaan Exploration</h3>
+              <p>The Western Canal Belt and adjacent Jordaan neighborhood offer some of Amsterdam's most picturesque streets and hidden gems.</p>
+              <ul>
+                <li>Visit the Anne Frank House (Prinsengracht 263) - Book tickets well in advance online</li>
+                <li>Explore the Jordaan's hidden courtyards (hofjes) - peaceful residential gardens</li>
+                <li>Wander the picturesque Brouwersgracht, often called Amsterdam's most beautiful canal</li>
+                <li>Discover the Houseboat Museum (Prinsengracht 296K) to see canal life from another perspective</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> The Jordaan was originally built in the 17th century as a working-class neighborhood to house immigrants and laborers who supported Amsterdam's booming economy. The area's name likely comes from the French word "jardin" (garden), as many streets were named after flowers and plants. The neighborhood's narrow streets, small canals, and distinctive architecture create an intimate atmosphere quite different from the grandeur of the main canal belt. The hidden hofjes (inner courtyards) were often built by wealthy merchants as charitable housing for the elderly and women, combining philanthropy with social control.</p>
+              </div>
+            </div>
+
+            <div class="location-highlight">
+              <h3>Afternoon Option 2: Eastern Canal Belt & Plantage Area</h3>
+              <p>The Eastern part of Amsterdam offers a less crowded experience with beautiful canals, interesting museums, and green spaces.</p>
+              <ul>
+                <li>Visit Artis Royal Zoo (Plantage Kerklaan 38-40) - One of Europe's oldest zoos with beautiful grounds</li>
+                <li>Explore Hortus Botanicus (Plantage Middenlaan 2A) - Historic botanical garden from 1638</li>
+                <li>The Hermitage Amsterdam (Amstel 51) - Dutch outpost of the famous Russian museum</li>
+                <li>Micropia (Plantage Kerklaan 38-40) - Unique museum dedicated to microorganisms</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> The Plantage (Plantation) area developed later than the western canal belt, originally serving as a green space with gardens where wealthy Amsterdammers could escape the city center. In the 19th century, it became home to cultural and scientific institutions, including the zoo and botanical garden. The area also has strong connections to Amsterdam's Jewish history, as many Jewish families lived here before WWII, and several important Jewish cultural sites are located nearby, including the Portuguese Synagogue and the Jewish Historical Museum.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Evening Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Evening</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Coffee & Cake Break</h3>
+              <ul>
+                <li>Bocca Coffee (Kerkstraat 96) - Specialty coffee roaster in the Canal Belt</li>
+                <li>Screaming Beans (Hartenstraat 12) - Excellent coffee in the 9 Streets area</li>
+                <li>De Laatste Kruimel (Langebrugsteeg 4) - Charming bakery with great cakes in the city center</li>
+                <li>Sweet Cup (Lange Leidsedwarsstraat 93) - Specialty coffee bar</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Pre-Dinner Drinks</h3>
+              <ul>
+                <li>Proeflokaal de Ooievaar (Sint Olofspoort 1) - Traditional Dutch tasting house dating from 1782</li>
+                <li>Tales & Spirits (Lijnbaanssteeg 5-7) - Award-winning cocktail bar</li>
+                <li>In 't Aepjen (Zeedijk 1) - One of Amsterdam's oldest bars, in a wooden building from the 1500s</li>
+                <li>De Drie Fleschjes (Gravenstraat 18) - Historic jenever tasting room near Dam Square</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Dinner Options</h3>
+              <ul>
+                <li>Rijsel (Marcusstraat 52) - Dutch-Flemish rotisserie in a former domestic science school</li>
+                <li>Tomaz (Voetboogstraat 15) - Traditional Dutch restaurant with an excellent balance of quality and value</li>
+                <li>De Kas (Kamerlingh Onneslaan 3) - Restaurant in a converted greenhouse that grows its own produce</li>
+                <li>Scheepskameel (Gebouw 24, Kattenburgerstraat 7) - Modern Dutch cuisine in a former naval building</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Evening Activities</h3>
+              <ul>
+                <li>Café Sound Garden (Marnixstraat 164-166) - Laid-back rock bar with occasional live music</li>
+                <li>Paradiso (Weteringschans 6-8) - Famous music venue in a converted church</li>
+                <li>Pacific Parc (Polonceaukade 23) - Bar/restaurant with occasional DJ sets in Westerpark</li>
+                <li>Return to Utrecht (remember to check the time of the last train)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Option B: Second Day in Utrecht -->
+      <div class="option-content" id="option-b">
+        <div class="section-title-container">
+          <h2>Second Day in Utrecht</h2>
+        </div>
+        
+        <!-- Historical Context -->
+        <section class="cultural-box">
+          <h3>Historical Context</h3>
+          <p>Utrecht offers a charming alternative to Amsterdam, with its unique two-level canal system, medieval center, and relaxed atmosphere. While Amsterdam often gets the spotlight, Utrecht experienced its own golden age during the Middle Ages when it was the most important city in the northern Netherlands. The city's central religious and commercial importance is symbolized by the Dom Tower, which at 112 meters remains the tallest church tower in the Netherlands.</p>
+          <p>Utrecht's unique feature is its wharf system along the canals - a two-level structure not found anywhere else in the world. In the Middle Ages, Utrecht diverted part of the Rhine River to create the Oudegracht (Old Canal) running through the city center. Wharves and cellars were built at water level to unload goods directly from boats, with streets running one level above. These former storage spaces now house cafés, restaurants, and shops, creating Utrecht's distinctive atmosphere.</p>
+        </section>
+
+        <!-- Breakfast Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Breakfast</h2>
+          </div>
+          
+          <div class="food-grid">
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Blackbird Coffee</h4>
+                <p>Oudegracht 222</p>
+                <p>Excellent coffee and breakfast</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Daen's</h4>
+                <p>Korte Jansstraat 13</p>
+                <p>Popular bakery with great coffee and pastries</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>The Village Coffee</h4>
+                <p>Voorstraat 46</p>
+                <p>Specialty coffee and breakfast options</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Morning Options Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Morning Activities</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Morning Option 1: Utrecht Canals By Boat</h3>
+              <p>Experiencing Utrecht's unique canals from water level offers a completely different perspective on the city.</p>
+              <ul>
+                <li>Several companies offer guided boat tours (€15-20, 1 hour)</li>
+                <li>Alternatively, rent your own small electric boat - no license needed (€45-60 for 2 hours, up to 6 people)</li>
+                <li>Boats allow you to see the medieval wharf cellars from water level</li>
+                <li>Some companies: Schuttevaer Canal Cruises, Lovers Canal Cruises, or Sloep Huren Utrecht for self-drive boats</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> A canal tour provides the perfect vantage point to understand Utrecht's unique two-level canal system. As you cruise along the Oudegracht (Old Canal), you'll see the distinctive wharf cellars that distinguish Utrecht's waterways from those in Amsterdam. These cellars, built in the 12th and 13th centuries as storage spaces for merchants, now house cafés and restaurants at water level. From the boat, you can spot architectural details not visible from street level, including the medieval crane that was used to hoist goods from boats, ancient bridges, and ornate façades of canal-side buildings.</p>
+              </div>
+            </div>
+
+            <div class="location-highlight">
+              <h3>Morning Option 2: Historical Walking Tour</h3>
+              <p>Explore Utrecht's rich history through its preserved medieval center.</p>
+              <ul>
+                <li>Start at Domplein square, site of Utrecht's ancient center</li>
+                <li>Visit the Dom Church (St. Martin's Cathedral) - free entry, €5 donation suggested</li>
+                <li>See the remaining cloisters and beautiful garden</li>
+                <li>Explore DOMunder (€11) - archaeological site beneath Domplein square showcasing 2,000 years of history</li>
+                <li>Walk to the Oudegracht and explore the unique wharf-level structures</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> Domplein (Cathedral Square) has been the heart of Utrecht for nearly 2,000 years. Romans built a fortress here around 50 CE, followed by the first Christian churches in the 7th century. The impressive Gothic cathedral was built between 1254 and 1517, but a 1674 tornado destroyed the nave, leaving the tower and choir separated by the square we see today. This unusual layout is unique in Europe. DOMunder, an archaeological experience beneath the square, reveals Roman foundations, medieval structures, and tells the story of Utrecht's development through interactive exhibits.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lunch Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Lunch</h2>
+          </div>
+          
+          <div class="food-grid">
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Olivier</h4>
+                <p>Achter Clarenburg 6A</p>
+                <p>Belgian beer café in a former church with good food</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>KEEK</h4>
+                <p>Twijnstraat 23</p>
+                <p>Organic café with excellent lunch options</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>De Rechtbank</h4>
+                <p>Korte Nieuwstraat 14</p>
+                <p>Beautiful courtyard restaurant in former courthouse</p>
+              </div>
+            </div>
+            
+            <div class="food-item">
+              <div class="food-item-content">
+                <h4>Dogma Hotdogbar</h4>
+                <p>Voorstraat 96</p>
+                <p>Creative gourmet hotdogs</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Afternoon Activities Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Afternoon Activities</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Afternoon Option 1: Museum Speelklok</h3>
+              <p>Museum of self-playing musical instruments</p>
+              <ul>
+                <li>Fascinating demonstrations of music boxes, street organs, and orchestrions</li>
+                <li>Open daily 10:00 AM - 5:00 PM</li>
+                <li>Entrance fee: €14</li>
+                <li>Tours with demonstrations every hour</li>
+              </ul>
+              <div class="travel-tip">
+                <p><i class="fas fa-lightbulb"></i> Museum Speelklok houses a unique collection of self-playing musical instruments from the 16th century to the present. The museum's centerpiece collection of street organs reflects the Netherlands' distinctive street music tradition. Unlike in other countries, Dutch street organs were large, elaborate instruments on wheels that played entire orchestral arrangements using punched books rather than simple barrel organs. These "orchestrions" were a defining element of Dutch street life from the late 19th through mid-20th centuries. The museum brings these mechanical marvels to life with regular demonstrations and tours, providing a musical journey through Dutch cultural history.</p>
+              </div>
+            </div>
+
+            <div class="location-highlight">
+              <h3>Afternoon Option 2: Explore Lesser-Known Utrecht</h3>
+              <p>Venture beyond the medieval center to discover Utrecht's diverse neighborhoods.</p>
+              <ul>
+                <li>Explore the Utrecht University Botanical Gardens - beautiful gardens with diverse plant collections</li>
+                <li>Walk through Wilhelminapark - elegant 19th-century park in the eastern part of the city</li>
+                <li>Visit the Railway Museum (Spoorwegmuseum) - housed in a beautiful 19th-century station building</li>
+                <li>Discover the street art in Utrecht's western districts</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Evening Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Evening</h2>
+          </div>
+
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Coffee & Dessert Break</h3>
+              <ul>
+                <li>30ml Coffee Roasters (Vredenburg 26) - Specialty coffee</li>
+                <li>Carla's Conditorie (Oudegracht 161) - Traditional Dutch cakes and pastries</li>
+                <li>Cornelis (Korte Jansstraat 23) - Excellent coffee and cakes</li>
+                <li>Toonbank (Mariaplaats 21) - Specialty coffee with house-made pastries</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Pre-Dinner Drinks</h3>
+              <ul>
+                <li>Belgian Beer Café Olivier (Achter Clarenburg 6A) - Over 100 Belgian beers in a former church</li>
+                <li>Kafé België (Oudegracht aan de Werf 196B) - Extensive beer selection in a canal-level cellar</li>
+                <li>Talud9 (Donkere Gaard 9) - Wine bar with a great selection of natural wines</li>
+                <li>'t Oude Pothuys (Oudegracht 279) - Underground cellar bar with occasional live music</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Dinner Options</h3>
+              <ul>
+                <li>WT Urban Kitchen (Watertorenplein 6) - Restaurant with panoramic city views (splurge option)</li>
+                <li>Humphrey's (Stadhuisbrug 3) - Reliable Dutch-international menu with canal views</li>
+                <li>Syr (Lange Nieuwstraat 71) - Social enterprise restaurant with excellent food</li>
+                <li>Podium onder de Dom (Domstraat 4) - Modern Dutch cuisine near the cathedral</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Evening Activities</h3>
+              <ul>
+                <li>TivoliVredenburg (Vredenburgkade 11) - Modern music venue often hosting concerts</li>
+                <li>Louis Hartlooper Complex (Tolsteegbrug 1) - Cinema and café in former police station</li>
+                <li>Nederlands Film Festival Café (Vinkenburgstraat 11) - Cultural venue for film lovers</li>
+                <li>Stadsschouwburg Utrecht (Lucasbolwerk 24) - City theater if you'd like to catch a performance</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Option C: Tulips -->
+      <div class="option-content" id="option-c">
+        <div class="section-title-container">
+          <h2>Tulips Experience</h2>
+        </div>
+        
+        <!-- Historical Context -->
+        <section class="cultural-box">
+          <h3>Historical Context - Dutch Tulip Culture</h3>
+          <p>While most people associate tulips with the Netherlands, these flowers actually originated in Turkey and Central Asia. Dutch tulip cultivation began in the late 16th century, and by the 1630s, "Tulip Mania" had gripped the nation, with single bulbs sometimes selling for the price of a house! Today, the Netherlands produces approximately 4.3 billion tulip bulbs annually, with around 1.7 billion exported to markets worldwide.</p>
+          <p>The Dutch landscape transforms dramatically during tulip season, with vast fields blossoming into ribbons of vibrant colors. The commercial tulip fields you'll see are actually grown for the bulbs rather than the flowers—farmers often cut off the blooms to strengthen the bulbs. This agricultural tradition has become one of the country's most significant tourist attractions.</p>
+        </section>
+
+        <!-- Introduction -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Dutch Tulip Experience</h2>
+          </div>
+          
+          <div class="travel-detail">
+            <h3>Overview</h3>
+            <p>The Netherlands in spring offers one of the world's most spectacular floral displays. This option allows you to experience the famous Dutch tulips in various ways, whether you're in Amsterdam, Utrecht, or want to take a day trip to the iconic flower fields.</p>
+          </div>
+
+          <div class="cultural-box">
+            <h3>When to See Tulips</h3>
+            <p>Tulip season in the Netherlands typically runs from late March to mid-May, with peak blooming usually occurring in mid-April, though this varies based on weather conditions. The 2025 season at Keukenhof Gardens runs from March 20 to May 11, making May 1 a perfect time to visit as most tulips should be in full bloom.</p>
+          </div>
+        </section>
+
+        <!-- Keukenhof Gardens Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Option 1: Keukenhof Gardens</h2>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>The World's Largest Flower Garden</h3>
+            <p>Keukenhof in Lisse is the world's largest flower garden and the centerpiece of Dutch tulip tourism.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="cultural-box">
+              <h3>Getting There</h3>
+              <ul>
+                <li>From Amsterdam: Direct buses (Keukenhof Express) run from Amsterdam RAI, Schiphol Airport, and Amsterdam city center. Travel time is approximately 30-40 minutes from Schiphol, and tickets cost around €30-40 for a combined transport and entrance ticket.</li>
+                <li>From Utrecht: Take a train to Schiphol Airport (30 minutes) or Leiden (40 minutes), then connect to the Keukenhof Express bus.</li>
+              </ul>
+            </div>
+
+            <div class="cultural-box">
+              <h3>What to Expect</h3>
+              <ul>
+                <li>32 hectares featuring more than 7 million bulbs and 800 varieties of tulips</li>
+                <li>Spectacular flower displays in both outdoor gardens and indoor pavilions</li>
+                <li>Themed gardens, including the historical garden with 16th and 17th-century tulip varieties</li>
+                <li>Special flower shows featuring freesias, chrysanthemums, orchids, and more</li>
+                <li>Family-friendly amenities including a maze, playground, and petting farm</li>
+                <li>Multiple restaurant options for meals and refreshments</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="options-box">
+            <h3>Tips for Visiting Keukenhof</h3>
+            <ul>
+              <li>Book tickets online in advance to avoid disappointment (€19.50 for adults)</li>
+              <li>Arrive early (before 10:30 AM) or late (after 4:00 PM) to avoid peak crowds</li>
+              <li>Mondays, Tuesdays, and Wednesdays are typically less crowded</li>
+              <li>Allow 3-4 hours for a complete visit</li>
+              <li>Consider adding an audio guide (available in 15 languages) for detailed information</li>
+              <li>Car parking is available for €9 if driving</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Tulip Fields Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Option 2: Tulip Fields Around Keukenhof</h2>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Exploring the Bollenstreek</h3>
+            <p>The area surrounding Keukenhof, known as the "Bollenstreek" (Bulb Region), contains many of the most picturesque tulip fields in the Netherlands.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="cultural-box">
+              <h3>Getting There</h3>
+              <ul>
+                <li>The Bollenstreek is easily accessible as a combination with your Keukenhof visit</li>
+                <li>Fields are located around the towns of Lisse, Noordwijkerhout, and Noordwijk</li>
+              </ul>
+            </div>
+
+            <div class="cultural-box">
+              <h3>What to Experience</h3>
+              <ul>
+                <li>Take a guided bike tour from Keukenhof to see the surrounding fields (€25-30 for bike rental and map)</li>
+                <li>Join a small group tour (8 people max) with a local guide for a more personalized experience (€70-100)</li>
+                <li>Experience the Tulip Experience Amsterdam in Noordwijkerhout, where you can walk among the tulips and take photos without restrictions (€12 for adults)</li>
+                <li>Wander through beautiful Dutch villages surrounded by colorful fields</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="options-box">
+            <h3>Important Etiquette</h3>
+            <ul>
+              <li>Most commercial tulip fields are private property—never enter without permission</li>
+              <li>Always stay on designated paths and roads when viewing fields</li>
+              <li>Only take photos in designated areas or "experience fields" that welcome visitors</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Noordoostpolder Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Option 3: Noordoostpolder Tulip Fields</h2>
+          </div>
+
+          <div class="location-highlight">
+            <h3>Off the Beaten Path</h3>
+            <p>For fewer tourists and more authentic experiences, consider visiting the Noordoostpolder region, which boasts the largest concentration of tulip fields in the Netherlands.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="cultural-box">
+              <h3>Getting There</h3>
+              <ul>
+                <li>By car: Approximately 1.5 hours from Amsterdam or Utrecht</li>
+                <li>Guided tour: Several companies offer day trips from Amsterdam (€80-120)</li>
+              </ul>
+            </div>
+
+            <div class="cultural-box">
+              <h3>What to Experience</h3>
+              <p>The Tulip Festival Noordoostpolder (April 13 to May 5, 2025) offers:</p>
+              <ul>
+                <li>A 114-kilometer car route through spectacular tulip fields (the longest continuous tulip route in the Netherlands)</li>
+                <li>A 24-kilometer cycling route through the fields</li>
+                <li>The Tulip Experience Field in Creil, where you can walk through fields and take photos (free entry)</li>
+                <li>The Tulip Picking Garden in Marknesse, where you can create your own bouquet</li>
+                <li>Combined trip opportunity with the picturesque village of Giethoorn ("Dutch Venice")</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="options-box">
+            <h3>Tips for Visiting Noordoostpolder</h3>
+            <ul>
+              <li>Download the Tulip Festival app for audio guides and information while driving</li>
+              <li>Rent bicycles in Emmeloord or Marknesse for the cycling route</li>
+              <li>Bring a picnic to enjoy amid the colorful surroundings</li>
+            </ul>
+          </div>
+        </section>
+        
+        <!-- Amsterdam Tulips Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Option 4: Tulip Experiences in Amsterdam</h2>
+          </div>
+          
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Amsterdam Tulip Festival</h3>
+              <p>You can absolutely enjoy tulips without leaving Amsterdam, especially during your late April visit when flowers will be at their peak.</p>
+              <ul>
+                <li>Runs throughout April 2025, celebrating Amsterdam's 750th birthday</li>
+                <li>Approximately 100,000 tulips displayed at 75 locations throughout the city</li>
+                <li>Colorful displays in public spaces, streets, bridges, squares, flower beds, parks, shopping centers and neighborhood gardens</li>
+                <li>Free to visit and accessible by walking or cycling</li>
+              </ul>
+              
+              <p>Notable locations include:</p>
+              <ul>
+                <li>The Rijksmuseum gardens</li>
+                <li>Vondelpark (highly recommended as one of the best places in the city for tulips)</li>
+                <li>Rembrandtplein</li>
+                <li>EYE Filmmuseum</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Amsterdam Tulip Attractions</h3>
+              
+              <h4>Amsterdam Botanical Garden</h4>
+              <p>Beautiful displays of spring flowers including tulips.</p>
+              
+              <h4>Amsterdam Tulip Museum</h4>
+              <ul>
+                <li>Located in the Jordaan district</li>
+                <li>Exhibits on tulip history, the tulip mania period, and cultivation</li>
+                <li>Entry fee: €5</li>
+                <li>Open daily 10:00 AM - 6:00 PM</li>
+              </ul>
+              
+              <h4>Floating Flower Market (Bloemenmarkt)</h4>
+              <ul>
+                <li>Historic flower market on Singel canal</li>
+                <li>Purchase tulip bulbs to take home (properly certified for export)</li>
+                <li>Colorful and fragrant year-round, but especially vibrant during tulip season</li>
+                <li>Open Monday-Saturday 9:00 AM - 5:30 PM, Sunday 11:30 AM - 5:30 PM</li>
+              </ul>
+              
+              <h4>Royal FloraHolland Flower Auction</h4>
+              <ul>
+                <li>The world's largest flower auction in Aalsmeer (near Amsterdam)</li>
+                <li>Witness the bustling trade of millions of flowers each day</li>
+                <li>Best visited early morning (7:00 AM - 9:00 AM)</li>
+                <li>Entry fee: €8</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Utrecht Tulips Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Option 5: Tulip Experiences in Utrecht</h2>
+          </div>
+          
+          <div class="content-grid">
+            <div class="location-highlight">
+              <h3>Utrecht Tulip Spots</h3>
+              <p>While Utrecht doesn't have a dedicated tulip festival like Amsterdam, you can still enjoy tulips within and near the city.</p>
+              
+              <h4>Utrecht Botanical Gardens</h4>
+              <ul>
+                <li>Beautiful spring flower displays including tulips</li>
+                <li>Part of Utrecht University</li>
+                <li>Entry fee: €8.50</li>
+                <li>Open daily 10:00 AM - 5:00 PM</li>
+              </ul>
+              
+              <h4>Utrecht Parks and Gardens</h4>
+              <ul>
+                <li>Wilhelminapark likely features spring tulip displays</li>
+                <li>The Pandhof garden next to Dom Cathedral often has spring flower plantings</li>
+                <li>City center planters and municipal gardens should have tulips in bloom during late April</li>
+                <li>Utrecht's canals are often lined with spring flowers, creating beautiful photo opportunities</li>
+              </ul>
+            </div>
+
+            <div class="cultural-box">
+              <h3>Day Trips from Utrecht</h3>
+              <ul>
+                <li>Utrecht is well-positioned for viewing tulips, with the Noordoostpolder tulip fields just over an hour's drive away</li>
+                <li>Rent a bicycle and explore the countryside around Utrecht</li>
+                <li>Several smaller tulip fields can be found in the Utrecht province, particularly near Houten and Wijk bij Duurstede</li>
+                <li>Late April (your visit time) is perfect timing for seeing tulips at their peak</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Practical Information Section -->
+        <section class="card">
+          <div class="section-title-container">
+            <h2>Practical Information</h2>
+          </div>
+          
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Tours and Guided Experiences</h3>
+              <p>If you prefer having logistics handled for you, consider booking one of the following:</p>
+              
+              <h4>Small Group Tours</h4>
+              <ul>
+                <li>Amsterdam Tulips Tour offers 8-person maximum tours to private tulip farms and fields without crowds (€90-120 per person)</li>
+                <li>Tulip Tours Holland provides 6-hour excursions to North Holland tulip farms with local guides (€95-110)</li>
+                <li>Small minibus tours depart from Amsterdam, Utrecht, and other major cities</li>
+              </ul>
+              
+              <h4>Private Tours</h4>
+              <ul>
+                <li>For maximum flexibility, book a private guide and vehicle</li>
+                <li>Customizable itineraries that can combine tulips with other Dutch highlights</li>
+                <li>Costs typically range from €350-600 for a full day</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Practical Tips for Tulip Viewing</h3>
+              <ul>
+                <li>Photography: Early morning or late afternoon offers the best light for photos</li>
+                <li>Weather: Be prepared for changeable Dutch spring weather—layers and rainproof clothing recommended</li>
+                <li>Accessibility: Most major tulip attractions are wheelchair and stroller accessible</li>
+                <li>Crowds: Weekdays are less crowded than weekends</li>
+                <li>Souvenirs: Certified tulip bulbs make great souvenirs and can be purchased at Keukenhof, the Amsterdam Flower Market, or garden centers</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="content-grid">
+            <div class="options-box">
+              <h3>Lunch Options near Tulip Areas</h3>
+              
+              <h4>Keukenhof Area</h4>
+              <ul>
+                <li>Keukenhof Gardens has multiple restaurants and cafés on site</li>
+                <li>Restaurant De Rozenboom in Lisse (Dutch cuisine with tulip field views)</li>
+                <li>Pancake restaurant "De Vier Seizoenen" (traditional Dutch pancakes)</li>
+              </ul>
+              
+              <h4>Noordoostpolder Area</h4>
+              <ul>
+                <li>Restaurant 't Voorhuys in Emmeloord (upscale Dutch cuisine)</li>
+                <li>De Orchideeën Hoeve in Luttelgeest (restaurant in a tropical garden)</li>
+                <li>Many of the tulip routes feature farm shops and cafés during the festival</li>
+              </ul>
+            </div>
+
+            <div class="options-box">
+              <h3>Evening Activities</h3>
+              <p>After a day among the tulips, consider:</p>
+              <ul>
+                <li>Dinner in a traditional Dutch restaurant in your home base city (see Options A and B)</li>
+                <li>Champions League Semi-finals are tonight at 9pm (Barcelona vs Inter Milan)—find a local bar to watch the match</li>
+                <li>Evening canal cruise to rest your feet after a day of walking</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <div class="navigation-buttons">
-        <a href="day1.html" class="btn">Previous: Travel Day</a>
-        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
+        <a href="day9.html" class="btn">Previous: Day 9</a>
+        <a href="day11.html" class="btn btn-accent">Next: Day 11</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>Option day: Second day in Amsterdam or Utrecht.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
-    // Add active class to current day link in the trip navigation
     document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop();
-      const dayLinks = document.querySelectorAll('.trip-nav-link');
+      // Option tabs functionality
+      const optionTabs = document.querySelectorAll('.option-tab');
+      const optionContents = document.querySelectorAll('.option-content');
       
-      dayLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-          link.classList.add('active');
-        }
+      optionTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs and contents
+          optionTabs.forEach(t => t.classList.remove('active'));
+          optionContents.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked tab
+          tab.classList.add('active');
+          
+          // Show corresponding content
+          const targetId = tab.dataset.option;
+          const targetContent = document.getElementById(targetId);
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        });
       });
     });
   </script>
-
-  <script src="../assets/js/main.js"></script>
 </body>
 </html> 
