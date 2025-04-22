@@ -3,52 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2: Travel Day & Ghent | Belgium & Netherlands Trip</title>
+  <title>Day 9: Amsterdam (Day Trip) | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Trip-specific navigation */
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
+    /* Create a sticky wrapper */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: white;
+    }
+    
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link - no longer needed */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
       position: sticky;
-      top: 70px;
-      z-index: 90;
+      top: 0; /* Start at the very top */
+      z-index: 1000; /* Higher z-index to ensure it stays above everything */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0; /* Remove gap between nav and header */
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+    
+    .fixed-nav {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .trip-nav-container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 0.75rem;
     }
 
-    .trip-nav-links, .trip-nav-days {
+    .trip-nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
+    .trip-nav-days {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap; /* Allow wrapping for day buttons on web */
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .trip-nav-days::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .trip-nav-days::-webkit-scrollbar-track {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+    }
+
     .trip-nav-link {
-      text-align: center;
       padding: 0.5rem 1rem;
       background-color: var(--light-bg);
       border-radius: 4px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      color: var(--dark-text);
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
     }
 
     .trip-nav-link:hover {
       background-color: var(--primary);
       color: var(--white);
     }
-
+    
     .trip-nav-link.active {
       background-color: var(--primary);
       color: var(--white);
@@ -57,51 +177,241 @@
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
-        top: 59px; /* Adjusted to prevent overlap with top nav */
+        top: 0; /* Ensure it's at the top */
       }
       
       .trip-nav-container {
-        flex-direction: column;
         gap: 0.5rem;
       }
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
+        display: none;
       }
       
       .trip-nav-days {
         justify-content: flex-start;
         width: 100%;
-        flex-wrap: wrap; /* Allow wrapping for day buttons */
         overflow-x: visible; /* Remove horizontal scrolling */
         padding-bottom: 0.25rem;
+        border-top: none; /* Remove top border */
+        padding-top: 0; /* Remove top padding */
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important;
+        gap: 0.3rem !important;
       }
-      
+
       .day-label {
         display: none;
       }
       
       .trip-nav-link {
-      text-align: center;
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
-      }
-      
-      .trip-nav-link.all-trips-link {
-        display: none; /* Hide All Trips link on mobile */
-      }
-      
-      .trip-nav-link.trip-home-link span {
-        display: none; /* Hide text on mobile */
+        width: 100%;
+        text-align: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .trip-nav-link {
+    /* Added styling for content grids similar to index.html */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title-container {
       text-align: center;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-      }
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .trip-details strong {
+      color: var(--primary);
+    }
+
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+
+    .route-section {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .route-box {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 0.5rem;
+    }
+    
+    .route-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .route-box ul {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .route-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .location-highlight {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .location-highlight h3 {
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .evening-options {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .evening-options h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .evening-options ul, .evening-options ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .evening-options li {
+      margin-bottom: 0.5rem;
+    }
+
+    .hotel-info {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0 2rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .hotel-details {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .hotel-details h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    .card {
+      margin-bottom: 3rem;
+    }
+    
+    .evening-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    /* Add grid for options display */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -118,103 +428,282 @@
       </nav>
     </div>
   </header>
-
-  <!-- Trip-specific navigation -->
-  <div class="trip-nav">
-    <div class="container trip-nav-container">
-      <div class="trip-nav-links">
-        <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
-        <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
-      </div>
-      <div class="trip-nav-days">
-        <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
-        <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
-        <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
-        <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
-        <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
-        <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
-        <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
-        <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
-        <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
-        <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+  
+  <!-- Create a sticky wrapper for navigation -->
+  <div class="sticky-nav-wrapper">
+    <!-- Trip Navigation -->
+    <div class="trip-nav">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+          <a href="day9.html" class="trip-nav-link active">Day 9 <span class="day-label">(Wed)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+          <a href="day11.html" class="trip-nav-link">Day 11 <span class="day-label">(Fri)</span></a>
+        </div>
       </div>
     </div>
   </div>
 
-  <main>
+  <main style="margin-top: 0; padding-top: 0;">
     <section class="hero">
       <div class="container">
-        <h1>Day 9: Amsterdam (Day Trip)</h1>
-        <p>Experience Amsterdam on King's Day!</p>
+        <h1>🚲 Day 9: Wednesday, April 30 - Amsterdam (Day Trip)</h1>
       </div>
     </section>
 
     <div class="container">
       <section class="card">
-        <h2>Morning</h2>
-        <ul>
-          <li>Arrival in Brussels International Airport</li>
-          <li>Navigate to train station at airport</li>
-          <li>Purchase train ticket to Ghent Sint-Pieters</li>
-          <li>Train journey (approximately 1 hour)</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Historical Context - Amsterdam's Golden Age</h2>
+        </div>
+        <div class="culture-box">
+          <p>Amsterdam's spectacular rise during the 17th century Dutch Golden Age transformed it from a small fishing village into one of the world's most important cities. This era saw unprecedented prosperity as Amsterdam became the center of a trading empire spanning the globe. The city's iconic canal ring (grachtengordel), now a UNESCO World Heritage site, was built during this period as part of a deliberate urban planning project that expanded the medieval city into the distinctive half-moon shape we recognize today.</p>
+          <p>Unlike other European capitals built to showcase royal power, Amsterdam developed as a merchant city. Its architecture reflects the prosperous but relatively modest bourgeois tastes of its wealthy merchant class, who displayed their success through elegant canal houses with ornate gables rather than palaces. This period also saw Amsterdam become a center of intellectual and artistic achievement, with figures like Rembrandt, Vermeer, and Spinoza contributing to what historians call the Dutch Golden Age.</p>
+          <p>Amsterdam has long been characterized by its spirit of tolerance and liberalism. In the 17th century, it welcomed religious refugees, including Portuguese Jews and French Huguenots. This tradition carried into the modern era with the city's famous progressive policies.</p>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Afternoon</h2>
-        <ul>
-          <li>Check-in at accommodation in Ghent</li>
-          <li>Quick lunch at a local café</li>
-          <li>Initial orientation walk around central Ghent</li>
-          <li>Visit Korenmarkt and Sint-Michielsbrug (St. Michael's Bridge) for iconic views</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Breakfast in Utrecht</h2>
+        </div>
+        <div class="route-section">
+          <div class="route-box">
+            <h3>Breakfast Options</h3>
+            <ul>
+              <li><strong>Meneer Smakers</strong> (Nobelstraat 163) - Good breakfast in relaxed setting</li>
+              <li><strong>Anne & Max</strong> (Steenweg 13) - Nice café with breakfast options</li>
+              <li><strong>Daen's</strong> (Korte Jansstraat 13) - Bakery with good coffee and pastries</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Evening</h2>
-        <ul>
-          <li>Dinner at a traditional Flemish restaurant</li>
-          <li>Stroll along the illuminated medieval buildings and canals</li>
-          <li>Early night to recover from travel fatigue</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Train to Amsterdam</h2>
+        </div>
+        <div class="travel-detail">
+          <h3><i class="fas fa-train"></i> Travel Information</h3>
+          <ul>
+            <li><strong>Trains run frequently</strong> between Utrecht Centraal and Amsterdam Centraal</li>
+            <li><strong>Journey time:</strong> approximately 30 minutes</li>
+            <li><strong>Cost:</strong> around €9 each way</li>
+          </ul>
+        </div>
       </section>
 
       <section class="card">
-        <h2>Tips for Day 2</h2>
-        <ul>
-          <li>Brussels Airport has clear signage to the train station below the terminal</li>
-          <li>Consider purchasing a travel card if you plan to use public transport in Ghent</li>
-          <li>Most accommodations in Ghent's center are within walking distance of main attractions</li>
-          <li>Ask your accommodation for a local map and recommendations</li>
-        </ul>
+        <div class="section-title-container">
+          <h2>Morning: Amsterdam Highlights Walking Tour</h2>
+        </div>
+        <div class="culture-box">
+          <p>This walking route takes you through several distinct Amsterdam neighborhoods, offering a good introduction to the city while avoiding the most tourist-heavy areas.</p>
+          <p><strong>Neighborhood Context:</strong> Dam Square has been the city's central square since the 13th century, though the imposing Royal Palace was originally built as a city hall in the 17th century. The Begijnhof offers a glimpse into medieval Amsterdam, while the nearby Spui has been an intellectual center with bookshops and cafés frequented by writers and academics. The Jordaan, originally a working-class district built in the 17th century to house immigrants and laborers, has transformed into one of Amsterdam's most charming neighborhoods with narrow streets, small courtyards (hofjes), and boutique shops. The 9 Streets (De 9 Straatjes) cross the main canals, offering smaller-scale shopping in historic buildings with unique specialty stores representing Amsterdam's creative spirit.</p>
+        </div>
+
+        <div class="options-grid">
+          <div class="evening-options">
+            <h3><i class="fas fa-walking"></i> Guided Tour Options</h3>
+            <ul>
+              <li><strong>Freedam Tours</strong> offers free walking tours (tip-based, €10-15 recommended)</li>
+              <li><strong>That Dam Guide</strong> provides small-group walking tours (€20-30/person)</li>
+              <li><strong>Amsterdam Food Tour</strong> combines history with culinary experiences (€89/person)</li>
+              <li><strong>Those Dam Boat Guys</strong> offers alternative small-group canal cruises (€25/person)</li>
+            </ul>
+          </div>
+
+          <div class="evening-options">
+            <h3><i class="fas fa-route"></i> Self-Guided Walking Route</h3>
+            <ol>
+              <li>Start at Amsterdam Centraal Station</li>
+              <li>Walk south along Damrak toward Dam Square</li>
+              <li>Continue to Spui and visit the Begijnhof (hidden courtyard)</li>
+              <li>Head west to explore the Jordaan neighborhood - one of Amsterdam's most authentic areas</li>
+              <li>Wander through De 9 Straatjes (The 9 Streets) - picturesque area with boutique shops</li>
+              <li>Follow Prinsengracht to see the Anne Frank House (exterior)</li>
+              <li>Cross bridges to explore the canals: Prinsengracht, Keizersgracht, and Herengracht</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="location-highlight">
+          <h3>Hidden Historical Gem - Begijnhof</h3>
+          <p>One of Amsterdam's most peaceful hidden spots, the Begijnhof is an enclosed courtyard dating from the 14th century that was home to the Beguines, a Catholic sisterhood who lived like nuns but took no formal vows. The Begijnhof houses Amsterdam's oldest surviving house (Het Houten Huis), dating from around 1420, one of only two wooden houses remaining in the city center after wooden buildings were banned due to fire hazards.</p>
+          <p>Despite being in the bustling center of Amsterdam, this tranquil courtyard remains a peaceful oasis largely undiscovered by casual tourists. Enter through an inconspicuous door on Spui square to step back in time.</p>
+          <p><strong>Location:</strong> Spui<br>
+          <strong>Hours:</strong> Daily 9:00 AM - 5:00 PM<br>
+          <strong>Entrance:</strong> Free (please maintain respectful quiet as some buildings are still residential)</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Lunch Options</h2>
+        </div>
+        <div class="route-section">
+          <div class="route-box">
+            <h3>Recommended Places</h3>
+            <ul>
+              <li><strong>Winkel 43</strong> (Noordermarkt 43) - Famous for the best apple pie in Amsterdam</li>
+              <li><strong>Foodhallen</strong> (Bellamyplein 51) - Indoor food market with diverse options</li>
+              <li><strong>Café 't Papeneiland</strong> (Prinsengracht 2) - Historic brown café serving traditional Dutch food</li>
+              <li><strong>De Reiger</strong> (Nieuwe Leliestraat 34) - Beloved local eatery in the Jordaan neighborhood</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Afternoon Options</h2>
+        </div>
+        <div class="options-grid">
+          <div class="evening-options">
+            <h3><i class="fas fa-water"></i> Option 1: Canal Cruise</h3>
+            <p>A canal cruise offers a unique perspective on Amsterdam's architectural treasures and urban layout.</p>
+            <ul>
+              <li>Several companies offer 1-hour cruises from docks near Central Station and along main canals</li>
+              <li>Smaller boats can access narrower canals for a more intimate experience</li>
+              <li>Evening cruises showcase illuminated bridges and canal houses</li>
+              <li>Cost: around €18-22 for standard tours, €25-35 for smaller boats</li>
+            </ul>
+            <p><strong>Historical Context:</strong> Amsterdam's canals are a masterpiece of urban planning from the Dutch Golden Age. The three main canals - Herengracht (Gentlemen's Canal), Keizersgracht (Emperor's Canal), and Prinsengracht (Prince's Canal) - were dug in the 17th century as part of a planned expansion of the city. This "grachtengordel" (canal belt) created the distinctive half-moon shape. Originally, the canals served practical purposes - transportation, water management, and defense - while the canal houses showcased the wealth of the merchant class. Today, over 100 kilometers of canals, 90 islands, and 1,500 bridges comprise Amsterdam's canal system, making a boat tour one of the best ways to appreciate the city's historical development.</p>
+          </div>
+
+          <div class="evening-options">
+            <h3><i class="fas fa-store"></i> Option 2: Explore De Pijp & Albert Cuyp Market</h3>
+            <p>De Pijp neighborhood offers a less touristy Amsterdam experience with its diverse population, eclectic restaurants, and buzzing atmosphere.</p>
+            <ul>
+              <li><strong>Albert Cuyp Market</strong> - One of Europe's largest and busiest day markets</li>
+              <li>Over 300 stalls selling everything from Dutch cheeses to clothing</li>
+              <li>Great place to try Dutch street food like stroopwafels, herring, and poffertjes</li>
+              <li>Open Monday-Saturday 9:00 AM - 5:00 PM</li>
+            </ul>
+            <p><strong>Historical Context:</strong> The Albert Cuyp Market began in the late 19th century when street vendors gathered along the Albert Cuypstraat in the working-class De Pijp neighborhood. Named after a 17th-century Dutch landscape painter, the market was officially established in 1905 when the city decided to concentrate street traders in one location. The market reflects Amsterdam's multicultural character, with traditional Dutch items sold alongside Surinamese, Turkish, Moroccan, and Antillean goods. It remains a genuine local market where Amsterdammers do their daily shopping, making it an authentic slice of city life.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Coffee & Traditional Dutch Treats</h2>
+        </div>
+        <div class="route-section">
+          <div class="route-box">
+            <h3>Sweet Stops</h3>
+            <ul>
+              <li><strong>Winkel 43</strong> (Noordermarkt 43) - Keep this one for their famous apple pie</li>
+              <li><strong>Café 't Papeneiland</strong> (Prinsengracht 2) - Historic brown café with good apple pie, in the Jordaan</li>
+              <li><strong>Chocolaterie Pompadour</strong> (Huidenstraat 12) - Excellent chocolate and pastries in the 9 Streets area</li>
+              <li><strong>Sweetella</strong> (Haarlemmerstraat 84) - Dutch pancakes and sweet treats near the Jordaan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Pre-Dinner Drinks</h2>
+        </div>
+        <div class="options-grid">
+          <div class="route-box">
+            <h3>Traditional Options</h3>
+            <ul>
+              <li><strong>Wynand Fockink</strong> (Pijlsteeg 31) - Traditional Dutch jenever tasting room, established 1679</li>
+              <li><strong>Café Papeneiland</strong> (Prinsengracht 2) - Historic brown café dating from 1642</li>
+              <li><strong>Proeflokaal Arendsnest</strong> (Herengracht 90) - Dutch craft beer bar with over 50 local beers</li>
+              <li><strong>Café de Prins</strong> (Prinsengracht 124) - Classic brown café on the Prinsengracht canal</li>
+            </ul>
+          </div>
+
+          <div class="route-box">
+            <h3>Cocktail Options</h3>
+            <ul>
+              <li><strong>Tales & Spirits</strong> (Lijnbaanssteeg 5-7) - Award-winning cocktail bar in the city center</li>
+              <li><strong>Pulitzer's Bar</strong> (Keizersgracht 234) - Elegant cocktail bar in the Canal Belt</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="location-highlight">
+          <h3>Historical Context - Jenever Tasting</h3>
+          <p>Jenever is the juniper-flavored traditional liquor of the Netherlands and Belgium, the predecessor to modern gin. Wynand Fockink distillery, founded in 1679, represents one of Amsterdam's oldest continuously operating businesses. In its traditional tasting room, you'll experience the authentic Dutch ritual of jenever drinking: the bartender fills a traditional tulip-shaped glass to the brim, requiring customers to lean over and take the first sip without using their hands (called "head-butting" or "kopstoot"). The distillery offers both oude (old) jenever, which is malty and has a whiskey-like quality, and jonge (young) jenever, which is lighter and more similar to modern gin.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Dinner Options</h2>
+        </div>
+        <div class="route-section">
+          <div class="route-box">
+            <h3>Recommended Restaurants</h3>
+            <ul>
+              <li><strong>Moeders</strong> (Rozengracht 251) - "Mothers" - traditional Dutch home cooking in a quirky setting</li>
+              <li><strong>Café de Reiger</strong> (Nieuwe Leliestraat 34) - Beloved local eatery serving Dutch-inspired cuisine</li>
+              <li><strong>Foodhallen</strong> (Bellamyplein 51) - Food hall with many options if you want variety</li>
+              <li><strong>Restaurant Greetje</strong> (Peperstraat 23-25) - Traditional Dutch cuisine with a modern twist, closer to the city center</li>
+              <li><strong>Bistrot des Alpes</strong> (Prinsengracht 124) - Cozy Alpine-inspired restaurant along the Prinsengracht canal</li>
+              <li><strong>Bar Restaurants Brasserie OCCO</strong> (Singel 303) - Stylish restaurant in the Dylan Hotel, located in the canal belt</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Evening</h2>
+        </div>
+        <p>Champions League Semi-finals (Barcelona vs Inter Milan) are tonight at 9pm</p>
+        
+        <div class="options-grid">
+          <div class="evening-options">
+            <h3><i class="fas fa-beer"></i> Bar Options</h3>
+            <ul>
+              <li><strong>Vesper Bar</strong> (Vinkenstraat 57) - Stylish cocktail bar</li>
+              <li><strong>Cafe Hoppe</strong> (Spui 18-20) - Classic brown café dating from 1670</li>
+              <li><strong>Café de Doffer</strong> (Runstraat 12) - Lively local bar in the 9 Streets, close to Vesper Bar</li>
+              <li><strong>Bar Oldenhof</strong> (Elandsgracht 84) - Speakeasy-style cocktail bar in the Jordaan near Vesper Bar</li>
+              <li><strong>Café De Spuyt</strong> (Korte Leidsedwarsstraat 86) - Authentic beer bar near Leidseplein, between Vesper and Hoppe</li>
+              <li><strong>Café Gollem</strong> (Raamsteeg 4) - Classic beer bar not far from Cafe Hoppe</li>
+            </ul>
+          </div>
+
+          <div class="evening-options">
+            <h3><i class="fas fa-train"></i> Return to Utrecht</h3>
+            <p>Catch the train back to Utrecht (trains run until approximately midnight)</p>
+            <div class="travel-tip">
+              <p>Tip: Check the train schedule before spending late evening in Amsterdam to ensure you don't miss the last train back to Utrecht.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <div class="navigation-buttons">
-        <a href="day1.html" class="btn">Previous: Travel Day</a>
-        <a href="day3.html" class="btn btn-accent">Next: Bruges (Day Trip)</a>
+        <a href="day8.html" class="btn">Previous: Day 8</a>
+        <a href="day10.html" class="btn btn-accent">Next: Day 10</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>Experience Amsterdam on King's Day!</p>
+        <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
-
-  <script>
-    // Add active class to current day link in the trip navigation
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop();
-      const dayLinks = document.querySelectorAll('.trip-nav-link');
-      
-      dayLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
 
   <script src="../assets/js/main.js"></script>
 </body>
