@@ -213,7 +213,7 @@
     .highlight-box {
       background-color: #f8f9fa;
       border-left: 4px solid var(--accent);
-      padding: 1.5rem;
+      padding: 1.5rem 2.5rem;
       border-radius: 0 8px 8px 0;
       height: 100%; /* Make all boxes the same height */
       display: flex;
@@ -222,16 +222,33 @@
 
     .highlight-box h3 {
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
     }
 
     .highlight-box p {
       margin-bottom: 1rem;
     }
 
-    .highlight-box ul {
-      padding-left: 1.5rem;
+    .highlight-box ul, .highlight-box ol,
+    .culture-box ul, .culture-box ol,
+    .trip-reminder ul, .trip-reminder ol {
+      padding-left: 3rem;
+      margin: 1rem 0 1.5rem;
+      list-style-position: outside;
+    }
+    
+    .highlight-box li,
+    .culture-box li,
+    .trip-reminder li {
+      margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+    }
+    
+    .highlight-box strong {
+      color: var(--primary);
     }
 
     .day-card {
@@ -381,6 +398,47 @@
         top: 0; /* Ensure it's at the top */
       }
       
+      /* Style bulletpoints consistently with day1.html */
+      .highlight-box ul, .highlight-box ol,
+      .culture-box ul, .culture-box ol,
+      .trip-reminder ul, .trip-reminder ol {
+        padding-left: 3rem !important;
+        margin: 1rem 0 1.5rem !important;
+        list-style-position: outside !important;
+      }
+      
+      .highlight-box li,
+      .culture-box li,
+      .trip-reminder li {
+        margin-bottom: 0.5rem !important;
+        padding-left: 0.5rem !important;
+      }
+      
+      /* Ensure border-left is preserved on mobile */
+      .highlight-box {
+        border-left: 4px solid var(--accent) !important;
+        border-radius: 0 8px 8px 0 !important;
+      }
+      
+      /* Preserve heading styles on mobile */
+      .highlight-box h3 {
+        border-bottom: 1px solid var(--secondary) !important;
+        padding-bottom: 0.5rem !important;
+        margin-bottom: 1.2rem !important;
+      }
+      
+      /* Reduce padding on mobile for container */
+      .container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        width: 95% !important;
+      }
+      
+      /* Reduce card padding on mobile */
+      .card, .highlight-box {
+        padding: 1rem !important;
+      }
+      
       /* Fix for map legend icons alignment on mobile */
       .map-legend-item {
         display: flex;
@@ -432,6 +490,15 @@
         display: none !important; /* Hide icon on mobile */
       }
       
+      /* Add home icon before text on mobile */
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.5rem;
+        display: inline-block !important;
+      }
+      
       /* Change text to just "Trip" on mobile */
       .trip-home-link span {
         display: inline !important;
@@ -445,6 +512,20 @@
       /* Hide the original text */
       .trip-home-link span > * {
         display: none !important;
+      }
+      
+      /* Style culture-box consistently */
+      .culture-box {
+        padding: 1rem !important;
+        border-left: 4px solid var(--accent) !important;
+        border-radius: 0 8px 8px 0 !important;
+      }
+      
+      /* Style trip-reminder consistently */
+      .trip-reminder {
+        padding: 1rem !important;
+        border-left: 4px solid var(--accent) !important;
+        border-radius: 0 8px 8px 0 !important;
       }
     }
 
@@ -515,7 +596,7 @@
     .highlight-box {
       background-color: #f8f9fa;
       border-left: 4px solid var(--accent);
-      padding: 1.5rem;
+      padding: 1.5rem 2.5rem;
       border-radius: 0 8px 8px 0;
       height: 100%;
       overflow-wrap: break-word;
@@ -543,7 +624,7 @@
     }
 
     .highlight-box ul, .highlight-box ol {
-      padding-left: 1.5rem;
+      padding-left: 2.5rem;
       margin-bottom: 1rem;
     }
 
@@ -601,10 +682,11 @@
     }
 
     .trip-reminder {
-      background-color: rgba(242, 201, 76, 0.1);
+      background-color: rgba(242, 201, 76, 0.2);
       border-left: 4px solid var(--accent);
-      padding: 1rem;
+      padding: 1.2rem 2.5rem;
       margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
       border-radius: 0 8px 8px 0;
     }
 
@@ -661,16 +743,19 @@
       
       /* Further reduce padding for very small screens */
       .container {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        width: 98% !important;
       }
       
-      .card {
-        padding: 0.75rem;
+      .card, .highlight-box, .culture-box, .trip-reminder {
+        padding: 0.75rem !important;
       }
       
-      .highlight-box {
-        padding: 0.75rem;
+      /* Maintain border-radius and borders on small screens */
+      .highlight-box, .culture-box, .trip-reminder {
+        border-left: 4px solid var(--accent) !important;
+        border-radius: 0 8px 8px 0 !important;
       }
       
       /* Improve map legend on very narrow screens */
@@ -694,21 +779,49 @@
       .trip-home-link i.fas.fa-map-marked-alt {
         display: none !important;
       }
-      
-      .trip-home-link:before {
-        content: "\f015";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        margin-right: 0.5rem;
-      }
     }
     
-    /* Mobile Trip button without icon */
+    /* Mobile Trip button styling */
     @media (max-width: 768px) {
       .trip-home-link i, 
       .trip-home-link:before {
         display: none !important;
       }
+      
+      /* Add home icon before text on mobile */
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.5rem;
+        display: inline-block !important;
+      }
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem 2.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+      margin-bottom: 2rem;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 2.5rem;
+      margin: 1rem 0 1.5rem;
     }
   </style>
 </head>
@@ -739,7 +852,7 @@
           <img src="../assets/images/belgium-netherlands/map.png" alt="Belgium & Netherlands Trip Map" id="trip-map">
           <p class="map-caption">🇧🇪 🇳🇱 Belgium & Netherlands Trip Route: Ghent - Bruges - Antwerp - Utrecht - Delft - Amsterdam</p>
           <div class="map-legend">
-            <span class="map-legend-item"><div class="map-red-marker"></div> Overnight stays: Ghent (4 nights), Utrecht (5 nights)</span>
+            <span class="map-legend-item"><div class="map-red-marker"></div> Overnight stays: Ghent, Utrecht</span>
             <span class="map-legend-item"><div class="map-blue-marker"></div> Day trips: Bruges, Antwerp, Delft, Amsterdam</span>
           </div>
         </div>
@@ -1163,7 +1276,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
 
