@@ -74,6 +74,31 @@
       .trip-home-link span > * {
         display: none !important;
       }
+      
+      /* Reduce padding on mobile for container */
+      .container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        width: 95% !important;
+      }
+      
+      /* Reduce card padding on mobile */
+      .card, .travel-detail {
+        padding: 1rem !important;
+      }
+    }
+
+    /* Further reduce padding on very small screens */
+    @media (max-width: 480px) {
+      .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        width: 98% !important;
+      }
+      
+      .card, .travel-detail {
+        padding: 0.75rem !important;
+      }
     }
 
     /* Reset trip-nav-container styles that may interfere */
@@ -396,11 +421,28 @@
       }
     }
     
-    /* Mobile Trip button without icon */
+    /* Mobile Trip button with home icon */
     @media (max-width: 768px) {
-      .trip-home-link i, 
-      .trip-home-link:before {
+      .trip-home-link i {
         display: none !important;
+      }
+      
+      .trip-home-link:before {
+        content: "\f015";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: 0.3rem;
+        font-size: 0.85rem;
+        display: inline-block !important;
+      }
+      
+      /* Ensure text content is just "Trip" */
+      .trip-home-link span:after {
+        content: "";
+      }
+      
+      .trip-home-link span {
+        font-size: 0.85rem;
       }
     }
   </style>
