@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 11: Final Day | Belgium & Netherlands Trip</title>
+  <title>Day 11: Friday, May 2 - Travel Day | Belgium & Netherlands Trip</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Override any conflicting styles and force stickiness */
+    #trip-nav-container {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+    }
+    
     /* Create a sticky wrapper */
     .sticky-nav-wrapper {
       position: sticky;
@@ -16,7 +24,84 @@
       background-color: white;
     }
     
-    /* Navigation styles */
+    /* Ensure secondary nav sticks correctly */
+    .trip-nav-days {
+      border-top: 1px solid var(--light-bg);
+      padding-top: 0.75rem;
+      background-color: var(--white);
+    }
+
+    /* Remove the All Trips link */
+    .all-trips-link {
+      display: none !important;
+    }
+    
+    /* Move Trip Home button to the day navigation row */
+    .trip-nav-links {
+      display: none !important; /* Hide the container for desktop */
+    }
+    
+    /* Display the Trip Home link in the day navigation */
+    .trip-home-link {
+      display: inline-block !important;
+      order: -1; /* Put it first in the flex order */
+      margin-right: 0.5rem;
+    }
+    
+    /* Hide the mobile-only Trip Home link - no longer needed */
+    .mobile-trip-home-link {
+      display: none !important;
+    }
+
+    .all-trips-link i,
+    .trip-home-link i {
+      margin-right: 5px;
+    }
+
+    /* Mobile responsive adjustments - simplified to avoid conflicts */
+    @media (max-width: 768px) {
+      /* Handle responsive text for Trip Home button */
+      .trip-home-link i {
+        display: none !important; /* Hide icon on mobile */
+      }
+      
+      /* Change text to just "Trip" on mobile */
+      .trip-home-link span:after {
+        content: "Trip";
+        display: inline;
+      }
+      
+      /* Hide the original text */
+      .trip-home-link span > * {
+        display: none !important;
+      }
+    }
+
+    /* Reset trip-nav-container styles that may interfere */
+    #trip-nav-container, 
+    #trip-nav-container * {
+      transform: none !important;
+      contain: none !important;
+    }
+
+    /* Remove gap between navigation and content */
+    main {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Remove padding/margin from sticky wrapper */
+    .sticky-nav-wrapper {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Remove bottom space from navigation */
+    .trip-nav {
+      margin-bottom: 0 !important;
+      padding-bottom: 0.5rem !important;
+    }
+
     .trip-nav {
       background-color: var(--white);
       padding: 0.75rem 0;
@@ -40,18 +125,17 @@
     }
 
     .trip-nav-links {
-      display: none !important; /* Hide the container for desktop */
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-    
+
     .trip-nav-days {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap; /* Allow wrapping for day buttons on web */
       max-width: 100%;
       -webkit-overflow-scrolling: touch;
-      border-top: 1px solid var(--light-bg);
-      padding-top: 0.75rem;
-      background-color: var(--white);
     }
 
     .trip-nav-days::-webkit-scrollbar {
@@ -90,120 +174,6 @@
       color: var(--white);
     }
 
-    /* Display the Trip Home link in the day navigation */
-    .trip-home-link {
-      display: inline-block !important;
-      order: -1; /* Put it first in the flex order */
-      margin-right: 0.5rem;
-    }
-    
-    /* Remove the All Trips link */
-    .all-trips-link {
-      display: none !important;
-    }
-    
-    /* Hide the mobile-only Trip Home link - no longer needed */
-    .mobile-trip-home-link {
-      display: none !important;
-    }
-
-    .all-trips-link i,
-    .trip-home-link i {
-      margin-right: 5px;
-    }
-
-    /* Trip header section */
-    .trip-header {
-      background-color: var(--primary);
-      color: var(--white);
-      padding: 3rem 0;
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 2rem; /* Add space between header and first card */
-    }
-    
-    /* Remove gap between navigation and content */
-    main {
-      padding-top: 0 !important;
-      margin-top: 0 !important;
-    }
-    
-    /* Remove padding/margin from sticky wrapper */
-    .sticky-nav-wrapper {
-      margin-bottom: 0 !important;
-      padding-bottom: 0 !important;
-    }
-    
-    /* Remove bottom space from navigation */
-    .trip-nav {
-      margin-bottom: 0 !important;
-      padding-bottom: 0.5rem !important;
-    }
-    
-    /* Remove top space from header */
-    .trip-header {
-      margin-top: 0 !important;
-      padding-top: 3rem !important;
-    }
-
-    .trip-header h1 {
-      color: var(--white);
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .trip-dates {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Content section styles */
-    .section-title-container {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .section-title-container h2 {
-      color: var(--primary);
-      font-size: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
-    }
-
-    .highlight-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .highlight-box {
-      background-color: #f8f9fa;
-      border-left: 4px solid var(--accent);
-      padding: 1.5rem;
-      border-radius: 0 8px 8px 0;
-      height: 100%; /* Make all boxes the same height */
-      display: flex;
-      flex-direction: column;
-    }
-
-    .highlight-box h3 {
-      color: var(--primary);
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-
-    .highlight-box p {
-      margin-bottom: 1rem;
-    }
-
-    .highlight-box ul {
-      padding-left: 1.5rem;
-    }
-
-    /* Mobile styles */
     @media (max-width: 768px) {
       .trip-nav {
         padding: 0.5rem 0;
@@ -216,6 +186,7 @@
       
       .trip-nav-links {
         justify-content: flex-start;
+        /* Move trip home link into the day nav row */
         display: none;
       }
       
@@ -241,107 +212,459 @@
         width: 100%;
         text-align: center;
       }
-      
-      /* Handle responsive text for Trip Home button */
-      .trip-home-link i {
-        display: none !important; /* Hide icon on mobile */
-      }
+    }
+
+    /* Added styling for content grids similar to index.html */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .culture-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      height: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .culture-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .culture-box p {
+      margin-bottom: 0.75rem;
+    }
+
+    .culture-box ul, .culture-box ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-container h2 {
+      color: var(--primary);
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    .trip-details strong {
+      color: var(--primary);
+    }
+
+    .travel-detail {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem 2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+    }
+
+    .travel-detail h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .travel-detail ul, .travel-detail ol {
+      padding-left: 2rem;
+      margin: 1rem 0 1.5rem;
+    }
+    
+    .travel-detail li {
+      margin-bottom: 0.5rem;
+    }
+
+    .route-section {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .route-box {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 0.5rem;
+    }
+    
+    .route-box h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .route-box ul {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .route-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .location-highlight {
+      background-color: rgba(242, 201, 76, 0.1);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .location-highlight h3 {
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .evening-options {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .evening-options h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .evening-options ul, .evening-options ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .evening-options li {
+      margin-bottom: 0.5rem;
+    }
+
+    .options-box {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .options-box h3 {
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+    
+    .options-box ul, .options-box ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .options-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .hotel-info {
+      background-color: rgba(0, 119, 204, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0 2rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .hotel-details {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .hotel-details h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--secondary);
+      padding-bottom: 0.5rem;
+    }
+
+    .travel-tip {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .travel-tip p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+    
+    .card {
+      margin-bottom: 3rem;
+    }
+    
+    .evening-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-home {
+      background-color: rgba(242, 201, 76, 0.2);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      border-left: 4px solid var(--accent);
+    }
+
+    .welcome-home h3 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .welcome-home p {
+      font-size: 1.2rem;
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
-  <!-- Header will be inserted here -->
-  <div id="header-container"></div>
+  <header>
+    <div class="container site-header">
+      <h1 class="site-title"><a href="../index.html">Trip Guides</a></h1>
+      <button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="index.html">Belgium & Netherlands</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
   
   <!-- Create a sticky wrapper for navigation -->
   <div class="sticky-nav-wrapper">
-    <!-- Trip Nav will be inserted here -->
-    <div id="trip-nav-container"></div>
+    <!-- Trip Navigation -->
+    <div class="trip-nav">
+      <div class="container trip-nav-container">
+        <div class="trip-nav-links">
+          <a href="../index.html" class="trip-nav-link all-trips-link"><i class="fas fa-home"></i> All Trips</a>
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+        </div>
+        <div class="trip-nav-days">
+          <a href="index.html" class="trip-nav-link trip-home-link"><i class="fas fa-map-marked-alt"></i> <span>Trip Home</span></a>
+          <a href="day1.html" class="trip-nav-link">Day 1 <span class="day-label">(Tue)</span></a>
+          <a href="day2.html" class="trip-nav-link">Day 2 <span class="day-label">(Wed)</span></a>
+          <a href="day3.html" class="trip-nav-link">Day 3 <span class="day-label">(Thu)</span></a>
+          <a href="day4.html" class="trip-nav-link">Day 4 <span class="day-label">(Fri)</span></a>
+          <a href="day5.html" class="trip-nav-link">Day 5 <span class="day-label">(Sat)</span></a>
+          <a href="day6.html" class="trip-nav-link">Day 6 <span class="day-label">(Sun)</span></a>
+          <a href="day7.html" class="trip-nav-link">Day 7 <span class="day-label">(Mon)</span></a>
+          <a href="day8.html" class="trip-nav-link">Day 8 <span class="day-label">(Tue)</span></a>
+          <a href="day9.html" class="trip-nav-link">Day 9 <span class="day-label">(Wed)</span></a>
+          <a href="day10.html" class="trip-nav-link">Day 10 <span class="day-label">(Thu)</span></a>
+          <a href="day11.html" class="trip-nav-link active">Day 11 <span class="day-label">(Fri)</span></a>
+        </div>
+      </div>
+    </div>
   </div>
-  
+
   <main style="margin-top: 0; padding-top: 0;">
-    <!-- Trip Header Section -->
-    <section class="trip-header" style="margin-top: 0;">
+    <section class="hero">
       <div class="container">
-        <h1>Day 11: Final Day</h1>
-        <div class="trip-dates">Friday, May 2, 2025</div>
+        <h1>✈ Day 11: Friday, May 2 - Travel Day</h1>
       </div>
     </section>
 
     <div class="container">
-      <!-- Day 11 Summary -->
       <section class="card">
         <div class="section-title-container">
-          <h2>Day 11 Overview</h2>
+          <h2>Morning Preparations</h2>
         </div>
-        <div class="content-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim.</p>
-          <p>Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
-        </div>
-      </section>
+        
+        <div class="content-grid">
+          <div class="travel-detail">
+            <h3>Breakfast & Check-out</h3>
+            <ul>
+              <li><strong>Early breakfast</strong> at hotel or nearby café</li>
+              <li><strong>Check out</strong> by 11:00 AM</li>
+              <li><strong>Store luggage</strong> at hotel if needed</li>
+            </ul>
+            <div class="travel-tip">
+              <p>Most hotels will store your luggage for free after checkout. This gives you a few extra hours to explore if your flight is later in the day.</p>
+            </div>
+          </div>
 
-      <!-- Day 11 Details -->
-      <section class="card">
-        <div class="section-title-container">
-          <h2>Today's Itinerary</h2>
-        </div>
-        <div class="highlight-grid">
-          <div class="highlight-box">
-            <h3>Morning Activities</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.</p>
+          <div class="options-box">
+            <h3>Last-Minute Checklist</h3>
             <ul>
-              <li>Activity 1: Lorem ipsum dolor sit amet</li>
-              <li>Activity 2: Consectetur adipiscing elit</li>
-              <li>Activity 3: Nullam in dui mauris</li>
-            </ul>
-          </div>
-          
-          <div class="highlight-box">
-            <h3>Afternoon Plans</h3>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-            <ul>
-              <li>Activity 1: Vivamus hendrerit arcu</li>
-              <li>Activity 2: Sed erat molestie vehicula</li>
-              <li>Activity 3: Auctor neque eu tellus</li>
-            </ul>
-          </div>
-          
-          <div class="highlight-box">
-            <h3>Evening Activities</h3>
-            <p>Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-            <ul>
-              <li>Activity 1: Phasellus molestie magna</li>
-              <li>Activity 2: Non est bibendum</li>
-              <li>Activity 3: Suspendisse dictum feugiat</li>
+              <li>Collect all belongings from hotel room and safe</li>
+              <li>Ensure you have your passport and travel documents</li>
+              <li>Settle any outstanding hotel charges</li>
+              <li>Purchase any last-minute souvenirs or gifts</li>
+              <li>Exchange leftover currency if needed</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- Final Day Reflections -->
       <section class="card">
         <div class="section-title-container">
-          <h2>Trip Reflections</h2>
+          <h2>Journey to Schiphol Airport</h2>
         </div>
-        <div class="content-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim.</p>
-          <p>Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
-          <p>Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</p>
+        
+        <div class="travel-detail">
+          <h3>Train to Amsterdam Airport Schiphol</h3>
+          <ul>
+            <li><strong>Take train</strong> from Utrecht Centraal to Schiphol Airport</li>
+            <li><strong>Trains run</strong> every 15 minutes</li>
+            <li><strong>Journey time:</strong> approximately 30 minutes</li>
+            <li><strong>Cost:</strong> around €10 per person</li>
+            <li><strong>Aim to arrive</strong> at the airport by 10:15 AM (3 hours before flight)</li>
+          </ul>
+        </div>
+
+        <div class="content-grid">
+          <div class="route-box">
+            <h3>Train Schedule Information</h3>
+            <ul>
+              <li>Trains to Schiphol depart from Utrecht Centraal station frequently throughout the morning</li>
+              <li>No need for advance booking - tickets can be purchased at the station</li>
+              <li>Recommended departure: Between 9:00 AM and 9:30 AM</li>
+            </ul>
+          </div>
+          
+          <div class="location-highlight">
+            <h3>Schiphol Airport Navigation</h3>
+            <ul>
+              <li>Follow signs from the train platform to Departures (Vertrek)</li>
+              <li>Check the departure boards for your terminal and check-in desk</li>
+              <li>Security and passport control can be busy - allow sufficient time</li>
+              <li>The airport has numerous shops and restaurants if you have extra time</li>
+            </ul>
+          </div>
         </div>
       </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Flight Details</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="travel-detail">
+            <h3>Departure Information</h3>
+            <ul>
+              <li><strong>Flight:</strong> JetBlue Flight B6 32</li>
+              <li><strong>Route:</strong> Amsterdam (AMS) → Boston (BOS)</li>
+              <li><strong>Departure Time:</strong> 1:14 PM</li>
+              <li><strong>Arrival Time:</strong> 3:05 PM (Boston time)</li>
+              <li><strong>Flight Duration:</strong> 7 hours 51 minutes</li>
+              <li><strong>Seats:</strong> 13E, 13F</li>
+            </ul>
+          </div>
+          
+          <div class="options-box">
+            <h3>Pre-Flight Checklist</h3>
+            <ul>
+              <li><strong>Check in</strong> at JetBlue counter (if not done online)</li>
+              <li><strong>Clear security</strong> and passport control</li>
+              <li><strong>Locate your gate</strong> - Check departure boards for any updates</li>
+              <li><strong>Grab a meal</strong> or snack before boarding</li>
+              <li><strong>Make any last-minute purchases</strong> at duty-free shops</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="travel-tip">
+          <p>JetBlue offers free Wi-Fi (Fly-Fi) on transatlantic flights, so you can stay connected during your journey. The airline also provides complimentary food and beverages in all cabins.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title-container">
+          <h2>Arrival in Boston</h2>
+        </div>
+        
+        <div class="content-grid">
+          <div class="travel-detail">
+            <h3>Immigration & Customs</h3>
+            <ul>
+              <li><strong>Land at 3:05 PM</strong> Boston time</li>
+              <li><strong>Complete immigration forms</strong> (if not done in-flight)</li>
+              <li><strong>Go through customs and immigration</strong></li>
+              <li><strong>Collect luggage</strong> at baggage claim</li>
+            </ul>
+          </div>
+          
+          <div class="options-box">
+            <h3>Transportation Options from Boston Logan Airport</h3>
+            <ul>
+              <li><strong>Taxi/Rideshare:</strong> Available outside all terminals</li>
+              <li><strong>MBTA (The T):</strong> Silver Line SL1 bus connects to South Station</li>
+              <li><strong>Logan Express:</strong> Bus service to various locations</li>
+              <li><strong>Rental Car:</strong> Available at the airport rental car center</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="welcome-home">
+          <h3>Welcome Home!</h3>
+          <p>Thank you for traveling with us through Belgium and the Netherlands. We hope you've enjoyed your European adventure!</p>
+        </div>
+      </section>
+
+      <div class="navigation-buttons">
+        <a href="day10.html" class="btn">Previous: Day 10</a>
+      </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2023 Trip Journal. All rights reserved.</p>
+      <p>&copy; 2025 Chris Augustine. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Components.js for template loading -->
-  <script src="../assets/js/components.js"></script>
-  
-  <!-- Main scripts -->
-  <script src="../assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const nav = document.querySelector('nav');
+      
+      mobileNavToggle.addEventListener('click', function() {
+        nav.classList.toggle('active');
+      });
+    });
+  </script>
 </body>
 </html> 
