@@ -1,0 +1,14 @@
+---
+description: Publishing, snapshots, and ISR behavior
+alwaysApply: true
+---
+- Publishing flips `status` to `published`, writes a full JSON snapshot to `trip_versions`, then revalidates affected routes only (homepage and the specific trip page).
+- Use Next.js ISR revalidation on Netlify; do not trigger full site rebuilds.
+- Provide a visible success/failure toast in admin.
+---
+description: Publishing, snapshots, and ISR behavior
+alwaysApply: true
+---
+- Publishing flips `status` to `published`, writes a full JSON snapshot to `trip_versions`, then revalidates affected routes only (homepage and the specific trip page).
+- Use Next.js ISR revalidation on Netlify; do not trigger full site rebuilds.
+- Provide a visible success/failure toast in admin.

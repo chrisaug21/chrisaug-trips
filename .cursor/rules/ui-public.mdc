@@ -1,0 +1,17 @@
+---
+description: Preserve existing visual design for public trip pages
+globs:
+  - app/(public)/**
+alwaysApply: true
+---
+- Do not introduce Tailwind or shadcn/ui into public routes.
+- Use the existing global CSS and class names from the legacy site; aim for pixel parity.
+- Do not rename classes or change typography/spacing/color tokens without explicit approval.
+- Avoid global resets or overrides (e.g., Tailwind preflight) that affect public pages.
+- CSS Modules are allowed for new isolated pieces, but must not alter global look.
+
+- **Responsiveness**: Maintain mobile‑first behavior.
+  - Trip nav must wrap or horizontally scroll on small screens; tap targets ≥ 44px.
+  - Grids collapse to single column under 768px.
+  - Images/maps are fluid width; maps ~300px (mobile) / 480px (desktop) height.
+- **Style guardrails**: Do not modify `app/(public)/styles/public.css` tokens or class names without updating `docs/STYLE_GUIDE_PUBLIC_UI.md` and getting approval.

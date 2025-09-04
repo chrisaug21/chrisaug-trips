@@ -1,0 +1,8 @@
+---
+description: Mobile responsiveness requirements across the app
+alwaysApply: true
+---
+- The app is mobile‑first. Breakpoints: 480px, 768px, 1024px.
+- Public routes must preserve legacy look on mobile & desktop with pixel parity.
+- Admin routes must be fully usable on small screens; no horizontal scrolling. Labels above fields; buttons ≥ 44px height.
+- Use `clamp()` for heading sizes where appropriate to maintain proportions.

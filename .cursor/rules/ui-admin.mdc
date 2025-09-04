@@ -1,0 +1,9 @@
+---
+description: Admin UI standards (applies to admin screens)
+globs:
+  - app/(admin)/**
+alwaysApply: false
+---
+- Use shadcn/ui and Tailwind. Keep forms accessible and mobile-friendly.
+- Provide clear loading states and error toasts. Avoid infinite spinners.
+- Group editing by tabs: Overview, Geographies, Days, Sections, Versions. Include a ‘Regenerate Day’ action and Publish with revalidation.

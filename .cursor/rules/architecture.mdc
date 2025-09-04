@@ -1,0 +1,10 @@
+---
+description: Architecture & framework decisions for Trip Planner MVP (Netlify + Next.js + Supabase)
+alwaysApply: true
+---
+- Use Next.js App Router deployed on Netlify’s Next runtime.
+- Database is Supabase (Postgres + Auth + Storage). Do not introduce other DBs without approval.
+- TypeScript everywhere. Keep server code in route handlers/server actions.
+- Validation with Zod at all boundaries (forms, API, AI output).
+- Leaflet + OSM for maps. Do not add heavy mapping libs.
+- Keep dependencies light. Ask before adding large libs.

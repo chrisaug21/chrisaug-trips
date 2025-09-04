@@ -1,0 +1,9 @@
+---
+description: Security, secrets, and data-access rules for Trip Planner MVP
+alwaysApply: true
+---
+- Never expose Supabase service keys or AI keys in client code. Keys live in environment variables and are used server-side only.
+- All writes (CRUD, AI generation, publish) must run in server actions or route handlers.
+- Protect `/admin/**` with Supabase Auth and allow-list my admin email from env.
+- Apply RLS: public can read only `published` trips; writes require admin.
+- Log minimal diagnostics server-side behind an env flag.

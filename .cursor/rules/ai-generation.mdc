@@ -1,0 +1,12 @@
+---
+description: AI generation and validation rules (OpenAI default)
+alwaysApply: true
+---
+- Default provider: **OpenAI**; model: **gpt-4o-mini** (configure via env).
+- The `/api/trips/[id]/generate` action must:
+  1) Build prompts from the brief and interest taxonomy
+  2) Request **structured JSON only** using OpenAI Structured Outputs: `response_format: { type: "json_schema", json_schema: <Trip schema>, strict: true }`
+  3) Validate with Zod; if invalid, attempt one self-heal with a repair prompt
+  4) Upsert trips/days/day_blocks and trip_interests in a transaction
+- Support per-day regeneration with the same schema.
+- Do not fetch external POI APIs on the client. If enrichment is enabled, call them server-side with caching.
